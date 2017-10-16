@@ -1,4 +1,4 @@
-package jira.models.sprints;
+package jira.models;
 
 import java.time.LocalDateTime;
 

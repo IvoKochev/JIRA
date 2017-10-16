@@ -1,4 +1,4 @@
-package jira.models.users;
+package jira.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,4 +1,4 @@
-package jira.models.projects;
+package jira.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
