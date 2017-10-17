@@ -4,8 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "users_has_issuse")
-public class UserHasIssuse {
+@Table(name = "users_has_issues")
+public class UserHasIssue {
 
 	private int users_id;
 	private int issuse_id;
