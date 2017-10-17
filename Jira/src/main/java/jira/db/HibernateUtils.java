@@ -9,6 +9,7 @@ import jira.models.Issue;
 import jira.models.Project;
 import jira.models.Sprint;
 import jira.models.User;
+import jira.models.UserHasIssuse;
 
 public class HibernateUtils {
 	private static SessionFactory sessionFactory;
@@ -20,6 +21,7 @@ public class HibernateUtils {
 			configuration.addAnnotatedClass(Project.class);
 			configuration.addAnnotatedClass(Sprint.class);
 			configuration.addAnnotatedClass(User.class);
+			configuration.addAnnotatedClass(UserHasIssuse.class);
 			StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder();
 			serviceRegistryBuilder.applySettings(configuration.getProperties());
 			StandardServiceRegistry serviceRegistry = serviceRegistryBuilder.build();
