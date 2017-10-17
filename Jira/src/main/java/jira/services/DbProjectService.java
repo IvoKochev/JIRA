@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import jira.contract.IProjectService;
+import jira.contracts.IProjectService;
 import jira.models.Project;
 
 @Service

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import jira.contract.IUserService;
+import jira.contracts.IUserService;
 import jira.exceptions.EmailException;
 import jira.exceptions.UserException;
 import jira.models.User;

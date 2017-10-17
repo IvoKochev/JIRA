@@ -1,4 +1,4 @@
-package jira.contract;
+package jira.contracts;
 
 import java.security.NoSuchAlgorithmException;
 

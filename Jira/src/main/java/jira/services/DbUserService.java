@@ -9,7 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
-import jira.contract.IUserService;
+import jira.contracts.IUserService;
 import jira.db.HibernateUtils;
 import jira.exceptions.EmailException;
 import jira.exceptions.UserException;
@@ -28,6 +28,7 @@ public class DbUserService implements IUserService {
 		if (user != null && user.getPassword().equals(getEncryptedPassword(password))) {
 			DbUserService.userId = 1;
 			session.close();
+			DbUserService.userId = user.getId();
 			return user;
 		}
 		session.close();
@@ -56,11 +57,10 @@ public class DbUserService implements IUserService {
 	@SuppressWarnings("restriction")
 	private final static String getEncryptedPassword(final String clearTextPassword) throws NoSuchAlgorithmException {
 
-		
-			MessageDigest md = MessageDigest.getInstance("SHA-256");
-			md.update(clearTextPassword.getBytes());
-			return new sun.misc.BASE64Encoder().encode(md.digest());
-		
+		MessageDigest md = MessageDigest.getInstance("SHA-256");
+		md.update(clearTextPassword.getBytes());
+		return new sun.misc.BASE64Encoder().encode(md.digest());
+
 	}
 
 }

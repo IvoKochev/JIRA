@@ -15,10 +15,10 @@ public class Issue {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
-	@Column(name = "projects_id")
-	private int projects_id;
-	@Column(name = "sprints_id")
-	private int sprints_id;
+	@Column(name = "project_id")
+	private int project_id;
+	@Column(name = "sprint_id")
+	private Integer sprint_id;
 	@Column(name = "type")
 	private String type;
 	@Column(name = "summary")
@@ -41,19 +41,19 @@ public class Issue {
 	}
 
 	public int getProject_id() {
-		return projects_id;
+		return project_id;
 	}
 
 	public void setProject_id(int project_id) {
-		this.projects_id = project_id;
+		this.project_id = project_id;
 	}
 
-	public int getSprint_id() {
-		return sprints_id;
+	public Integer getSprint_id() {
+		return sprint_id;
 	}
 
-	public void setSprint_id(int sprint_id) {
-		this.sprints_id = sprint_id;
+	public void setSprint_id(Integer sprint_id) {
+		this.sprint_id = sprint_id;
 	}
 
 	public String getType() {
