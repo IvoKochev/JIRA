@@ -1,13 +1,21 @@
 package jira.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "users_has_issues")
 public class UserHasIssue {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE)
+	@Column(name = "users_id")
 	private int users_id;
+	@Column(name = "issuse_id")
 	private int issuse_id;
 
 	public int getUsers_id() {
