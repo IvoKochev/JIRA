@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import jira.contracts.IUserService;
-import jira.exceptions.EmailException;
-import jira.exceptions.UserException;
+import jira.exceptions.InvalidUserException;
 import jira.models.User;
 
 @RestController
@@ -24,12 +23,12 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
-	public User signIn(@RequestBody User user) throws UserException, NoSuchAlgorithmException {
+	public User signIn(@RequestBody User user) throws InvalidUserException, NoSuchAlgorithmException {
 		return this.userService.signIn(user.getEmail(), user.getPassword());
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public User signUn(@RequestBody User user) throws EmailException, NoSuchAlgorithmException {
+	public User signUn(@RequestBody User user) throws InvalidUserException, NoSuchAlgorithmException {
 		return this.userService.singUp(user.getEmail(), user.getPassword());
 	}
 }

@@ -2,15 +2,15 @@ package jira.contracts;
 
 import java.util.List;
 
-import jira.exceptions.IssueException;
+import jira.exceptions.ResourceNotFoundException;
 import jira.models.Issue;
 
 public interface IIssueService {
 
 	Issue createIssue(Issue issue);
 
-	Issue updateIssue(Issue issue) throws IssueException;
+	Issue updateIssue(Issue issue) throws ResourceNotFoundException;
 
-	List<Issue> issueList() throws IssueException;
+	List<Issue> issueList() throws ResourceNotFoundException;
 
 }

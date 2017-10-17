@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import jira.contracts.IIssueService;
-import jira.exceptions.IssueException;
+import jira.exceptions.ResourceNotFoundException;
 import jira.models.Issue;
 
 @RestController
@@ -29,12 +29,12 @@ public class IssueController {
 	}
 
 	@RequestMapping(value = "update", method = RequestMethod.PUT)
-	public Issue updateIssue(@RequestBody Issue issue) throws IssueException {
+	public Issue updateIssue(@RequestBody Issue issue) throws ResourceNotFoundException {
 		return this.issueService.updateIssue(issue);
 	}
 
 	@RequestMapping(value = "list", method = RequestMethod.GET)
-	public List<Issue> issueList() throws IssueException {
+	public List<Issue> issueList() throws ResourceNotFoundException {
 		return this.issueService.issueList();
 	}
 }

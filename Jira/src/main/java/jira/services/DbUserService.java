@@ -11,8 +11,7 @@ import org.springframework.stereotype.Service;
 
 import jira.contracts.IUserService;
 import jira.db.HibernateUtils;
-import jira.exceptions.EmailException;
-import jira.exceptions.UserException;
+import jira.exceptions.InvalidUserException;
 import jira.models.User;
 
 @Service
@@ -20,7 +19,7 @@ public class DbUserService implements IUserService {
 	static int userId;
 
 	@Override
-	public User signIn(String email, String password) throws UserException, NoSuchAlgorithmException {
+	public User signIn(String email, String password) throws InvalidUserException, NoSuchAlgorithmException {
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		Criteria criteria = session.createCriteria(User.class);
 		criteria.add(Restrictions.eq("email", email));
@@ -32,11 +31,11 @@ public class DbUserService implements IUserService {
 			return user;
 		}
 		session.close();
-		throw new UserException("Invalid email or password");
+		throw new InvalidUserException("Invalid email or password");
 	}
 
 	@Override
-	public User singUp(String email, String password) throws EmailException, NoSuchAlgorithmException {
+	public User singUp(String email, String password) throws InvalidUserException, NoSuchAlgorithmException {
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
 		Criteria criteria = session.createCriteria(User.class);
@@ -44,7 +43,7 @@ public class DbUserService implements IUserService {
 		Object object = criteria.uniqueResult();
 		if (object != null) {
 			session.close();
-			throw new EmailException("Email already exists");
+			throw new InvalidUserException("Email already exists");
 		}
 		User newUser = new User();
 		newUser.setEmail(email);

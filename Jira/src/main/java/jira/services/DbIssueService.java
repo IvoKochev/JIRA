@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import jira.contracts.IIssueService;
 import jira.db.HibernateUtils;
-import jira.exceptions.IssueException;
+import jira.exceptions.ResourceNotFoundException;
 import jira.models.Issue;
 
 @Service
@@ -27,13 +27,13 @@ public class DbIssueService implements IIssueService {
 	}
 
 	@Override
-	public Issue updateIssue(Issue issue) throws IssueException {
+	public Issue updateIssue(Issue issue) throws ResourceNotFoundException {
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
 		Issue issue2 = (Issue) session.get(Issue.class, issue.getId());
 		if (issue2 == null) {
 			session.close();
-			throw new IssueException("Issue Not Found");
+			throw new ResourceNotFoundException("Issue Not Found");
 		}
 		issue2.setPriority(issue.getPriority());
 		issue2.setStatus(issue.getStatus());
@@ -46,7 +46,7 @@ public class DbIssueService implements IIssueService {
 	}
 
 	@Override
-	public List<Issue> issueList() throws IssueException {
+	public List<Issue> issueList() throws ResourceNotFoundException {
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		Criteria criteria = session.createCriteria(Issue.class);
 		criteria.add(Restrictions.eq("project_id", DbProjectService.current_project_id));
@@ -54,7 +54,7 @@ public class DbIssueService implements IIssueService {
 		List<Issue> issues = criteria.list();
 		if (issues == null) {
 			session.close();
-			throw new IssueException("'Issues' not found");
+			throw new ResourceNotFoundException("Issues' not found");
 		}
 		session.close();
 		return issues;

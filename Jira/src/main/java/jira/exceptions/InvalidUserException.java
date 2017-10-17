@@ -1,33 +1,34 @@
 package jira.exceptions;
 
-public class UserException extends RuntimeException {
+public class InvalidUserException extends RuntimeException {
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -4777519096332967970L;
+	private static final long serialVersionUID = -1340488024782817775L;
 
-	public UserException() {
+	public InvalidUserException() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserException(String message, Throwable cause, boolean enableSuppression,
+	public InvalidUserException(String message, Throwable cause, boolean enableSuppression,
 			boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserException(String message, Throwable cause) {
+	public InvalidUserException(String message, Throwable cause) {
 		super(message, cause);
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserException(String message) {
+	public InvalidUserException(String message) {
 		super(message);
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserException(Throwable cause) {
+	public InvalidUserException(Throwable cause) {
 		super(cause);
 		// TODO Auto-generated constructor stub
 	}
