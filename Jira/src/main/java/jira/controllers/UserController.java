@@ -2,6 +2,8 @@ package jira.controllers;
 
 import java.security.NoSuchAlgorithmException;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +25,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
-	public User signIn(@RequestBody User user) throws InvalidUserException, NoSuchAlgorithmException {
-		return this.userService.signIn(user.getEmail(), user.getPassword());
+	public User signIn(@RequestBody User user, HttpServletRequest request)
+			throws InvalidUserException, NoSuchAlgorithmException {
+		return this.userService.signIn(user.getEmail(), user.getPassword(), request);
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)

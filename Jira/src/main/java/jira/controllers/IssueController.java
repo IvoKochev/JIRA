@@ -2,6 +2,8 @@ package jira.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +26,8 @@ public class IssueController {
 	}
 
 	@RequestMapping(value = "create", method = RequestMethod.POST)
-	public Issue createIssue(@RequestBody Issue issue) {
-		return this.issueService.createIssue(issue);
+	public Issue createIssue(@RequestBody Issue issue, HttpServletRequest request) {
+		return this.issueService.createIssue(issue, request);
 	}
 
 	@RequestMapping(value = "update", method = RequestMethod.PUT)

@@ -3,6 +3,8 @@ package jira.services;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -16,18 +18,17 @@ import jira.models.User;
 
 @Service
 public class DbUserService implements IUserService {
-	static int userId;
 
 	@Override
-	public User signIn(String email, String password) throws InvalidUserException, NoSuchAlgorithmException {
+	public User signIn(String email, String password, HttpServletRequest request)
+			throws InvalidUserException, NoSuchAlgorithmException {
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		Criteria criteria = session.createCriteria(User.class);
 		criteria.add(Restrictions.eq("email", email));
 		User user = (User) criteria.uniqueResult();
 		if (user != null && user.getPassword().equals(getEncryptedPassword(password))) {
-			DbUserService.userId = 1;
 			session.close();
-			DbUserService.userId = user.getId();
+			request.getSession().setAttribute("user_id", user.getId());
 			return user;
 		}
 		session.close();

@@ -2,10 +2,12 @@ package jira.services;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
+//import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import jira.contracts.IIssueService;
@@ -17,9 +19,10 @@ import jira.models.Issue;
 public class DbIssueService implements IIssueService {
 
 	@Override
-	public Issue createIssue(Issue issue) {
+	public Issue createIssue(Issue issue,HttpServletRequest request) {
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
+		issue.setSprint_id((Integer)request.getSession().getAttribute("user_id"));
 		session.save(issue);
 		transaction.commit();
 		session.close();
@@ -49,7 +52,7 @@ public class DbIssueService implements IIssueService {
 	public List<Issue> issueList() throws ResourceNotFoundException {
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		Criteria criteria = session.createCriteria(Issue.class);
-		criteria.add(Restrictions.eq("project_id", DbProjectService.current_project_id));
+		//criteria.add(Restrictions.eq("project_id", DbProjectService.current_project_id));
 		@SuppressWarnings("unchecked")
 		List<Issue> issues = criteria.list();
 		if (issues == null) {

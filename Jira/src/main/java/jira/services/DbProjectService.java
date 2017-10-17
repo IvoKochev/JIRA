@@ -9,7 +9,6 @@ import jira.models.Project;
 
 @Service
 public class DbProjectService implements IProjectService {
-	public static int current_project_id = 1;
 
 	@Override
 	public List<Project> getProjectList() {
