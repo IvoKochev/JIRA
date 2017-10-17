@@ -27,8 +27,6 @@ public class Issue {
 	private String description;
 	@Column(name = "priority")
 	private String priority;
-	@Column(name = "attachment")
-	private String attachment;
 	@Column(name = "status")
 	private String status;
 
@@ -86,14 +84,6 @@ public class Issue {
 
 	public void setPriority(String priority) {
 		this.priority = priority;
-	}
-
-	public String getAttachment() {
-		return attachment;
-	}
-
-	public void setAttachment(String attachment) {
-		this.attachment = attachment;
 	}
 
 	public String getStatus() {
