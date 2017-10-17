@@ -32,6 +32,7 @@ public class DbIssueService implements IIssueService {
 		Transaction transaction = session.beginTransaction();
 		Issue issue2 = (Issue) session.get(Issue.class, issue.getId());
 		if (issue2 == null) {
+			session.close();
 			throw new IssueException("Issue Not Found");
 		}
 		issue2.setPriority(issue.getPriority());
@@ -45,14 +46,15 @@ public class DbIssueService implements IIssueService {
 	}
 
 	@Override
-	public List<Issue> issueList()throws IssueException {
+	public List<Issue> issueList() throws IssueException {
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		Criteria criteria = session.createCriteria(Issue.class);
 		criteria.add(Restrictions.eq("project_id", DbProjectService.current_project_id));
 		@SuppressWarnings("unchecked")
 		List<Issue> issues = criteria.list();
 		if (issues == null) {
-         throw new IssueException("'Issues' not found");
+			session.close();
+			throw new IssueException("'Issues' not found");
 		}
 		session.close();
 		return issues;

@@ -43,6 +43,7 @@ public class DbUserService implements IUserService {
 		criteria.add(Restrictions.eq("email", email));
 		Object object = criteria.uniqueResult();
 		if (object != null) {
+			session.close();
 			throw new EmailException("Email already exists");
 		}
 		User newUser = new User();
