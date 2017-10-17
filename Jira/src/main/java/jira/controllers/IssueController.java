@@ -1,5 +1,7 @@
 package jira.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,4 +33,8 @@ public class IssueController {
 		return this.issueService.updateIssue(issue);
 	}
 
+	@RequestMapping(value = "list", method = RequestMethod.GET)
+	public List<Issue> issueList() throws IssueException {
+		return this.issueService.issueList();
+	}
 }
