@@ -35,9 +35,10 @@ public class DbProjectService implements IProjectService {
 	}
 
 	private static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
-		List<T> r = new ArrayList<T>(c.size());
-		for (Object o : c)
-			r.add(clazz.cast(o));
+		List<T> r = new ArrayList<>(c.size());
+                c.forEach((o) -> {
+                    r.add(clazz.cast(o));
+            });
 		return r;
 
 	}

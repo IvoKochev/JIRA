@@ -14,6 +14,7 @@ import jira.contracts.IIssueService;
 import jira.db.HibernateUtils;
 import jira.exceptions.ResourceNotFoundException;
 import jira.models.Issue;
+import jira.models.UserHasIssue;
 
 @Service
 public class DbIssueService implements IIssueService {
@@ -23,10 +24,14 @@ public class DbIssueService implements IIssueService {
 	public Issue createIssue(Issue issue, HttpServletRequest request) {
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		//issue.setSprint_id((Integer) request.getSession().getAttribute("user_id"));
-		System.err.println(issue.getProject_id());
 		session.save(issue);
 		transaction.commit();
+		Transaction transaction2 = session.beginTransaction();
+		UserHasIssue userHasIssue = new UserHasIssue();
+		userHasIssue.setIssue_id(issue.getId());
+		userHasIssue.setUsers_id((int) request.getSession().getAttribute("user_id"));
+		session.save(userHasIssue);
+		transaction2.commit();
 		session.close();
 		return issue;
 	}

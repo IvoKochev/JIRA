@@ -8,32 +8,32 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "users_has_issues")
+@Table(name = "issues_has_users")
 public class UserHasIssue {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
-	@Column(name = "users_id")
-	private int users_id;
-	@Column(name = "issuse_id")
-	private int issuse_id;
+	@Column(name = "user_id")
+	private int user_id;
+	@Column(name = "issue_id")
+	private int issue_id;
 
 	public int getUsers_id() {
-		return users_id;
+		return user_id;
 	}
 
 	public void setUsers_id(int users_id) {
-		this.users_id = users_id;
+		this.user_id = users_id;
 	}
 
-	public int getIssuse_id() {
-		return issuse_id;
+	public int getIssue_id() {
+		return issue_id;
 	}
 
-	public void setIssuse_id(int issuse_id) {
-		this.issuse_id = issuse_id;
+	public void setIssue_id(int issue_id) {
+		this.issue_id = issue_id;
 	}
 
 	public int getId() {

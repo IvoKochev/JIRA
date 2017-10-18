@@ -28,7 +28,8 @@ public class IssueController {
 
 	@RequestMapping(value = "create", method = RequestMethod.POST)
 	public Issue createIssue(@RequestBody Issue issue, HttpServletRequest request) {
-		return this.issueService.createIssue(issue, request);
+		Issue issue2 = this.issueService.createIssue(issue, request);
+		return issue2;
 	}
 
 	@RequestMapping(value = "update", method = RequestMethod.PUT)
