@@ -10,6 +10,7 @@ import jira.models.Project;
 import jira.models.Sprint;
 import jira.models.User;
 import jira.models.UserHasIssue;
+import org.hibernate.HibernateException;
 
 public class HibernateUtils {
 	private static SessionFactory sessionFactory;
@@ -27,7 +28,7 @@ public class HibernateUtils {
 			StandardServiceRegistry serviceRegistry = serviceRegistryBuilder.build();
 			sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 
-		} catch (Exception ex) {
+		} catch (HibernateException ex) {
 			System.out.println(ex);
 		}
 	}
