@@ -14,7 +14,7 @@ import jira.exceptions.ResourceNotFoundException;
 import jira.models.Project;
 
 @RestController
-@RequestMapping("/projects")
+@RequestMapping("/project")
 public class ProjectController {
 	IProjectService projectService;
 

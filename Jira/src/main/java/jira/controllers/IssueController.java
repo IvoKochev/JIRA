@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,7 +37,13 @@ public class IssueController {
 	}
 
 	@RequestMapping(value = "list", method = RequestMethod.GET)
-	public List<Issue> issueList(HttpServletRequest request) throws ResourceNotFoundException {
+	public List<Issue> getIssueList(HttpServletRequest request) throws ResourceNotFoundException {
 		return this.issueService.issueList(request);
+	}
+
+	@RequestMapping(value = "/{issue_id}", method = RequestMethod.GET)
+	public Issue getIssue(@PathVariable(value = "issue_id") int id, HttpServletRequest request)
+			throws ResourceNotFoundException {
+		return this.issueService.getIssue(id, request);
 	}
 }
