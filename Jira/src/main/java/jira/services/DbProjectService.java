@@ -31,6 +31,16 @@ public class DbProjectService implements IProjectService {
 		}
 		session.close();
 		return projects;
+<<<<<<< HEAD
+=======
+	}
+
+	private static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
+		List<T> r = new ArrayList<T>(c.size());
+		for (Object o : c)
+			r.add(clazz.cast(o));
+		return r;
+>>>>>>> f94075f2220f3efb88acacb2c0bcfc48b7107068
 	}
 
 	private static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
