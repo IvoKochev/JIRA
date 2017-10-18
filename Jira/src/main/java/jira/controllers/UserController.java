@@ -30,6 +30,6 @@ public class UserController {
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public User signUn(@RequestBody User user, HttpServletRequest request) throws InvalidUserException {
-		return this.userService.singUp(user.getEmail(), user.getPassword(), request);
+		return this.userService.signUp(user.getEmail(), user.getPassword(), request);
 	}
 }

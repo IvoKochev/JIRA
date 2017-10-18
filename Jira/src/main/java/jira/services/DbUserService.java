@@ -28,7 +28,6 @@ public class DbUserService implements IUserService {
                 criteria.add(Restrictions.eq("email", email));
                 User user = (User) criteria.uniqueResult();
                 if (user != null && user.getPassword().equals(getEncryptedPassword(password))) {
-                    session.close();
                     request.getSession().setAttribute("user_id", user.getId());
                     return user;
                 }
@@ -37,7 +36,7 @@ public class DbUserService implements IUserService {
 	}
 
 	@Override
-	public User singUp(String email, String password, HttpServletRequest request)
+	public User signUp(String email, String password, HttpServletRequest request)
 			throws InvalidUserException {
             User newUser;
             try (Session session = HibernateUtils.getSessionFactory().openSession()) {
@@ -46,7 +45,6 @@ public class DbUserService implements IUserService {
                 criteria.add(Restrictions.eq("email", email));
                 Object object = criteria.uniqueResult();
                 if (object != null) {
-                    session.close();
                     throw new InvalidUserException("Email already exists");
                 }
                 newUser = new User();

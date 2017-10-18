@@ -11,5 +11,5 @@ public interface IUserService {
 
 	User signIn(String email, String password,HttpServletRequest request) throws ResourceNotFoundException;
 
-	User singUp(String email, String password,HttpServletRequest request) throws InvalidUserException;
+	User signUp(String email, String password,HttpServletRequest request) throws InvalidUserException;
 }

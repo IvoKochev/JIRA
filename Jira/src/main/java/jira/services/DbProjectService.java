@@ -21,15 +21,15 @@ public class DbProjectService implements IProjectService {
 
 	@Override
 	public List<Project> getProjectList(HttpServletRequest request) throws ResourceNotFoundException {
-		Session session = HibernateUtils.getSessionFactory().openSession();
-		Criteria criteria = session.createCriteria(Project.class);
-		criteria.add(Restrictions.eq("user_id", request.getSession().getAttribute("user_id")));
-		List<Project> projects = castList(Project.class, criteria.list());
-		if (projects == null || projects.isEmpty()) {
-			session.close();
-			throw new ResourceNotFoundException("There are no open projects");
-		}
-		session.close();
+            List<Project> projects;
+            try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+                Criteria criteria = session.createCriteria(Project.class);
+                criteria.add(Restrictions.eq("user_id", request.getSession().getAttribute("user_id")));
+                projects = castList(Project.class, criteria.list());
+                if (projects == null || projects.isEmpty()) {
+                    throw new ResourceNotFoundException("There are no open projects");
+                }
+            }
 		return projects;
 
 	}

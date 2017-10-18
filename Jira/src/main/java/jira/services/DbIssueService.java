@@ -22,68 +22,69 @@ public class DbIssueService implements IIssueService {
 	@Override
 	// unfinished
 	public Issue createIssue(Issue issue, HttpServletRequest request) {
-		Session session = HibernateUtils.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
-		session.save(issue);
-		transaction.commit();
-		Transaction transaction2 = session.beginTransaction();
-		UserHasIssue userHasIssue = new UserHasIssue();
-		userHasIssue.setIssue_id(issue.getId());
-		userHasIssue.setUsers_id((int) request.getSession().getAttribute("user_id"));
-		session.save(userHasIssue);
-		transaction2.commit();
-		session.close();
+            try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+                Transaction transaction = session.beginTransaction();
+                session.save(issue);
+                transaction.commit();
+                Transaction transaction2 = session.beginTransaction();
+                UserHasIssue userHasIssue = new UserHasIssue();
+                userHasIssue.setIssue_id(issue.getId());
+                userHasIssue.setUsers_id((int) request.getSession().getAttribute("user_id"));
+                session.save(userHasIssue);
+                transaction2.commit();
+            }
 		return issue;
 	}
 
 	@Override
 	public Issue updateIssue(Issue issue) throws ResourceNotFoundException {
-		Session session = HibernateUtils.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
-		Issue issue2 = (Issue) session.get(Issue.class, issue.getId());
-		if (issue2 == null) {
-			session.close();
-			throw new ResourceNotFoundException("Issue Not Found");
-		}
-		issue2.setPriority(issue.getPriority());
-		issue2.setStatus(issue.getStatus());
-		issue2.setSummary(issue.getSummary());
-		issue2.setType(issue.getType());
-		session.update(issue2);
-		transaction.commit();
-		session.close();
+            Issue issue2;
+            try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+                Transaction transaction = session.beginTransaction();
+                issue2 = (Issue) session.get(Issue.class, issue.getId());
+                if (issue2 == null) {
+                    session.close();
+                    throw new ResourceNotFoundException("Issue Not Found");
+                }
+                issue2.setPriority(issue.getPriority());
+                issue2.setStatus(issue.getStatus());
+                issue2.setSummary(issue.getSummary());
+                issue2.setType(issue.getType());
+                session.update(issue2);
+                transaction.commit();
+            }
 		return issue2;
 	}
 
 	@Override
 	// unfinished
 	public List<Issue> issueList(HttpServletRequest request) throws ResourceNotFoundException {
-		Session session = HibernateUtils.getSessionFactory().openSession();
-		Criteria criteria = session.createCriteria(Issue.class);
-		// criteria.add(Restrictions.eq("project_id",
-		// DbProjectService.current_project_id));
-		@SuppressWarnings("unchecked")
-		List<Issue> issues = criteria.list();
-		if (issues == null) {
-			session.close();
-			throw new ResourceNotFoundException("Issues' not found");
-		}
-		session.close();
+            @SuppressWarnings("unchecked")
+                    List<Issue> issues;
+            try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+                Criteria criteria = session.createCriteria(Issue.class);
+                // criteria.add(Restrictions.eq("project_id",
+                // DbProjectService.current_project_id));
+                issues = criteria.list();
+                if (issues == null) {
+                    throw new ResourceNotFoundException("Issues' not found");
+                }
+            }
 		return issues;
 	}
 
 	@Override
 	// unfinished
 	public Issue getIssue(int id, HttpServletRequest request) {
-		Session session = HibernateUtils.getSessionFactory().openSession();
-		Criteria criteria = session.createCriteria(Issue.class);
-		criteria.add(Restrictions.eq("id", id));
-		Issue issue = (Issue) criteria.uniqueResult();
-		if (issue == null) {
-			session.close();
-			throw new ResourceNotFoundException("Issue not found");
-		}
-		session.close();
+            Issue issue;
+            try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+                Criteria criteria = session.createCriteria(Issue.class);
+                criteria.add(Restrictions.eq("id", id));
+                issue = (Issue) criteria.uniqueResult();
+                if (issue == null) {
+                    throw new ResourceNotFoundException("Issue not found");
+                }
+            }
 		return issue;
 	}
 }
