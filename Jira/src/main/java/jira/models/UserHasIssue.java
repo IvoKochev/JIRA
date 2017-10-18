@@ -12,7 +12,9 @@ import javax.persistence.Table;
 public class UserHasIssue {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
 	@Column(name = "users_id")
 	private int users_id;
 	@Column(name = "issuse_id")
@@ -32,6 +34,14 @@ public class UserHasIssue {
 
 	public void setIssuse_id(int issuse_id) {
 		this.issuse_id = issuse_id;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

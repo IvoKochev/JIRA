@@ -9,10 +9,12 @@ import jira.models.Issue;
 
 public interface IIssueService {
 
-	Issue createIssue(Issue issue,HttpServletRequest request);
+	Issue createIssue(Issue issue, HttpServletRequest request);
 
 	Issue updateIssue(Issue issue) throws ResourceNotFoundException;
 
 	List<Issue> issueList(HttpServletRequest request) throws ResourceNotFoundException;
+
+	Issue getIssue(int id, HttpServletRequest request);
 
 }
