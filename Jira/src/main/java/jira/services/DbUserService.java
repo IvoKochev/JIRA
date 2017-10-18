@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import jira.contracts.IUserService;
 import jira.db.HibernateUtils;
 import jira.exceptions.InvalidUserException;
+import jira.exceptions.ResourceNotFoundException;
 import jira.models.User;
 
 @Service
@@ -21,7 +22,7 @@ public class DbUserService implements IUserService {
 
 	@Override
 	public User signIn(String email, String password, HttpServletRequest request)
-			throws InvalidUserException, NoSuchAlgorithmException {
+			throws ResourceNotFoundException {
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		Criteria criteria = session.createCriteria(User.class);
 		criteria.add(Restrictions.eq("email", email));
@@ -32,11 +33,12 @@ public class DbUserService implements IUserService {
 			return user;
 		}
 		session.close();
-		throw new InvalidUserException("Invalid email or password");
+		throw new ResourceNotFoundException("Invalid email or password");
 	}
 
 	@Override
-	public User singUp(String email, String password) throws InvalidUserException, NoSuchAlgorithmException {
+	public User singUp(String email, String password, HttpServletRequest request)
+			throws InvalidUserException {
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
 		Criteria criteria = session.createCriteria(User.class);
@@ -52,16 +54,22 @@ public class DbUserService implements IUserService {
 		session.save(newUser);
 		transaction.commit();
 		session.close();
+		request.getSession().setAttribute("user_id", newUser.getId());
 		return newUser;
 	}
 
 	@SuppressWarnings("restriction")
-	private final static String getEncryptedPassword(final String clearTextPassword) throws NoSuchAlgorithmException {
+	private final static String getEncryptedPassword(final String clearTextPassword) {
 
-		MessageDigest md = MessageDigest.getInstance("SHA-256");
-		md.update(clearTextPassword.getBytes());
+		MessageDigest md = null;
+		try {
+			md = MessageDigest.getInstance("SHA-256");
+			md.update(clearTextPassword.getBytes());
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+
 		return new sun.misc.BASE64Encoder().encode(md.digest());
 
 	}
-
 }

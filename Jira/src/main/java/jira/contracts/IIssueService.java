@@ -13,6 +13,6 @@ public interface IIssueService {
 
 	Issue updateIssue(Issue issue) throws ResourceNotFoundException;
 
-	List<Issue> issueList() throws ResourceNotFoundException;
+	List<Issue> issueList(HttpServletRequest request) throws ResourceNotFoundException;
 
 }

@@ -1,7 +1,5 @@
 package jira.controllers;
 
-import java.security.NoSuchAlgorithmException;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jira.contracts.IUserService;
 import jira.exceptions.InvalidUserException;
+import jira.exceptions.ResourceNotFoundException;
 import jira.models.User;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/account")
 public class UserController {
 	IUserService userService;
 
@@ -25,13 +24,12 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
-	public User signIn(@RequestBody User user, HttpServletRequest request)
-			throws InvalidUserException, NoSuchAlgorithmException {
+	public User signIn(@RequestBody User user, HttpServletRequest request) throws ResourceNotFoundException {
 		return this.userService.signIn(user.getEmail(), user.getPassword(), request);
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public User signUn(@RequestBody User user) throws InvalidUserException, NoSuchAlgorithmException {
-		return this.userService.singUp(user.getEmail(), user.getPassword());
+	public User signUn(@RequestBody User user, HttpServletRequest request) throws InvalidUserException {
+		return this.userService.singUp(user.getEmail(), user.getPassword(), request);
 	}
 }

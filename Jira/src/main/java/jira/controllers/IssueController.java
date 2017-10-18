@@ -36,7 +36,7 @@ public class IssueController {
 	}
 
 	@RequestMapping(value = "list", method = RequestMethod.GET)
-	public List<Issue> issueList() throws ResourceNotFoundException {
-		return this.issueService.issueList();
+	public List<Issue> issueList(HttpServletRequest request) throws ResourceNotFoundException {
+		return this.issueService.issueList(request);
 	}
 }
