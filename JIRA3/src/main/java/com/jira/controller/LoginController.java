@@ -20,18 +20,20 @@ public class LoginController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = { "/adminlogin" }, method = RequestMethod.GET)
-	public ModelAndView adminlogin() {
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("adminlogin");
-		return modelAndView;
-	}
-
 	@RequestMapping(value = { "/", "/login" }, method = RequestMethod.GET)
 	public ModelAndView login() {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("login");
 		return modelAndView;
+	}
+
+	@RequestMapping(value = { "/dispatcher" }, method = RequestMethod.GET)
+	public String dispatcher() {
+		String s = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+		if (s.contains("ADMIN")) {
+			return "redirect:/admin/home";
+		}
+		return "redirect:/user/home";
 	}
 
 	@RequestMapping(value = "/registration", method = RequestMethod.GET)
@@ -64,13 +66,20 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/admin/home", method = RequestMethod.GET)
-	public ModelAndView home() {
+	public ModelAndView adminHome() {
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
 		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + " (" + user.getEmail() + ")");
 		modelAndView.addObject("adminMessage", "JIRA ADMIN PANEL");
 		modelAndView.setViewName("admin/home");
+		return modelAndView;
+	}
+
+	@RequestMapping(value = { "/user/home" }, method = RequestMethod.GET)
+	public ModelAndView userHome() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("/user/home");
 		return modelAndView;
 	}
 
