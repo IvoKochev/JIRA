@@ -20,13 +20,6 @@ public class LoginController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = { "/", "/login" }, method = RequestMethod.GET)
-	public ModelAndView login() {
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("login");
-		return modelAndView;
-	}
-
 	@RequestMapping(value = { "/dispatcher" }, method = RequestMethod.GET)
 	public String dispatcher() {
 		String s = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
@@ -34,6 +27,13 @@ public class LoginController {
 			return "redirect:/admin/home";
 		}
 		return "redirect:/user/home";
+	}
+
+	@RequestMapping(value = { "/", "/login" }, method = RequestMethod.GET)
+	public ModelAndView login() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("login");
+		return modelAndView;
 	}
 
 	@RequestMapping(value = "/registration", method = RequestMethod.GET)
@@ -79,7 +79,10 @@ public class LoginController {
 	@RequestMapping(value = { "/user/home" }, method = RequestMethod.GET)
 	public ModelAndView userHome() {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/user/home");
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + " (" + user.getEmail() + ")");
+		modelAndView.setViewName("user/home");
 		return modelAndView;
 	}
 
