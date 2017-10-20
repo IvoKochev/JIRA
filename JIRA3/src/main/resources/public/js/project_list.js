@@ -4,7 +4,8 @@ $.getJSON( "/project/list", function( data ) {
 	  $.each( data, function( key, val ) {
 	    items.push( "<li id='" + key + "'>" + val.name + "</li>" );
 	  });
-	 
+
+$("#mydiv").attr("class", "container");
 	  $( "<ul/>", {
 	    "class": "my-new-list",
 	    html: items.join( "" )

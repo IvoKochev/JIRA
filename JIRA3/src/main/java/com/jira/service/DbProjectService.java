@@ -25,13 +25,4 @@ public class DbProjectService implements IProjectService {
 		return projectRepository.findByuserid((int)request.getSession().getAttribute("user_id"));
 
 	}
-
-//	private static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
-//		List<T> r = new ArrayList<>(c.size());
-//                c.forEach((o) -> {
-//                    r.add(clazz.cast(o));
-//            });
-//		return r;
-//
-//	}
 }

@@ -77,6 +77,12 @@ public class LoginController {
 		modelAndView.setViewName("admin/home");
 		return modelAndView;
 	}
+	@RequestMapping(value = "/admin/projects", method = RequestMethod.GET)
+	public ModelAndView admin(HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("/admin/projects");
+		return modelAndView;
+	}
 
 	@RequestMapping(value = { "/user/home" }, method = RequestMethod.GET)
 	public ModelAndView userHome(HttpServletRequest request) {
