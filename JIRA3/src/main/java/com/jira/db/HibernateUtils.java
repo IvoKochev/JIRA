@@ -4,6 +4,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jira.model.Issue;
 import com.jira.model.Project;
@@ -13,6 +14,7 @@ import com.jira.model.User;
 import org.hibernate.HibernateException;
 
 public class HibernateUtils {
+	@Autowired
 	private static SessionFactory sessionFactory;
 
 	static {

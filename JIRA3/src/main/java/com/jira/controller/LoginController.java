@@ -67,10 +67,11 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/admin/home", method = RequestMethod.GET)
-	public ModelAndView adminHome() {
+	public ModelAndView adminHome(HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
+		request.getSession().setAttribute("user_id", user.getId());
 		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + " (" + user.getEmail() + ")");
 		modelAndView.addObject("adminMessage", "JIRA ADMIN PANEL");
 		modelAndView.setViewName("admin/home");

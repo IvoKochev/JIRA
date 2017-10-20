@@ -27,5 +27,4 @@ public class ProjectController {
 	public List<Project> getProjectList(HttpServletRequest request) throws ResourceNotFoundException {
 		return this.projectService.getProjectList(request);
 	}
-
 }

@@ -12,11 +12,11 @@ import javax.persistence.Table;
 public class Project {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private int id;
-	@Column(name = "user_id")
-	private int user_id;
+	@Column(name = "userid")
+	private int userid;
 	@Column(name = "name")
 	private String name;
 	@Column(name = "key")
@@ -60,12 +60,12 @@ public class Project {
 		this.type = type;
 	}
 
-	public int getUser_id() {
-		return user_id;
+	public int getUserid() {
+		return userid;
 	}
 
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+	public void setUserid(int user_id) {
+		this.userid = user_id;
 	}
 
 	public String getCategory() {
