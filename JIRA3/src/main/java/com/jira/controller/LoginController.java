@@ -1,5 +1,6 @@
 package com.jira.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,10 +78,11 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = { "/user/home" }, method = RequestMethod.GET)
-	public ModelAndView userHome() {
+	public ModelAndView userHome(HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
+		request.getSession().setAttribute("user_id", user.getId());
 		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + " (" + user.getEmail() + ")");
 		modelAndView.setViewName("user/home");
 		return modelAndView;
