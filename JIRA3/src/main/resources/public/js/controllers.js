@@ -1,7 +1,7 @@
 angular.module('jira.controllers', [])
   .controller('jiraCtrl', function($scope, projectService) {
     $scope.page = 1;
-    var pageSize = 20;
+    var pageSize = 12;
     var projects;
     $scope.isPrevDisabled = true;
     $scope.isNextDisabled = false;
@@ -18,11 +18,11 @@ angular.module('jira.controllers', [])
       $scope.projects = projects.slice(($scope.page - 1) * pageSize, $scope.page * pageSize);
     }
     $scope.goToNextPage = function() {
-      if ($scope.page === projects.length / pageSize) {
+      if ($scope.page >= projects.length / pageSize) {
         return;
       }
       ++$scope.page;
-      if ($scope.page === projects.length / pageSize) {
+      if ($scope.page >= projects.length / pageSize) {
         $scope.isNextDisabled = true;
       }
       $scope.isPrevDisabled = false;
