@@ -2,10 +2,10 @@ angular.module('jiraProject', ['ngRoute', 'jiraServices', 'jira.controllers'], f
 
 }).config(['$routeProvider', function($routeProvider) {
   $routeProvider
-    .when('/admin/home', {
+    .when('/projects', {
       templateUrl: '/admin/projects.html;',
       controller: 'jiraCtrl'
     }).otherwise({
-      redirectTo: 'admin/home'
+      redirectTo: '/projects'
     });
 }]);
