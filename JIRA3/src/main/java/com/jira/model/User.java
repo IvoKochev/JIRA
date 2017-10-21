@@ -38,6 +38,8 @@ public class User {
 	@Column(name = "name")
 	@NotEmpty(message = "*Please provide your name")
 	private String name;
+	@Column(name = "imgUrl")
+	private String imgUrl;
 	@Column(name = "active")
 	private int active;
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -91,5 +93,14 @@ public class User {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+	
 
 }

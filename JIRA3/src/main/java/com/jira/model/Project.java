@@ -27,6 +27,8 @@ public class Project {
 	private String category;
 	@Column(name = "url")
 	private String url;
+	@Column(name = "imgurl")
+	private String imgurl;
 
 	public int getId() {
 		return id;
@@ -84,4 +86,12 @@ public class Project {
 		this.url = url;
 	}
 
+	public String getImgurl() {
+		return imgurl;
+	}
+
+	public void setImgurl(String imgurl) {
+		this.imgurl = imgurl;
+	}
+	
 }
