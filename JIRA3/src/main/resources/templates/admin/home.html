@@ -23,13 +23,14 @@
 		<div class="panel-group" style="margin-top: 10px">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
+					<img th:src="${userImg}" width="80" height="80" alt="">
 					<span th:utext="${userName}"></span>
 				</div>
 				<p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
 			</div>
 			<div ng-view></div>
+			 </div>
 		</div>
-	</div>
 </body>
 
 </html>

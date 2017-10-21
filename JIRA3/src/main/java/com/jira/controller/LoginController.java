@@ -72,13 +72,16 @@ public class LoginController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
 		request.getSession().setAttribute("user_id", user.getId());
+		request.getSession().setAttribute("owner", user.getName());
+		modelAndView.addObject("userImg", "" + user.getImg_url());
 		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + " (" + user.getEmail() + ")");
 		modelAndView.addObject("adminMessage", "JIRA ADMIN PANEL");
 		modelAndView.setViewName("admin/home");
 		return modelAndView;
 	}
+
 	@RequestMapping(value = "/admin/projects", method = RequestMethod.GET)
-	public ModelAndView admin(HttpServletRequest request) {
+	public ModelAndView admin() {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("/admin/projects");
 		return modelAndView;
@@ -90,6 +93,7 @@ public class LoginController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
 		request.getSession().setAttribute("user_id", user.getId());
+		request.getSession().setAttribute("owner", user.getName());
 		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + " (" + user.getEmail() + ")");
 		modelAndView.setViewName("user/home");
 		return modelAndView;

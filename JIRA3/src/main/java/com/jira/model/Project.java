@@ -15,8 +15,8 @@ public class Project {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private int id;
-	@Column(name = "userid")
-	private int userid;
+	@Column(name = "owner")
+	private String owner;
 	@Column(name = "name")
 	private String name;
 	@Column(name = "key")
@@ -62,12 +62,12 @@ public class Project {
 		this.type = type;
 	}
 
-	public int getUserid() {
-		return userid;
+	public String getOwner() {
+		return owner;
 	}
 
-	public void setUserid(int user_id) {
-		this.userid = user_id;
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 
 	public String getCategory() {
@@ -93,5 +93,5 @@ public class Project {
 	public void setImgurl(String imgurl) {
 		this.imgurl = imgurl;
 	}
-	
+
 }
