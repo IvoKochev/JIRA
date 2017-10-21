@@ -39,6 +39,12 @@
     </tbody>
 
   </table>
+  <div class="row">
+    <button ng-if="isPrevDisabled" class="btn col-xs-6" disabled="disabled">Prev</button>
+    <button ng-if="!isPrevDisabled" class="btn col-xs-6" ng-click="goToPrevPage()">Prev</button>
+    <button ng-if="isNextDisabled" class="btn col-xs-6" disabled="disabled">Next</button>
+    <button ng-if="!isNextDisabled" class="btn col-xs-6" ng-click="goToNextPage()">Next</button>
+  </div>
 
 </body>
 
