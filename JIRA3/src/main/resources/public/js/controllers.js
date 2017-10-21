@@ -3,5 +3,7 @@ angular.module('jira.controllers', [])
     console.log("In Jira Controoler");
     projectService.all(function(data) {
       console.log(data);
+      $scope.projects = data;
+
     });
   });

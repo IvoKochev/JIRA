@@ -10,4 +10,5 @@ import com.jira.model.Project;
 @Repository("projectRepository")
 public interface ProjectRepository extends JpaRepository<Project, Long>{
         List<Project> findByuserid(int user_id);
+        Project findByname(String name);
 }

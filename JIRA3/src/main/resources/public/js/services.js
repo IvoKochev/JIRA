@@ -4,8 +4,8 @@ angular.module('jiraServices', [])
       all: function(collback) {
         var url = "/project/list";
         $http.get(url)
-          .then(function (data) {
-            collback(data);
+          .then(function(data) {
+            collback(data.data);
           });
       }
     };

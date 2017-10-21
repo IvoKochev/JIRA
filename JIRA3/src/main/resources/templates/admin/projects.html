@@ -1,10 +1,66 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>JIRA</title>
-  </head>
-  <body>
 
-  </body>
+<head>
+  <meta charset="utf-8">
+  <title>JIRA</title>
+  <link rel="stylesheet" href="/css/admin_home.css">
+</head>
+
+<body>
+  <table class="kffeWc">
+    <thead class="iccVIQ">
+      <tr>
+        <th width="200" class="geZoUn">
+          <span>Name</span>
+        </th>
+        <th width="15" class="bKZlcx">
+          <span>Key</span>
+        </th>
+        <th class="dZlBnq">
+          <span>Type</span>
+        </th>
+        <th class="dZlBnq">
+          <span>Owner</span>
+        </th>
+        <th class="dZlBnq">
+          <span>Category</span>
+        </th>
+        <th class="lbcrZf">
+          <span>URL</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="ewoyXV" ng-repeat="project in projects">
+        <td width="200" class="kUfcsh">
+          <span class="gGsHVf">
+            <a href="#" >{{project.name}}</a>
+          </span>
+        </td>
+        <td width="15" class="drqBbD">
+          <span class="fuVjLH">{{project.key}}</span>
+        </td>
+        <td class="kqXqNO">
+          <span class="jPYEPF"></span>
+          <span>{{project.key}}</span>
+        </td>
+        <td class="kqXqNO">
+          <span>{{project.userid}}</span>
+        </td>
+        <td class="kqXqNO">
+          <span>{{project.category}}</span>
+        </td>
+        <td class="kqXqNO">
+          <span>{{project.url}}</span>
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</body>
+
 </html>

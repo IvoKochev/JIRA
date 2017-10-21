@@ -6,7 +6,6 @@
 	<link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
 	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
-	<script src="/bower_components/jquery/dist/jquery.js"></script>
 	<script src="/bower_components/angular/angular.js"></script>
 	<script src="/bower_components/angular-route/angular-route.js"></script>
 	<script src="/js/services.js"></script>
@@ -26,13 +25,11 @@
 				<div class="panel-heading">
 					<span th:utext="${userName}"></span>
 				</div>
-				<div class="panel-body">
-					<img th:src="@{/images/bad_goat.jpg}" class="img-responsive left-block" width="300" height="300" alt="Bad_Goat" />
-				</div>
+
 				<p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
 			</div>
 		</div>
-		<div data-ng-view>
+		<div ng-view>
 
 		</div>
 	</div>
