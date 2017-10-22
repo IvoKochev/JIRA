@@ -34,8 +34,10 @@ angular.module('jira.controllers', [])
       $scope.projects = projects.slice(($scope.page - 1) * pageSize, $scope.page * pageSize);
     });
   })
-  .controller('pCtrl', function($scope, projectsService) {
-    console.log("InP Ctrl");
-
-
-  });
+  .controller('pCtrl', ['$scope', 'Page', '$routeParams', '$http', function($scope, Page, $routeParams, $http) {
+    Page.posts($routeParams.id).then(function success(response) {
+       $scope.Page = response.data;
+}, function error(reason) {
+// do something
+});
+}]);
