@@ -1,5 +1,5 @@
 angular.module('jira.controllers', [])
-  .controller('jiraCtrl', function($scope, projectService) {
+  .controller('projectsCtrl', function($scope, projectsService) {
     $scope.page = 1;
     var pageSize = 12;
     var projects;
@@ -28,10 +28,14 @@ angular.module('jira.controllers', [])
       $scope.isPrevDisabled = false;
       $scope.projects = projects.slice(($scope.page - 1) * pageSize, $scope.page * pageSize);
     };
-    projectService.all(function(data) {
+    projectsService.all(function(data) {
       console.log(data);
       projects = data;
       $scope.projects = projects.slice(($scope.page - 1) * pageSize, $scope.page * pageSize);
-
     });
+  })
+  .controller('pCtrl', function($scope, projectsService) {
+    console.log("InP Ctrl");
+
+
   });

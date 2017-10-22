@@ -8,19 +8,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.jira.cotract.IProjectService;
 import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.model.Project;
 
 @RestController
-@RequestMapping("/project")
 public class ProjectController {
 	IProjectService projectService;
 
 	@Autowired
 	public ProjectController(IProjectService projectService) {
 		this.projectService = projectService;
+	}
+	@RequestMapping(value = "/admin/projects", method = RequestMethod.GET)
+	public ModelAndView adminProjects() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("/admin/projects");
+		return modelAndView;
+	}
+	@RequestMapping(value = "/admin/projectView", method = RequestMethod.GET)
+	public ModelAndView admin() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("/admin/projectView");
+		return modelAndView;
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)

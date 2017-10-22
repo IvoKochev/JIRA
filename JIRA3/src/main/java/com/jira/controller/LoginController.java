@@ -73,19 +73,14 @@ public class LoginController {
 		User user = userService.findUserByEmail(auth.getName());
 		request.getSession().setAttribute("user_id", user.getUser_id());
 		request.getSession().setAttribute("owner", user.getName());
-		modelAndView.addObject("userImg", "" + user.getImg_url());
+		modelAndView.addObject("userImg", "" + user.getImgurl());
 		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + " (" + user.getEmail() + ")");
 		modelAndView.addObject("adminMessage", "JIRA ADMIN PANEL");
 		modelAndView.setViewName("admin/home");
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/admin/projects", method = RequestMethod.GET)
-	public ModelAndView admin() {
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/admin/projects");
-		return modelAndView;
-	}
+	
 
 	@RequestMapping(value = { "/user/home" }, method = RequestMethod.GET)
 	public ModelAndView userHome(HttpServletRequest request) {

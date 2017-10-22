@@ -1,8 +1,8 @@
-angular.module('jiraServices', [])
-  .factory('projectService', function($http) {
+angular.module('adminProjectServices', [])
+  .factory('projectsService', function($http) {
     return {
       all: function(collback) {
-        var url = "/project/list";
+        var url = "/list";
         $http.get(url)
           .then(function(data) {
             collback(data.data);
