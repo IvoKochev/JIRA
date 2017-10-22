@@ -20,6 +20,6 @@ public class ProjectService implements IProjectService {
 
 	@Override
 	public List<Project> getProjectList(HttpServletRequest request) throws ResourceNotFoundException {
-		return projectRepository.findByowner((String)(request.getSession().getAttribute("owner")));
+		return projectRepository.findByOwnerid((int) request.getSession().getAttribute("user_id"));
 	}
 }

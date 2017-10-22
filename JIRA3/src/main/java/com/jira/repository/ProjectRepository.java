@@ -9,5 +9,5 @@ import com.jira.model.Project;
 
 @Repository("projectRepository")
 public interface ProjectRepository extends JpaRepository<Project, Long>{
-        List<Project> findByowner(String owner);
+       List<Project> findByOwnerid(int ownerid);
 }

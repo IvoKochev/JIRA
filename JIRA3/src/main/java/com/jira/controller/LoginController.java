@@ -71,7 +71,7 @@ public class LoginController {
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
-		request.getSession().setAttribute("user_id", user.getId());
+		request.getSession().setAttribute("user_id", user.getUser_id());
 		request.getSession().setAttribute("owner", user.getName());
 		modelAndView.addObject("userImg", "" + user.getImg_url());
 		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + " (" + user.getEmail() + ")");
@@ -92,7 +92,7 @@ public class LoginController {
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
-		request.getSession().setAttribute("user_id", user.getId());
+		request.getSession().setAttribute("user_id", user.getUser_id());
 		request.getSession().setAttribute("owner", user.getName());
 		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + " (" + user.getEmail() + ")");
 		modelAndView.setViewName("user/home");

@@ -16,7 +16,7 @@ angular.module('jira.controllers', [])
       }
       $scope.isNextDisabled = false;
       $scope.projects = projects.slice(($scope.page - 1) * pageSize, $scope.page * pageSize);
-    }
+    };
     $scope.goToNextPage = function() {
       if ($scope.page >= projects.length / pageSize) {
         return;
@@ -27,8 +27,9 @@ angular.module('jira.controllers', [])
       }
       $scope.isPrevDisabled = false;
       $scope.projects = projects.slice(($scope.page - 1) * pageSize, $scope.page * pageSize);
-    }
+    };
     projectService.all(function(data) {
+      console.log(data);
       projects = data;
       $scope.projects = projects.slice(($scope.page - 1) * pageSize, $scope.page * pageSize);
 

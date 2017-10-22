@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,8 +17,8 @@ public class Project {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private int id;
-	@Column(name = "owner")
-	private String owner;
+	@Column(name = "ownerid")
+	private int ownerid;
 	@Column(name = "name")
 	private String name;
 	@Column(name = "key")
@@ -29,6 +31,9 @@ public class Project {
 	private String url;
 	@Column(name = "imgurl")
 	private String imgurl;
+	@ManyToOne()
+	@JoinColumn(name = "user_id")
+	private User user;
 
 	public int getId() {
 		return id;
@@ -62,12 +67,12 @@ public class Project {
 		this.type = type;
 	}
 
-	public String getOwner() {
-		return owner;
+	public int getOwnerid() {
+		return ownerid;
 	}
 
-	public void setOwner(String owner) {
-		this.owner = owner;
+	public void setOwnerid(int ownerId) {
+		this.ownerid = ownerId;
 	}
 
 	public String getCategory() {
@@ -92,6 +97,14 @@ public class Project {
 
 	public void setImgurl(String imgurl) {
 		this.imgurl = imgurl;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }
