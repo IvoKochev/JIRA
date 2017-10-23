@@ -4,9 +4,9 @@ angular.module('jiraProject', ['ngRoute', 'adminProjectServices', 'jira.controll
   $routeProvider
     .when('/', {
       templateUrl: '/admin/projects.html;',
-      controller: 'projectsCtrl'
+      controller: 'ProjectsCtrl'
     }).when('/projectView/:id', {
       templateUrl: 'projectView.html;',
-      controller: 'pCtrl'
+      controller: 'ProjectViewCtrl'
     });
 }]);

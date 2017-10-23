@@ -26,4 +26,11 @@ public class ProjectService implements IProjectService {
 		}
 		return projects;
 	}
+
+	@Override
+	public Project getProjectById(int id) {
+		Project p = projectRepository.findById(id);
+		p.getUser().setPassword(null);
+		return p;
+	}
 }
