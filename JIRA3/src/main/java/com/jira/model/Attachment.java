@@ -23,6 +23,8 @@ public class Attachment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
+	@Column(name = "uploader_id")
+	private Integer uploaderid;
 	@Column(name = "location")
 	private String location;
 	@Column(name = "issues_id")
