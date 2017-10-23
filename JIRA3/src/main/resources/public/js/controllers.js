@@ -1,5 +1,5 @@
 angular.module('jira.controllers', [])
-  .controller('projectsCtrl', function($scope, projectsService) {
+  .controller('ProjectsCtrl', function($scope, projectsService) {
     $scope.page = 1;
     var pageSize = 12;
     var projects;
@@ -34,10 +34,10 @@ angular.module('jira.controllers', [])
       $scope.projects = projects.slice(($scope.page - 1) * pageSize, $scope.page * pageSize);
     });
   })
-  .controller('pCtrl', ['$scope', 'Page', '$routeParams', '$http', function($scope, Page, $routeParams, $http) {
+  .controller('ProjectViewCtrl', ['$scope', 'Page', '$routeParams', '$http', function($scope, Page, $routeParams, $http) {
     Page.posts($routeParams.id).then(function success(response) {
-       $scope.Page = response.data;
-}, function error(reason) {
-// do something
-});
-}]);
+     $scope.project = response.data;
+    }, function error(reason) {
+      console.log("ERROR");
+    });
+  }]);

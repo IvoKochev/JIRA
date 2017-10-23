@@ -46,6 +46,7 @@ public class ProjectController {
 	@RequestMapping(value = "/admin/projectView/{id}", method = RequestMethod.GET)
 	public Project getProjectById(@PathVariable(name = "id") int id, HttpServletRequest request)
 			throws ResourceNotFoundException {
+		System.err.println(id);
 		return this.projectService.getProjectById(id);
 	}
 }

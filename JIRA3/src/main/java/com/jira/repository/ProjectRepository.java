@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.jira.model.Project;
 
 @Repository("projectRepository")
-public interface ProjectRepository extends JpaRepository<Project, Long>{
-       List<Project> findByOwnerid(int ownerid);
+public interface ProjectRepository extends JpaRepository<Project, Long> {
+	List<Project> findByOwnerid(int ownerid);
+
+	Project findById(int id);
 }
