@@ -11,5 +11,5 @@ public interface IProjectService {
 
 	List<Project> getProjectList(HttpServletRequest request) throws ResourceNotFoundException;
 
-	Project getProjectById(int id);
+	Project getProjectById(int id) throws ResourceNotFoundException;
 }

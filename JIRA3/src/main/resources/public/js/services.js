@@ -1,5 +1,5 @@
 angular.module('adminProjectServices', [])
-  .factory('projectsService', function($http) {
+  .factory('ProjectList', function($http) {
     return {
       all: function(collback) {
         var url = "/list";
@@ -10,7 +10,7 @@ angular.module('adminProjectServices', [])
       }
     };
   })
-  .factory('page', ['$http', function($http) {
+  .factory('ProjectService', ['$http', function($http) {
         var _posts = function posts(param) {
   console.log(param);
           return  $http.get('/admin/projectView/'+ param);

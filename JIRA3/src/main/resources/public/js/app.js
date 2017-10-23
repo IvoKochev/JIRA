@@ -8,5 +8,8 @@ angular.module('jiraProject', ['ngRoute', 'adminProjectServices', 'jira.controll
     }).when('/projectView/:id', {
       templateUrl: 'projectView.html;',
       controller: 'ProjectViewCtrl'
+    }).when('/404', {
+      templateUrl: '404.html;',
+      controller: 'ErrorCtrl'
     });
 }]);

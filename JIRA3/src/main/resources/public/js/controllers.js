@@ -1,7 +1,7 @@
 angular.module('jira.controllers', [])
-  .controller('ProjectsCtrl', function($scope, projectsService) {
+  .controller('ProjectsCtrl', function($scope, ProjectList) {
     $scope.page = 1;
-    var pageSize = 12;
+    var pageSize = 15;
     var projects;
     $scope.isPrevDisabled = true;
     $scope.isNextDisabled = false;
@@ -28,16 +28,19 @@ angular.module('jira.controllers', [])
       $scope.isPrevDisabled = false;
       $scope.projects = projects.slice(($scope.page - 1) * pageSize, $scope.page * pageSize);
     };
-    projectsService.all(function(data) {
+    ProjectList.all(function(data) {
       console.log(data);
       projects = data;
       $scope.projects = projects.slice(($scope.page - 1) * pageSize, $scope.page * pageSize);
     });
   })
-  .controller('ProjectViewCtrl', ['$scope', 'Page', '$routeParams', '$http', function($scope, Page, $routeParams, $http) {
-    Page.posts($routeParams.id).then(function success(response) {
-     $scope.project = response.data;
-    }, function error(reason) {
-      console.log("ERROR");
+  .controller('ProjectViewCtrl', ['$scope', 'ProjectService', '$routeParams', '$http', '$location', '$rootScope', function($scope, ProjectService, $routeParams, $http, $location, $rootScope) {
+    ProjectService.posts($routeParams.id).then(function success(response) {
+      $scope.project = response.data;
+    }, function error(data, status, headers, config) {
+      $location.path('/404');
     });
-  }]);
+  }])
+  .controller('ErrorCtrl', function($scope) {
+    console.log("404Ctrl");
+  });

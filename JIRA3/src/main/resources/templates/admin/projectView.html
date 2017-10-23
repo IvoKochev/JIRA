@@ -2,16 +2,45 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <title>JIRA Project</title>
+<meta charset="utf-8">
+<title>JIRA Project</title>
 </head>
 
 <body>
-  <div ng-controller="ProjectViewCtrl">
-    <h1>{{project.name}}</h1>
-    <h2>{{project.id}}</h2>
-    <h3>{{project.key}}</h3>
-  </div>
+	<table class="kffeWc">
+		<thead class="iccVIQ">
+			<tr>
+				<th width="200" class="geZoUn"><span>Name</span></th>
+				<th width="70" class="bKZlcx"><span>Key</span></th>
+				<th width="150" class="dZlBnq"><span>Type</span></th>
+				<th width="200" class="dZlBnq"><span>Owner</span></th>
+				<th width="250" class="dZlBnq"><span>Category</span></th>
+				<th class="lbcrZf"><span>URL</span></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td width="200" class="kUfcsh"><span class="gGsHVf"> <a
+						ng-href="http://localhost:8080/admin/home#!/projectView/{{project.id}}">
+							<img ng-src="{{project.imgurl}}" width="50" height="50">{{project.name}}
+					</a>
+				</span></td>
+				<td width="70" class="drqBbD"><span class="fuVjLH">{{project.key}}</span>
+				</td>
+				<td width="150" class="kqXqNO"><span class="jPYEPF"></span> <span>{{project.type}}</span>
+				</td>
+				<td width="200" class="kqXqNO"><a href="/"> <img
+						ng-src="{{project.user.imgurl}}" width="40" height="40" alt="">
+						{{project.user.name}}
+				</a></td>
+				<td width="250" class="kqXqNO"><span>{{project.category}}</span></td>
+				<td class="kqXqNO"><span>{{project.url}}</span></td>
+
+			</tr>
+
+		</tbody>
+
+	</table>
 </body>
 
 </html>

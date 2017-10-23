@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.jira.model.Attachment;
 
-@Repository("attachmentRepository")
-public interface AttachmentRepository extends JpaRepository<Attachment, Long>{
-	List<Attachment> findAttachmentByUploaderId(int uploaderId);
-}
+//@Repository("attachmentRepository")
+//public interface AttachmentRepository extends JpaRepository<Attachment, Long>{
+//	List<Attachment> findAttachmentByUploaderId(int uploaderId);
+//}

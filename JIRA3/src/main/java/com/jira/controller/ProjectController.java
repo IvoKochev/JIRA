@@ -37,6 +37,13 @@ public class ProjectController {
 		modelAndView.setViewName("/admin/projectView");
 		return modelAndView;
 	}
+	@RequestMapping(value = "/admin/404", method = RequestMethod.GET)
+	public ModelAndView errorNotFound() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("/admin/404");
+		return modelAndView;
+	}
+
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public List<Project> getProjectList(HttpServletRequest request) throws ResourceNotFoundException {
@@ -46,7 +53,6 @@ public class ProjectController {
 	@RequestMapping(value = "/admin/projectView/{id}", method = RequestMethod.GET)
 	public Project getProjectById(@PathVariable(name = "id") int id, HttpServletRequest request)
 			throws ResourceNotFoundException {
-		System.err.println(id);
 		return this.projectService.getProjectById(id);
 	}
 }

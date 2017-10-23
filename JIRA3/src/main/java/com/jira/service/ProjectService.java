@@ -21,6 +21,9 @@ public class ProjectService implements IProjectService {
 	@Override
 	public List<Project> getProjectList(HttpServletRequest request) throws ResourceNotFoundException {
 		List<Project> projects = projectRepository.findByOwnerid((int) request.getSession().getAttribute("user_id"));
+		if (projects == null || projects.isEmpty()) {
+			throw new ResourceNotFoundException();
+		}
 		for (Project p : projects) {
 			p.getUser().setPassword(null);
 		}
@@ -28,8 +31,11 @@ public class ProjectService implements IProjectService {
 	}
 
 	@Override
-	public Project getProjectById(int id) {
+	public Project getProjectById(int id) throws ResourceNotFoundException {
 		Project p = projectRepository.findById(id);
+		if (p == null) {
+			throw new ResourceNotFoundException();
+		}
 		p.getUser().setPassword(null);
 		return p;
 	}
