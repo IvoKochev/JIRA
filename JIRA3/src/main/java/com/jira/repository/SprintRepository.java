@@ -10,5 +10,5 @@ import com.jira.model.Sprint;
 @Repository("sprintRepository")
 public interface SprintRepository extends JpaRepository<Sprint, Integer>{
 	//not in DB
-	//List<Sprint> findByOwnerrid(int owner_id);
+	//List<Sprint> findByOwnerid(int owner_id);
 }
