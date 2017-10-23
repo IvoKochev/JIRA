@@ -9,5 +9,6 @@ import com.jira.model.Attachment;
 
 @Repository("attachmentRepository")
 public interface AttachmentRepository extends JpaRepository<Attachment, Long>{
-	List<Attachment> findAttachmentByUploaderId(int uploaderId);
+	//not in DB
+	//List<Attachment> findByUploaderid(int owner_id);
 }
