@@ -21,15 +21,6 @@ public class LoginController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = { "/dispatcher" }, method = RequestMethod.GET)
-	public String dispatcher() {
-		String s = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
-		if (s.contains("ADMIN")) {
-			return "redirect:/admin/home";
-		}
-		return "redirect:/user/home";
-	}
-
 	@RequestMapping(value = { "/", "/login" }, method = RequestMethod.GET)
 	public ModelAndView login() {
 		ModelAndView modelAndView = new ModelAndView();
@@ -66,32 +57,17 @@ public class LoginController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/admin/home", method = RequestMethod.GET)
+	@RequestMapping(value = "/common/home", method = RequestMethod.GET)
 	public ModelAndView adminHome(HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
-		request.getSession().setAttribute("user_id", user.getUser_id());
+		request.getSession().setAttribute("user_id", user.getId());
 		request.getSession().setAttribute("owner", user.getName());
 		modelAndView.addObject("userImg", "" + user.getImgurl());
 		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + " (" + user.getEmail() + ")");
 		modelAndView.addObject("adminMessage", "JIRA ADMIN PANEL");
-		modelAndView.setViewName("admin/home");
+		modelAndView.setViewName("common/home");
 		return modelAndView;
 	}
-
-	
-
-	@RequestMapping(value = { "/user/home" }, method = RequestMethod.GET)
-	public ModelAndView userHome(HttpServletRequest request) {
-		ModelAndView modelAndView = new ModelAndView();
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByEmail(auth.getName());
-		request.getSession().setAttribute("user_id", user.getUser_id());
-		request.getSession().setAttribute("owner", user.getName());
-		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + " (" + user.getEmail() + ")");
-		modelAndView.setViewName("user/home");
-		return modelAndView;
-	}
-
 }

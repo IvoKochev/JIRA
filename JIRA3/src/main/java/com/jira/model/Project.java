@@ -5,9 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "projects")
@@ -31,9 +30,11 @@ public class Project {
 	private String url;
 	@Column(name = "imgurl")
 	private String imgurl;
-	@ManyToOne()
-	@JoinColumn(name = "user_id")
-	private User user;
+	
+	
+	
+	@Transient
+	private User owner;
 
 	public int getId() {
 		return id;
@@ -99,12 +100,13 @@ public class Project {
 		this.imgurl = imgurl;
 	}
 
-	public User getUser() {
-		return user;
+	public User getOwner() {
+		return owner;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setOwner(User owner) {
+		this.owner = owner;
 	}
+
 
 }

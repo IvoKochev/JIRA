@@ -3,7 +3,7 @@ angular.module('jiraProject', ['ngRoute', 'adminProjectServices', 'jira.controll
 }).config(['$routeProvider', function($routeProvider) {
   $routeProvider
     .when('/', {
-      templateUrl: '/admin/projects.html;',
+      templateUrl: '/common/projects.html;',
       controller: 'ProjectsCtrl'
     }).when('/projectView/:id', {
       templateUrl: 'projectView.html;',

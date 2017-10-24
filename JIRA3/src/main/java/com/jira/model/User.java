@@ -22,38 +22,37 @@ import org.springframework.data.annotation.Transient;
 @Table(name = "users")
 public class User {
 
+	private int id;
+
+	private String email;
+
+	private String password;
+
+	private String name;
+
+	private String imgurl;
+
+	private int active;
+
+	private Set<Role> roles;
+
+	private Set<Project> projects;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "user_id")
-	private int user_id;
-	@Column(name = "email")
-	@Email(message = "*Please provide a valid Email")
-	@NotEmpty(message = "*Please provide an email")
-	private String email;
+	@Column(name = "id")
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	@Column(name = "password")
 	@Length(min = 5, message = "*Your password must have at least 5 characters")
 	@NotEmpty(message = "*Please provide your password")
 	@Transient
-	private String password;
-	@Column(name = "name")
-	@NotEmpty(message = "*Please provide your name")
-	private String name;
-	@Column(name = "imgurl")
-	private String imgurl;
-	@Column(name = "active")
-	private int active;
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles;
-
-	public int getUser_id() {
-		return user_id;
-	}
-
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -62,6 +61,8 @@ public class User {
 		this.password = password;
 	}
 
+	@Column(name = "name")
+	@NotEmpty(message = "*Please provide your name")
 	public String getName() {
 		return name;
 	}
@@ -70,6 +71,9 @@ public class User {
 		this.name = name;
 	}
 
+	@Column(name = "email")
+	@Email(message = "*Please provide a valid Email")
+	@NotEmpty(message = "*Please provide an email")
 	public String getEmail() {
 		return email;
 	}
@@ -78,6 +82,7 @@ public class User {
 		this.email = email;
 	}
 
+	@Column(name = "active")
 	public int getActive() {
 		return active;
 	}
@@ -86,6 +91,8 @@ public class User {
 		this.active = active;
 	}
 
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	public Set<Role> getRoles() {
 		return roles;
 	}
@@ -94,12 +101,23 @@ public class User {
 		this.roles = roles;
 	}
 
+	@Column(name = "imgurl")
 	public String getImgurl() {
 		return imgurl;
 	}
 
 	public void setImgurl(String imgurl) {
 		this.imgurl = imgurl;
+	}
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "users_projects", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "project_id") })
+	public Set<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(Set<Project> projects) {
+		this.projects = projects;
 	}
 
 }

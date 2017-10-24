@@ -13,7 +13,7 @@ angular.module('adminProjectServices', [])
   .factory('ProjectService', ['$http', function($http) {
         var _posts = function posts(param) {
   console.log(param);
-          return  $http.get('/admin/projectView/'+ param);
+          return  $http.get('/common/projectView/'+ param);
         };
                 var description = '';
                 var title = '';

@@ -1,9 +1,8 @@
 package com.jira.controller;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,35 +23,35 @@ public class ProjectController {
 		this.projectService = projectService;
 	}
 
-	@RequestMapping(value = "/admin/projects", method = RequestMethod.GET)
+	@RequestMapping(value = "/common/projects", method = RequestMethod.GET)
 	public ModelAndView adminProjects() {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/admin/projects");
+		modelAndView.setViewName("/common/projects");
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/admin/projectView", method = RequestMethod.GET)
-	public ModelAndView admin() {
+	@RequestMapping(value = "/common/projectView", method = RequestMethod.GET)
+	public ModelAndView commonProjectViewPage() {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/admin/projectView");
+		modelAndView.setViewName("/common/projectView");
 		return modelAndView;
 	}
-	@RequestMapping(value = "/admin/404", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/common/404", method = RequestMethod.GET)
 	public ModelAndView errorNotFound() {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/admin/404");
+		modelAndView.setViewName("/common/404");
 		return modelAndView;
 	}
 
-
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public List<Project> getProjectList(HttpServletRequest request) throws ResourceNotFoundException {
-		return this.projectService.getProjectList(request);
+	public Set<Project> getProjectList() throws ResourceNotFoundException {
+		return this.projectService.getProjectList();
 	}
 
-	@RequestMapping(value = "/admin/projectView/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/common/projectView/{id}", method = RequestMethod.GET)
 	public Project getProjectById(@PathVariable(name = "id") int id, HttpServletRequest request)
 			throws ResourceNotFoundException {
-		return this.projectService.getProjectById(id);
+		return this.projectService.getProjectById(id, request);
 	}
 }
