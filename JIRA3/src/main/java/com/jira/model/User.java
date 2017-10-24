@@ -1,5 +1,6 @@
 package com.jira.model;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -20,7 +21,12 @@ import org.springframework.data.annotation.Transient;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4773497523060141339L;
 
 	private int id;
 

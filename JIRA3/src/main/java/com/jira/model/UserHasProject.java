@@ -1,5 +1,6 @@
 package com.jira.model;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,8 +10,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users_projects")
-public class UserHasProject {
+public class UserHasProject implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8970766848065036294L;
 	private int id;
 	private int user_id;
 

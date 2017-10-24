@@ -6,7 +6,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.jira.model.Attachment;
+//import com.jira.model.Attachment;
 import com.jira.model.Issue;
 import com.jira.model.Project;
 import com.jira.model.Sprint;
