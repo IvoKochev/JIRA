@@ -118,6 +118,7 @@ public class User implements Serializable {
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "users_projects", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "project_id") })
+	@Transient
 	public Set<Project> getProjects() {
 		return projects;
 	}

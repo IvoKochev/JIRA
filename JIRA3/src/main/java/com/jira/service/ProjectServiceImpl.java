@@ -12,25 +12,22 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.jira.cotract.IProjectService;
+import com.jira.cotract.IUserHasProject;
 import com.jira.cotract.UserService;
 import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.model.Project;
 import com.jira.model.User;
 import com.jira.repository.ProjectRepository;
-import com.jira.repository.UserHasProjectRepository;
-import com.jira.repository.UserRepository;
 
-@Service
-public class ProjectService implements IProjectService {
+@Service("projectService")
+public class ProjectServiceImpl implements IProjectService {
 
 	@Autowired
 	private ProjectRepository projectRepository;
 	@Autowired
-	private UserRepository userRepository;
-	@Autowired
 	private UserService userService;
 	@Autowired
-	private UserHasProjectRepository userHasProjectRepository;
+	private IUserHasProject iuserHasProject;
 
 	@Override
 	public Set<Project> getProjectList() throws ResourceNotFoundException {
@@ -51,8 +48,7 @@ public class ProjectService implements IProjectService {
 				project.setOwner(u);
 				continue;
 			}
-			User u = userRepository.findByid(project.getOwnerid());
-			u.setProjects(null);
+			User u = this.userService.findById(project.getOwnerid());
 			u.setPassword(null);
 			project.setOwner(u);
 		}
@@ -61,9 +57,21 @@ public class ProjectService implements IProjectService {
 
 	@Override
 	public Project getProjectById(int id, HttpServletRequest request) throws ResourceNotFoundException {
-		if (this.userHasProjectRepository.findUserHasProject((int) request.getSession().getAttribute("user_id"),
-				id) == 1) {
-			return this.projectRepository.findById(id);
+		if (this.iuserHasProject.findUserHasProject((int) request.getSession().getAttribute("user_id"), id) == 1) {
+			Project p = this.projectRepository.findById(id);
+			User owner = this.userService.findById(p.getOwnerid());
+			if (p.getOwnerid() == owner.getId()) {
+				User u = new User();
+				u.setName(owner.getName());
+				u.setEmail(owner.getEmail());
+				u.setId(owner.getId());
+				u.setImgurl(owner.getImgurl());
+				u.setRoles(owner.getRoles());
+				p.setOwner(u);
+				return p;
+			}
+			p.setOwner(owner);
+			return p;
 		}
 
 		throw new ResourceNotFoundException();
