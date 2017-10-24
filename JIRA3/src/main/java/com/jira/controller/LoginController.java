@@ -65,8 +65,9 @@ public class LoginController {
 		request.getSession().setAttribute("user_id", user.getId());
 		request.getSession().setAttribute("owner", user.getName());
 		modelAndView.addObject("userImg", "" + user.getImgurl());
-		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + " (" + user.getEmail() + ")");
-		modelAndView.addObject("adminMessage", "JIRA ADMIN PANEL");
+		modelAndView.addObject("userEmail", "" + " (" + user.getEmail() + ")");
+		modelAndView.addObject("userName", "Welcome " + user.getName());
+		modelAndView.addObject("adminMessage", "PROJECT LIST");
 		modelAndView.setViewName("common/home");
 		return modelAndView;
 	}
