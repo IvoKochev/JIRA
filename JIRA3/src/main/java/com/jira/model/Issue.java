@@ -16,8 +16,8 @@ public class Issue implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -5899221217986589147L;
-	private int id;
-	private int project_id;
+	private Integer id;
+	private Integer project_id;
 	private Integer sprints_id;
 	private String type;
 	private String summary;
@@ -29,13 +29,13 @@ public class Issue implements Serializable {
 	
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -48,14 +48,6 @@ public class Issue implements Serializable {
 		this.project_id = project_id;
 	}
 
-	@Column(name = "sprints_id")
-	public Integer getSprint_id() {
-		return sprints_id;
-	}
-	
-	public void setSprint_id(Integer sprint_id) {
-		this.sprints_id = sprint_id;
-	}
 
 	@Column(name = "type")
 	public String getType() {

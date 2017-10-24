@@ -20,18 +20,18 @@ import javax.persistence.Table;
 @Table(name = "attachments")
 public class Attachment {
 	
-	private int id;
+	private Integer id;
 	private Integer uploader_id;
 	private String location;
 	private Integer issues_id;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	
@@ -44,9 +44,10 @@ public class Attachment {
 	}
 	
 	@Column(name = "issues_id")
-	public Integer getIssuesid() {
+	public Integer getIssues_id() {
 		return issues_id;
 	}
+	
 	public void setIssues_id(Integer issues_id) {
 		this.issues_id = issues_id;
 	}
