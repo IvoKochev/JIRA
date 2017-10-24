@@ -19,33 +19,44 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "attachments")
 public class Attachment {
+	
+	private int id;
+	private Integer uploader_id;
+	private String location;
+	private Integer issues_id;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private int id;
-	@Column(name = "uploader_id")
-	private Integer uploaderid;
-	@Column(name = "location")
-	private String location;
-	@Column(name = "issues_id")
-	private Integer issues_id;
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	@Column(name = "location")
 	public String getLocation() {
 		return location;
 	}
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public Integer getIssues_id() {
+	
+	@Column(name = "issues_id")
+	public Integer getIssuesid() {
 		return issues_id;
 	}
 	public void setIssues_id(Integer issues_id) {
 		this.issues_id = issues_id;
+	}
+	
+	@Column(name = "uploader_id")
+	public Integer getUploaderid() {
+		return uploader_id;
+	}
+	public void setUploaderid(Integer uploaderid) {
+		this.uploader_id = uploaderid;
 	}
 	
     
