@@ -1,4 +1,4 @@
-package com.jira.cotract;
+package com.jira.contract;
 
 import java.util.Set;
 
@@ -11,5 +11,7 @@ public interface IProjectService {
 
 	Set<Project> getProjectList() throws ResourceNotFoundException;
 
-	Project getProjectById(int id,HttpServletRequest request) throws ResourceNotFoundException;
+	Project getProjectById(int id, HttpServletRequest request) throws ResourceNotFoundException;
+
+	void saveProject(Project project,HttpServletRequest request);
 }

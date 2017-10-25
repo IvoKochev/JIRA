@@ -41,6 +41,10 @@ angular.module('jira.controllers', [])
       $location.path('/404');
     });
   }])
-  .controller('ErrorCtrl', function($scope) {
+  .controller('CreateProjectCtrl', function($scope) {
+    console.log("CreateProjectCtrl");
+
+    
+  }).controller('ErrorCtrl', function($scope) {
     console.log("404Ctrl");
   });

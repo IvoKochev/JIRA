@@ -25,14 +25,13 @@
 			</div>
 
 			<div th:if="${isAdmin}">
-				<a href="#" class="btn btn-info btn-lg"> <span
-						class="glyphicon glyphicon-plus-sign"></span> Create project
+				<a href="http://localhost:8080/common/home#!/admin/createProject" class="btn btn-info btn-lg"> <span
+						class="glyphicon glyphicon-plus-sign"></span> New project
 					</a>
 			</div>
 		</nav>
 		<section class="col-md-8">
 			<div class="panel-group" style="margin-top: 10px">
-				<p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
 				<div ng-view></div>
 				<script type="text/ng-template" id="projects.html">
 				</script>

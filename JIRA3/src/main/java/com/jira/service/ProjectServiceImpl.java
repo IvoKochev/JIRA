@@ -11,12 +11,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.jira.cotract.IProjectService;
-import com.jira.cotract.IUserHasProject;
-import com.jira.cotract.UserService;
+import com.jira.contract.IProjectService;
+import com.jira.contract.IUserHasProject;
+import com.jira.contract.UserService;
 import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.model.Project;
 import com.jira.model.User;
+import com.jira.model.UserHasProject;
 import com.jira.repository.ProjectRepository;
 
 @Service("projectService")
@@ -75,5 +76,17 @@ public class ProjectServiceImpl implements IProjectService {
 		}
 
 		throw new ResourceNotFoundException();
+	}
+
+	@Override
+	public void saveProject(Project project, HttpServletRequest request) {
+		int userId = (int) request.getSession().getAttribute("user_id");
+		project.setOwnerid(userId);
+		project.setImgurl("/images/project.jpg");
+		UserHasProject uhp = new UserHasProject();
+		uhp.setUser_id(userId);
+		uhp.setProject_id(project.getId());
+		this.projectRepository.save(project);
+		this.iuserHasProject.save(uhp);
 	}
 }

@@ -1,41 +1,48 @@
 package com.jira.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "projects")
 public class Project {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
 	private int id;
-	@Column(name = "ownerid")
+
 	private int ownerid;
-	@Column(name = "name")
+
 	private String name;
-	@Column(name = "key")
-	private String key;
-	@Column(name = "type")
-	private String type;
-	@Column(name = "category")
+
+	private String projectkey;
+
+	private String projecttype;
+
 	private String category;
-	@Column(name = "url")
+
 	private String url;
-	@Column(name = "imgurl")
+
 	private String imgurl;
-	
-	
-	
+
+	private List<User> users;
+
 	@Transient
 	private User owner;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	public int getId() {
 		return id;
 	}
@@ -44,6 +51,8 @@ public class Project {
 		this.id = id;
 	}
 
+	@Column(name = "name")
+	@NotEmpty(message = "*Please provide your name")
 	public String getName() {
 		return name;
 	}
@@ -52,30 +61,34 @@ public class Project {
 		this.name = name;
 	}
 
-	public String getKey() {
-		return key;
+	@Column(name = "projectkey")
+	public String getProjectkey() {
+		return projectkey;
 	}
 
-	public void setKey(String key) {
-		this.key = key;
+	public void setProjectkey(String projectkey) {
+		this.projectkey = projectkey;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
+	@Column(name = "ownerid")
 	public int getOwnerid() {
 		return ownerid;
+	}
+
+	@Column(name = "projecttype")
+	public String getProjecttype() {
+		return projecttype;
+	}
+
+	public void setProjecttype(String projecttype) {
+		this.projecttype = projecttype;
 	}
 
 	public void setOwnerid(int ownerId) {
 		this.ownerid = ownerId;
 	}
 
+	@Column(name = "category")
 	public String getCategory() {
 		return category;
 	}
@@ -84,6 +97,7 @@ public class Project {
 		this.category = category;
 	}
 
+	@Column(name = "url")
 	public String getUrl() {
 		return url;
 	}
@@ -92,6 +106,7 @@ public class Project {
 		this.url = url;
 	}
 
+	@Column(name = "imgurl")
 	public String getImgurl() {
 		return imgurl;
 	}
@@ -100,6 +115,7 @@ public class Project {
 		this.imgurl = imgurl;
 	}
 
+	@Transient
 	public User getOwner() {
 		return owner;
 	}
@@ -108,5 +124,17 @@ public class Project {
 		this.owner = owner;
 	}
 
+	@ManyToMany
+	@JoinTable(name = "users_projects", joinColumns = {
+			@JoinColumn(name = "project_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "user_id", referencedColumnName = "id") })
+	@Transient
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
 
 }

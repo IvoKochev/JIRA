@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.jira.cotract.UserService;
+import com.jira.contract.UserService;
 import com.jira.model.Role;
 import com.jira.model.User;
 import com.jira.repository.RoleRepository;

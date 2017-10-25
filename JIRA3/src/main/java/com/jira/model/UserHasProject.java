@@ -3,9 +3,6 @@ package com.jira.model;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
@@ -16,10 +13,10 @@ public class UserHasProject implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -8970766848065036294L;
-	private int id;
 	private int user_id;
 
 	private int project_id;
+	//ID
 
 	@Column(name = "user_id")
 	public int getUser_id() {
@@ -38,16 +35,4 @@ public class UserHasProject implements Serializable {
 	public void setProject_id(int project_id) {
 		this.project_id = project_id;
 	}
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
 }

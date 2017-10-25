@@ -1,4 +1,4 @@
-package com.jira.cotract;
+package com.jira.contract;
 
 import com.jira.model.User;
 

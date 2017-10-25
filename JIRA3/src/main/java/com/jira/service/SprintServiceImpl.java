@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jira.cotract.ISprintService;
+import com.jira.contract.ISprintService;
 import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.model.Sprint;
 import com.jira.repository.SprintRepository;
