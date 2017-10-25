@@ -19,10 +19,15 @@
 		<nav class="col-md-2">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<span th:utext="${userName}"></span>
-					<span th:utext="${userEmail}"></span>
+					<span th:utext="${userName}"></span> <span th:utext="${userEmail}"></span>
 					<img th:src="${userImg}" width="80" height="80" alt="">
 				</div>
+			</div>
+
+			<div th:if="${isAdmin}">
+				<a href="#" class="btn btn-info btn-lg"> <span
+						class="glyphicon glyphicon-plus-sign"></span> Create project
+					</a>
 			</div>
 		</nav>
 		<section class="col-md-8">

@@ -68,6 +68,12 @@ public class LoginController {
 		modelAndView.addObject("userEmail", "" + " (" + user.getEmail() + ")");
 		modelAndView.addObject("userName", "Welcome " + user.getName());
 		modelAndView.addObject("adminMessage", "PROJECT LIST");
+		String s = auth.getAuthorities().toString();
+		if (s.contains("ADMIN")) {
+			modelAndView.addObject("isAdmin", true);
+		} else {
+			modelAndView.addObject("isAdmin", false);
+		}
 		modelAndView.setViewName("common/home");
 		return modelAndView;
 	}
