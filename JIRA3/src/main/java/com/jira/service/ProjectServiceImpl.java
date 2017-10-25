@@ -1,5 +1,7 @@
 package com.jira.service;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -76,10 +78,11 @@ public class ProjectServiceImpl implements IProjectService {
 
 	@Override
 	public void saveProject(Project project, HttpServletRequest request) {
-		int userId = (int) request.getSession().getAttribute("user_id");
-		project.setOwnerid(userId);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+		project.setOwnerid(user.getId());
 		project.setImgurl("/images/project.jpg");
+		project.setUsers(new HashSet<>(Arrays.asList(user)));
 		this.projectRepository.save(project);
-		
 	}
 }

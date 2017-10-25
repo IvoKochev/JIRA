@@ -18,7 +18,6 @@ import com.jira.contract.IProjectService;
 import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.model.Project;
 
-//@ModelAttribute anotaciq v metoda za vzemane na gotov model ot html stranica
 @RestController
 public class ProjectController {
 	IProjectService projectService;

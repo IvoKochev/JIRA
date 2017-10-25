@@ -1,11 +1,10 @@
 package com.jira.model;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,8 +38,7 @@ public class Project {
 
 	private String imgurl;
 
-	private List<User> users;
-
+	private Set<User> users;
 	@Transient
 	private User owner;
 
@@ -128,14 +126,14 @@ public class Project {
 		this.owner = owner;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "users_projects", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	@JsonIgnore
-	public List<User> getUsers() {
+	public Set<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<User> users) {
+	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
 
