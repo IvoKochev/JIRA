@@ -3,14 +3,18 @@ package com.jira.controller;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jira.cotract.IProjectService;
+import com.jira.contract.IProjectService;
 import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.model.Project;
 
@@ -54,4 +58,26 @@ public class ProjectController {
 			throws ResourceNotFoundException {
 		return this.projectService.getProjectById(id, request);
 	}
+
+	@RequestMapping(value = "/admin/createProject", method = RequestMethod.GET)
+	public ModelAndView createProject() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("project", new Project());
+		modelAndView.setViewName("/admin/createProject");
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/createProject", method = RequestMethod.POST)
+	public ModelAndView createNewUser(@Valid @ModelAttribute("pForm") Project project, BindingResult bindingResult,
+			HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView();
+		if (bindingResult.hasErrors()) {
+			modelAndView.setViewName("redirect:/common/home#!/admin/createProject");
+		} else {
+			this.projectService.save(project, request);
+			modelAndView.setViewName("redirect:/common/home");
+		}
+		return modelAndView;
+	}
+
 }

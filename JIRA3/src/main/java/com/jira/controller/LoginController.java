@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jira.cotract.UserService;
+import com.jira.contract.UserService;
 import com.jira.model.User;
 
 @Controller
@@ -63,10 +63,15 @@ public class LoginController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
 		request.getSession().setAttribute("user_id", user.getId());
-		request.getSession().setAttribute("owner", user.getName());
 		modelAndView.addObject("userImg", "" + user.getImgurl());
-		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + " (" + user.getEmail() + ")");
-		modelAndView.addObject("adminMessage", "JIRA ADMIN PANEL");
+		modelAndView.addObject("userEmail", "" + " (" + user.getEmail() + ")");
+		modelAndView.addObject("userName", "Welcome " + user.getName());
+		String s = auth.getAuthorities().toString();
+		if (s.contains("ADMIN")) {
+			modelAndView.addObject("isAdmin", true);
+		} else {
+			modelAndView.addObject("isAdmin", false);
+		}
 		modelAndView.setViewName("common/home");
 		return modelAndView;
 	}

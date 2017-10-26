@@ -1,55 +1,64 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>JIRA Projects</title>
-  </head>
+
+<head>
+  <meta charset="utf-8">
+  <title>JIRA Projects</title>
+</head>
+
+<body>
+
   <body>
-    <body>
-      <label>Search: <input ng-model="searchText"></label>
-      <table class="kffeWc">
-        <thead class="iccVIQ">
-          <tr>
-            <th width="200" class="geZoUn"><span>Name</span></th>
-            <th width="70" class="bKZlcx"><span>Key</span></th>
-            <th width="150" class="dZlBnq"><span>Type</span></th>
-            <th width="200" class="dZlBnq"><span>Owner</span></th>
-            <th width="250" class="dZlBnq"><span>Category</span></th>
-            <th class="lbcrZf"><span>URL</span></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="ewoyXV" ng-repeat="project in projects | filter:searchText">
-            <td width="200" class="kUfcsh"><span class="gGsHVf"> <a
+    <div class="alert alert-info">
+      <div class="container">
+        <strong>Project list</strong>
+      </div>
+    </div>
+    <label>Search: <input ng-model="searchText"></label>
+    <table class="kffeWc">
+      <thead class="iccVIQ">
+        <tr>
+          <th width="200" class="geZoUn"><span>Name</span></th>
+          <th width="70" class="bKZlcx"><span>Key</span></th>
+          <th width="150" class="dZlBnq"><span>Type</span></th>
+          <th width="200" class="dZlBnq"><span>Owner</span></th>
+          <th width="250" class="dZlBnq"><span>Category</span></th>
+          <th class="lbcrZf"><span>URL</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="ewoyXV" ng-repeat="project in projects | filter:searchText">
+          <td width="200" class="kUfcsh"><span class="gGsHVf"> <a
                 ng-href="http://localhost:8080/common/home#!/projectView/{{project.id}}"> <img ng-src="{{project.imgurl}}" width="50"
                   height="50">{{project.name}}
               </a>
             </span></td>
-            <td width="70" class="drqBbD"><span class="fuVjLH">{{project.key}}</span>
-            </td>
-            <td width="150" class="kqXqNO"><span class="jPYEPF"></span> <span>{{project.type}}</span>
-            </td>
-            <td width="200" class="kqXqNO">
-              <a href="/">
+          <td width="70" class="drqBbD"><span class="fuVjLH">{{project.key}}</span>
+          </td>
+          <td width="150" class="kqXqNO"><span class="jPYEPF"></span> <span>{{project.type}}</span>
+          </td>
+          <td width="200" class="kqXqNO">
+            <a href="/">
               <img
               ng-src="{{project.owner.imgurl}}" width="40" height="40" alt="">
               {{project.owner.name}}</a></td>
-            <td width="250" class="kqXqNO"><span>{{project.category}}</span></td>
-            <td class="kqXqNO"><span>{{project.url}}</span></td>
+          <td width="250" class="kqXqNO"><span>{{project.category}}</span></td>
+          <td class="kqXqNO"><span>{{project.url}}</span></td>
 
-          </tr>
+        </tr>
 
-        </tbody>
+      </tbody>
 
-      </table>
-      <div class="row">
-        <button ng-if="isPrevDisabled" class="btn col-xs-6" disabled="disabled">Prev</button>
-        <button ng-if="!isPrevDisabled" class="btn col-xs-6" ng-click="goToPrevPage()">Prev</button>
-        <button ng-if="isNextDisabled" class="btn col-xs-6" disabled="disabled">Next</button>
-        <button ng-if="!isNextDisabled" class="btn col-xs-6" ng-click="goToNextPage()">Next</button>
-      </div>
-
-    </body>
+    </table>
+    <div class="row">
+      <button ng-if="isPrevDisabled" class="btn col-xs-6" disabled="disabled">Prev</button>
+      <button ng-if="!isPrevDisabled" class="btn col-xs-6" ng-click="goToPrevPage()">Prev</button>
+      <button ng-if="isNextDisabled" class="btn col-xs-6" disabled="disabled">Next</button>
+      <button ng-if="!isNextDisabled" class="btn col-xs-6" ng-click="goToNextPage()">Next</button>
+    </div>
 
   </body>
+
+</body>
+
 </html>

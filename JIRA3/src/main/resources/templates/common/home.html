@@ -15,27 +15,37 @@
 </head>
 
 <body ng-app="jiraProject">
-	<div class="container">
-		<form th:action="@{/logout}" method="get">
-			<button class="btn btn-md btn-danger btn-block" name="registration" type="Submit">Logout</button>
-		</form>
-
-		<div class="panel-group" style="margin-top: 10px">
+	<div class="row">
+		<nav class="col-md-2">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
+					<span th:utext="${userName}"></span> <span th:utext="${userEmail}"></span>
 					<img th:src="${userImg}" width="80" height="80" alt="">
-					<span th:utext="${userName}"></span>
 				</div>
-				<p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
 			</div>
-			<div ng-view></div>
-			<script type="text/ng-template" id="projects.html">
-			</script>
-			<script type="text/ng-template" id="projectView.html">
-			</script>
-			<script type="text/ng-template" id="404.html">
-			</script>
-		</div>
+
+			<div th:if="${isAdmin}">
+				<a href="http://localhost:8080/common/home#!/admin/createProject" class="btn btn-info btn-lg"> <span
+						class="glyphicon glyphicon-plus-sign"></span> New project
+					</a>
+			</div>
+		</nav>
+		<section class="col-md-8">
+			<div class="panel-group" style="margin-top: 10px">
+				<div ng-view></div>
+				<script type="text/ng-template" id="projects.html">
+				</script>
+				<script type="text/ng-template" id="projectView.html">
+				</script>
+				<script type="text/ng-template" id="404.html">
+				</script>
+			</div>
+		</section>
+		<nav class="col-md-2">
+			<form th:action="@{/logout}" method="get">
+				<button class="btn btn-md btn-danger btn-block" name="registration" type="Submit">Logout</button>
+			</form>
+		</nav>
 	</div>
 </body>
 

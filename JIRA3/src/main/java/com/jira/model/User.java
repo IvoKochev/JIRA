@@ -1,6 +1,7 @@
 package com.jira.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,11 +14,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "users")
@@ -42,7 +44,9 @@ public class User implements Serializable {
 
 	private Set<Role> roles;
 
-	private Set<Project> projects;
+	private Set<Project> projects = new HashSet<>();
+
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -116,9 +120,9 @@ public class User implements Serializable {
 		this.imgurl = imgurl;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "users_projects", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "project_id") })
+	@ManyToMany(mappedBy = "users")
 	@Transient
+	@JsonIgnore
 	public Set<Project> getProjects() {
 		return projects;
 	}
@@ -126,5 +130,4 @@ public class User implements Serializable {
 	public void setProjects(Set<Project> projects) {
 		this.projects = projects;
 	}
-
 }

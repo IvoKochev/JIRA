@@ -1,41 +1,49 @@
 package com.jira.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "projects")
 public class Project {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
 	private int id;
-	@Column(name = "ownerid")
-	private int ownerid;
-	@Column(name = "name")
+
 	private String name;
-	@Column(name = "key")
-	private String key;
-	@Column(name = "type")
-	private String type;
-	@Column(name = "category")
+
+	private String projectkey;
+
+	private String projecttype;
+
 	private String category;
-	@Column(name = "url")
+
 	private String url;
-	@Column(name = "imgurl")
+
 	private String imgurl;
-	
-	
-	
-	@Transient
+
+	private Set<User> users;
+
 	private User owner;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	public int getId() {
 		return id;
 	}
@@ -44,6 +52,8 @@ public class Project {
 		this.id = id;
 	}
 
+	@Column(name = "name")
+	@NotEmpty(message = "*Please provide your name")
 	public String getName() {
 		return name;
 	}
@@ -52,30 +62,25 @@ public class Project {
 		this.name = name;
 	}
 
-	public String getKey() {
-		return key;
+	@Column(name = "projectkey")
+	public String getProjectkey() {
+		return projectkey;
 	}
 
-	public void setKey(String key) {
-		this.key = key;
+	public void setProjectkey(String projectkey) {
+		this.projectkey = projectkey;
 	}
 
-	public String getType() {
-		return type;
+	@Column(name = "projecttype")
+	public String getProjecttype() {
+		return projecttype;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setProjecttype(String projecttype) {
+		this.projecttype = projecttype;
 	}
 
-	public int getOwnerid() {
-		return ownerid;
-	}
-
-	public void setOwnerid(int ownerId) {
-		this.ownerid = ownerId;
-	}
-
+	@Column(name = "category")
 	public String getCategory() {
 		return category;
 	}
@@ -84,6 +89,7 @@ public class Project {
 		this.category = category;
 	}
 
+	@Column(name = "url")
 	public String getUrl() {
 		return url;
 	}
@@ -92,6 +98,7 @@ public class Project {
 		this.url = url;
 	}
 
+	@Column(name = "imgurl")
 	public String getImgurl() {
 		return imgurl;
 	}
@@ -100,6 +107,8 @@ public class Project {
 		this.imgurl = imgurl;
 	}
 
+	@ManyToOne(optional = true, fetch = FetchType.LAZY)
+	@JoinColumn(name = "owner_id")
 	public User getOwner() {
 		return owner;
 	}
@@ -108,5 +117,35 @@ public class Project {
 		this.owner = owner;
 	}
 
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "users_projects", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	@JsonIgnore
+	public Set<User> getUsers() {
+		return users;
+	}
 
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Project other = (Project) obj;
+		return !(id != other.id);
+
+	}
 }

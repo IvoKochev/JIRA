@@ -1,6 +1,7 @@
 package com.jira.service;
 
-import java.util.Iterator;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,9 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.jira.cotract.IProjectService;
-import com.jira.cotract.IUserHasProject;
-import com.jira.cotract.UserService;
+import com.jira.contract.IProjectService;
+import com.jira.contract.UserService;
 import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.model.Project;
 import com.jira.model.User;
@@ -26,54 +26,33 @@ public class ProjectServiceImpl implements IProjectService {
 	private ProjectRepository projectRepository;
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private IUserHasProject iuserHasProject;
 
 	@Override
 	public Set<Project> getProjectList() throws ResourceNotFoundException {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
-
-		Set<Project> projects = user.getProjects();
-		Iterator<Project> pIter = projects.iterator();
-		while (pIter.hasNext()) {
-			Project project = (Project) pIter.next();
-			if (project.getOwnerid() == user.getId()) {
-				User u = new User();
-				u.setName(user.getName());
-				u.setEmail(user.getEmail());
-				u.setId(user.getId());
-				u.setImgurl(user.getImgurl());
-				u.setRoles(user.getRoles());
-				project.setOwner(u);
-				continue;
-			}
-			User u = this.userService.findById(project.getOwnerid());
-			u.setPassword(null);
-			project.setOwner(u);
-		}
 		return user.getProjects();
 	}
 
 	@Override
 	public Project getProjectById(int id, HttpServletRequest request) throws ResourceNotFoundException {
-		if (this.iuserHasProject.findUserHasProject((int) request.getSession().getAttribute("user_id"), id) == 1) {
-			Project p = this.projectRepository.findById(id);
-			User owner = this.userService.findById(p.getOwnerid());
-			if (p.getOwnerid() == owner.getId()) {
-				User u = new User();
-				u.setName(owner.getName());
-				u.setEmail(owner.getEmail());
-				u.setId(owner.getId());
-				u.setImgurl(owner.getImgurl());
-				u.setRoles(owner.getRoles());
-				p.setOwner(u);
-				return p;
-			}
-			p.setOwner(owner);
-			return p;
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+		Project p = new Project();
+		p.setId(id);
+		if (user.getProjects().contains(p)) {
+			return this.projectRepository.findById(id);
 		}
-
 		throw new ResourceNotFoundException();
+	}
+
+	@Override
+	public void save(Project project, HttpServletRequest request) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+		project.setImgurl("/images/project.jpg");
+		project.setUsers(new HashSet<>(Arrays.asList(user)));
+		project.setOwner(user);
+		this.projectRepository.save(project);
 	}
 }

@@ -1,3 +1,4 @@
+
 package com.jira.model;
 
 import java.io.Serializable;
@@ -121,3 +122,4 @@ public class Issue implements Serializable {
 		this.asignee_id = asignee_id;
 	}
 }
+
