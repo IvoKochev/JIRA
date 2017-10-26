@@ -2,9 +2,10 @@ package com.jira.cotract;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.model.Sprint;
 
 public interface ISprintService {
-	public Sprint findSprintByName(HttpServletRequest request,String sprintName);
+	public Sprint findSprintByName(HttpServletRequest request, String sprintName) throws ResourceNotFoundException;
 	public boolean removeSprintByName(String sprintName);
 }
