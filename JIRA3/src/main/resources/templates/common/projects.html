@@ -14,7 +14,20 @@
         <strong>Project list</strong>
       </div>
     </div>
-    <label>Search: <input ng-model="searchText"></label>
+    <div class="row">
+      <nav class="col-md-2">
+        <label>Search: <input ng-model="searchText"></label>
+      </nav>
+        <nav class="col-md-8">
+        </nav>
+      <nav class="col-md-2">
+        <div th:if="${isAdmin}">
+          <a href="http://localhost:8080/common/home#!/admin/createProject" class="btn btn-info btn-lg"> <span
+          class="glyphicon glyphicon-plus-sign"></span> New project
+        </a>
+        </div>
+      </nav>
+    </div>
     <table class="kffeWc">
       <thead class="iccVIQ">
         <tr>
@@ -33,9 +46,9 @@
                   height="50">{{project.name}}
               </a>
             </span></td>
-          <td width="70" class="drqBbD"><span class="fuVjLH">{{project.key}}</span>
+          <td width="70" class="drqBbD"><span class="fuVjLH">{{project.projectkey}}</span>
           </td>
-          <td width="150" class="kqXqNO"><span class="jPYEPF"></span> <span>{{project.type}}</span>
+          <td width="150" class="kqXqNO"><span class="jPYEPF"></span> <span>{{project.projecttype}}</span>
           </td>
           <td width="200" class="kqXqNO">
             <a href="/">

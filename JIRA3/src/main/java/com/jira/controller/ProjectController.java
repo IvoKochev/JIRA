@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,21 +17,33 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jira.contract.IProjectService;
+import com.jira.contract.UserService;
 import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.model.Project;
+import com.jira.model.User;
 
 @RestController
 public class ProjectController {
-	IProjectService projectService;
+	private IProjectService projectService;
+
+	private UserService userService;
 
 	@Autowired
-	public ProjectController(IProjectService projectService) {
+	public ProjectController(IProjectService projectService, UserService userService) {
 		this.projectService = projectService;
+		this.userService = userService;
 	}
 
 	@RequestMapping(value = "/common/projects", method = RequestMethod.GET)
 	public ModelAndView adminProjects() {
 		ModelAndView modelAndView = new ModelAndView();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String s = auth.getAuthorities().toString();
+		if (s.contains("ADMIN")) {
+			modelAndView.addObject("isAdmin", true);
+		} else {
+			modelAndView.addObject("isAdmin", false);
+		}
 		modelAndView.setViewName("/common/projects");
 		return modelAndView;
 	}
@@ -77,6 +91,19 @@ public class ProjectController {
 			this.projectService.save(project, request);
 			modelAndView.setViewName("redirect:/common/home");
 		}
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/share/project", method = RequestMethod.POST)
+	public ModelAndView share(HttpServletRequest request) {
+		String email = request.getParameter("email");
+		int projectId = Integer.parseInt(request.getParameter("projectId"));
+		User user = this.userService.findUserByEmail(email);
+		if (user != null) {
+			System.err.println("OOO");
+		}
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirect:/common/home#!/projectView/" + request.getParameter("projectId"));
 		return modelAndView;
 	}
 
