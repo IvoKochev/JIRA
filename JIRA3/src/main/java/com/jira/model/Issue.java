@@ -7,7 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "issues")
@@ -28,7 +35,9 @@ public class Issue implements Serializable {
 	private Integer reporter_id;
 	private Integer asignee_id;
 	
-
+	@OneToMany(mappedBy = "issues_id") 
+	@Fetch(FetchMode.JOIN)
+    @JsonIgnore
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
@@ -51,6 +60,7 @@ public class Issue implements Serializable {
 
 
 	@Column(name = "type")
+	@NotEmpty(message = "*Please, provide type")
 	public String getType() {
 		return type;
 	}
@@ -60,6 +70,7 @@ public class Issue implements Serializable {
 	}
 
 	@Column(name = "summary")
+	@NotEmpty(message = "*Please, provide summary")
 	public String getSummary() {
 		return summary;
 	}
@@ -78,6 +89,7 @@ public class Issue implements Serializable {
 	}
 
 	@Column(name = "priority")
+	@NotEmpty(message = "Please, provide priority")
 	public String getPriority() {
 		return priority;
 	}
