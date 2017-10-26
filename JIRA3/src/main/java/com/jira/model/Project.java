@@ -5,14 +5,15 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -23,8 +24,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Project {
 
 	private int id;
-
-	private int ownerid;
 
 	private String name;
 
@@ -39,7 +38,7 @@ public class Project {
 	private String imgurl;
 
 	private Set<User> users;
-	@Transient
+
 	private User owner;
 
 	@Id
@@ -72,11 +71,6 @@ public class Project {
 		this.projectkey = projectkey;
 	}
 
-	@Column(name = "ownerid")
-	public int getOwnerid() {
-		return ownerid;
-	}
-
 	@Column(name = "projecttype")
 	public String getProjecttype() {
 		return projecttype;
@@ -84,10 +78,6 @@ public class Project {
 
 	public void setProjecttype(String projecttype) {
 		this.projecttype = projecttype;
-	}
-
-	public void setOwnerid(int ownerId) {
-		this.ownerid = ownerId;
 	}
 
 	@Column(name = "category")
@@ -117,7 +107,8 @@ public class Project {
 		this.imgurl = imgurl;
 	}
 
-	@Transient
+	@ManyToOne(optional = true, fetch = FetchType.LAZY)
+	@JoinColumn(name = "owner_id")
 	public User getOwner() {
 		return owner;
 	}
@@ -137,4 +128,24 @@ public class Project {
 		this.users = users;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Project other = (Project) obj;
+		return !(id != other.id);
+
+	}
 }

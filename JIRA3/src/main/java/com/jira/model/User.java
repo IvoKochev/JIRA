@@ -1,6 +1,7 @@
 package com.jira.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -17,6 +18,8 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "users")
@@ -41,7 +44,9 @@ public class User implements Serializable {
 
 	private Set<Role> roles;
 
-	private Set<Project> projects;
+	private Set<Project> projects = new HashSet<>();
+
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -117,6 +122,7 @@ public class User implements Serializable {
 
 	@ManyToMany(mappedBy = "users")
 	@Transient
+	@JsonIgnore
 	public Set<Project> getProjects() {
 		return projects;
 	}
@@ -124,5 +130,4 @@ public class User implements Serializable {
 	public void setProjects(Set<Project> projects) {
 		this.projects = projects;
 	}
-
 }

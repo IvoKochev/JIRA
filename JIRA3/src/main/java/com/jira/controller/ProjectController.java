@@ -74,7 +74,7 @@ public class ProjectController {
 		if (bindingResult.hasErrors()) {
 			modelAndView.setViewName("redirect:/common/home#!/admin/createProject");
 		} else {
-			this.projectService.saveProject(project, request);
+			this.projectService.save(project, request);
 			modelAndView.setViewName("redirect:/common/home");
 		}
 		return modelAndView;

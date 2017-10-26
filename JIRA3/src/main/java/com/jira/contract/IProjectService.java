@@ -13,5 +13,5 @@ public interface IProjectService {
 
 	Project getProjectById(int id, HttpServletRequest request) throws ResourceNotFoundException;
 
-	void saveProject(Project project,HttpServletRequest request);
+	void save(Project project,HttpServletRequest request);
 }
