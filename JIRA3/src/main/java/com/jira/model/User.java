@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,8 +46,6 @@ public class User implements Serializable {
 	private Set<Role> roles;
 
 	private Set<Project> projects = new HashSet<>();
-
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -101,7 +100,7 @@ public class User implements Serializable {
 		this.active = active;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	public Set<Role> getRoles() {
 		return roles;
@@ -120,7 +119,7 @@ public class User implements Serializable {
 		this.imgurl = imgurl;
 	}
 
-	@ManyToMany(mappedBy = "users")
+	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@Transient
 	@JsonIgnore
 	public Set<Project> getProjects() {

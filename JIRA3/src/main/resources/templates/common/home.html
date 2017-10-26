@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>JIRA Admin Page</title>
+	<title>JIRA</title>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
 	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
@@ -20,15 +20,12 @@
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<span th:utext="${userName}"></span> <span th:utext="${userEmail}"></span>
-					<img th:src="${userImg}" width="80" height="80" alt="">
+					<a ng-href="http://localhost:8080/common/home#!">
+						 <img th:src="${userImg}" width="80" height="80" alt="">
+					 </a>
 				</div>
 			</div>
 
-			<div th:if="${isAdmin}">
-				<a href="http://localhost:8080/common/home#!/admin/createProject" class="btn btn-info btn-lg"> <span
-						class="glyphicon glyphicon-plus-sign"></span> New project
-					</a>
-			</div>
 		</nav>
 		<section class="col-md-8">
 			<div class="panel-group" style="margin-top: 10px">

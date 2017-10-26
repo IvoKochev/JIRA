@@ -66,12 +66,6 @@ public class LoginController {
 		modelAndView.addObject("userImg", "" + user.getImgurl());
 		modelAndView.addObject("userEmail", "" + " (" + user.getEmail() + ")");
 		modelAndView.addObject("userName", "Welcome " + user.getName());
-		String s = auth.getAuthorities().toString();
-		if (s.contains("ADMIN")) {
-			modelAndView.addObject("isAdmin", true);
-		} else {
-			modelAndView.addObject("isAdmin", false);
-		}
 		modelAndView.setViewName("common/home");
 		return modelAndView;
 	}

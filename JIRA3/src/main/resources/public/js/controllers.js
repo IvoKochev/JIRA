@@ -1,7 +1,7 @@
 angular.module('jira.controllers', [])
   .controller('ProjectsCtrl', function($scope, ProjectList) {
     $scope.page = 1;
-    var pageSize = 18;
+    var pageSize = 16;
     var projects;
     $scope.isPrevDisabled = true;
     $scope.isNextDisabled = false;
@@ -29,7 +29,6 @@ angular.module('jira.controllers', [])
       $scope.projects = projects.slice(($scope.page - 1) * pageSize, $scope.page * pageSize);
     };
     ProjectList.all(function(data) {
-      console.log(data);
       projects = data;
       $scope.projects = projects.slice(($scope.page - 1) * pageSize, $scope.page * pageSize);
     });
@@ -42,8 +41,6 @@ angular.module('jira.controllers', [])
     });
   }])
   .controller('CreateProjectCtrl', function($scope) {
-    console.log("CreateProjectCtrl");
-
     
   }).controller('ErrorCtrl', function($scope) {
     console.log("404Ctrl");

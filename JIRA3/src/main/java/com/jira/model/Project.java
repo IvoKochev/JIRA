@@ -53,7 +53,7 @@ public class Project {
 	}
 
 	@Column(name = "name")
-	@NotEmpty(message = "*Please provide your name")
+	@NotEmpty(message = "*Please provide your project name")
 	public String getName() {
 		return name;
 	}
@@ -63,6 +63,7 @@ public class Project {
 	}
 
 	@Column(name = "projectkey")
+	@NotEmpty(message = "*Please provide your project key")
 	public String getProjectkey() {
 		return projectkey;
 	}
@@ -72,6 +73,7 @@ public class Project {
 	}
 
 	@Column(name = "projecttype")
+	@NotEmpty(message = "*Please provide your project type")
 	public String getProjecttype() {
 		return projecttype;
 	}
@@ -107,7 +109,7 @@ public class Project {
 		this.imgurl = imgurl;
 	}
 
-	@ManyToOne(optional = true, fetch = FetchType.LAZY)
+	@ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "owner_id")
 	public User getOwner() {
 		return owner;
@@ -117,7 +119,7 @@ public class Project {
 		this.owner = owner;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "users_projects", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	@JsonIgnore
 	public Set<User> getUsers() {
