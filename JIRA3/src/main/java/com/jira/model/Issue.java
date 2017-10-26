@@ -2,17 +2,22 @@
 package com.jira.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.data.annotation.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -34,10 +39,8 @@ public class Issue implements Serializable {
 	private String status;
 	private Integer reporter_id;
 	private Integer asignee_id;
+	private List<Comments> comments = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "issues_id") 
-	@Fetch(FetchMode.JOIN)
-    @JsonIgnore
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
@@ -124,14 +127,28 @@ public class Issue implements Serializable {
 	public void setReporter_id(Integer reporter_id) {
 		this.reporter_id = reporter_id;
 	}
-
+	
 	@Column(name = "asignee_id")
 	public Integer getAsignee_id() {
 		return asignee_id;
 	}
+	
 
 	public void setAsignee_id(Integer asignee_id) {
 		this.asignee_id = asignee_id;
 	}
+
+	@OneToMany(mappedBy = "issue")
+	@Fetch(FetchMode.JOIN)
+    @JsonIgnore
+	public List<Comments> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comments> comments) {
+		this.comments = comments;
+	}
+
+	
 }
 
