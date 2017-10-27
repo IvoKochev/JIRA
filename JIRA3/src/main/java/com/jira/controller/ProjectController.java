@@ -19,14 +19,21 @@ import org.springframework.web.servlet.ModelAndView;
 import com.jira.contract.IProjectService;
 import com.jira.contract.UserService;
 import com.jira.exceptions.ResourceNotFoundException;
+import com.jira.mail.Mail;
 import com.jira.model.Project;
 import com.jira.model.User;
+import com.jira.model.UserHasProject;
+import com.jira.model.UserHasProjectId;
+import com.jira.repository.UserHasProjectRepository;
 
 @RestController
 public class ProjectController {
 	private IProjectService projectService;
 
 	private UserService userService;
+
+	@Autowired
+	private UserHasProjectRepository userHasProjectRepository;
 
 	@Autowired
 	public ProjectController(IProjectService projectService, UserService userService) {
@@ -99,8 +106,14 @@ public class ProjectController {
 		String email = request.getParameter("email");
 		int projectId = Integer.parseInt(request.getParameter("projectId"));
 		User user = this.userService.findUserByEmail(email);
+		UserHasProject uu = new UserHasProject();
+		UserHasProjectId uhpi = new UserHasProjectId();
+		uhpi.setUser_id(user.getId());
+		uhpi.setProject_id(projectId);
+		uu.setUserHasProjectID(uhpi);
 		if (user != null) {
-			System.err.println("OOO");
+			userHasProjectRepository.save(uu);
+			new Mail(email, "JIRA", "You were added to a new project");
 		}
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:/common/home#!/projectView/" + request.getParameter("projectId"));
