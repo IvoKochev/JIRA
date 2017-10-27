@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Account</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="user-profile">
+      <div id="id=details-fragment" class="module">
+        <div class="mod-header">
+          <h3>Account details</h3>
+        </div>
+        <div class="mod-content">
+          <ul class="item-details">
+            <li>
+              <dl>
+                <dt>Avatar</dt>
+                <dd>
+                  <a ng-href="#">
+                        <img th:src="@{${user.imgurl}}" width="50" height="50">
+                    </a>
+                </dd>
+              </dl>
+              <dl>
+                <dt>Full name:</dt>
+                <dd th:text="${user.name}"></dd>
+              </dl>
+              <dl>
+                <dt>Email</dt>
+                <dd>
+                  <a th:href="@{${user.email}}" th:text="${user.email}"></a>
+                </dd>
+              </dl>
+              <dl>
+                <dt>Password</dt>
+                <dd>
+                  <a href="#">Change password</a>
+                </dd>
+              </dl>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
