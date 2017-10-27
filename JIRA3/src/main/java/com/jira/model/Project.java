@@ -1,5 +1,6 @@
 package com.jira.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,8 +14,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -38,6 +42,8 @@ public class Project {
 	private String imgurl;
 
 	private Set<User> users;
+	
+	private Set<Sprint> sprints = new HashSet<>();
 
 	private User owner;
 
@@ -130,6 +136,17 @@ public class Project {
 	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
+	
+	@OneToMany(mappedBy = "project")
+	@Fetch(FetchMode.JOIN)
+    @JsonIgnore
+	public Set<Sprint> getSprints() {
+		return sprints;
+	}
+
+	public void setSprints(Set<Sprint> sprints) {
+		this.sprints = sprints;
+	}
 
 	@Override
 	public int hashCode() {
@@ -151,4 +168,6 @@ public class Project {
 		return !(id != other.id);
 
 	}
+
+
 }
