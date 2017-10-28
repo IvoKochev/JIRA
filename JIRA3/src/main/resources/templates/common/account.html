@@ -52,47 +52,49 @@
             <div class="mod-header">
               <h3>Account details</h3>
             </div>
-            <div class="mod-content">
-              <ul class="item-details">
-                <li>
-                  <dl>
-                    <dt>Avatar</dt>
-                    <dd>
-                      <a ng-href="#">
+            <form action="/avatar" method="post" enctype="multipart/form-data">
+              <div class="mod-content">
+                <ul class="item-details">
+                  <li>
+                    <dl>
+                      <dt>Avatar</dt>
+                      <dd>
+                        <nav class="col-sx-2">
+                          <a ng-href="#">
                         <img th:src="@{${user.imgurl}}" width="50" height="50">
                     </a>
-                      <form action="/avatar" method="post" enctype="multipart/form-data">
-                        <input type="password" name="password" />
-                        <input type="file" name="file" />
-                        <input type="submit" />
-                      </form>
-                    </dd>
-                  </dl>
-                  <dl>
-                    <dt>Full name:</dt>
-                    <dd th:text="${user.name}"></dd>
-                  </dl>
-                  <dl>
-                    <dt>Email</dt>
-                    <dd>
-                      <a th:href="@{${user.email}}" th:text="${user.email}"></a>
-                    </dd>
-                  </dl>
-                  <dl>
-                    <dt>Password</dt>
-                    <dd>
-                      <a href="#">Change password</a>
-                    </dd>
-                  </dl>
-                  <dl>
-                    <dt>Role</dt>
-                    <dd>
-                      <a ng:href="#" th:text="${user.roles[0].role}"></a>
-                    </dd>
-                  </dl>
-                </li>
-              </ul>
-            </div>
+                          <input type="file" name="file" />
+                        </nav>
+                      </dd>
+                    </dl>
+                    <dl>
+                      <dt>Full name:</dt>
+                      <dd th:text="${user.name}"></dd>
+                    </dl>
+                    <dl>
+                      <dt>Email</dt>
+                      <dd>
+                        <a th:href="@{${user.email}}" th:text="${user.email}"></a>
+                      </dd>
+                    </dl>
+                    <dl>
+                      <dt>Password</dt>
+                      <dd>
+                        <a href="#">Change password</a>
+                      </dd>
+                    </dl>
+                    <dl>
+                      <dt>Role</dt>
+                      <dd>
+                        <a ng:href="#" th:text="${user.roles[0].role}"></a>
+                      </dd>
+                    </dl>
+                  </li>
+                </ul>
+              </div>
+              <input type="password" name="password" placeholder="Password" />
+              <input class="btn btn-warning" type="submit" />
+            </form>
           </div>
         </div>
       </nav>

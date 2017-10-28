@@ -1,7 +1,6 @@
 package com.jira.controller;
 
 import java.io.IOException;
-import java.nio.file.Paths;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -44,17 +43,16 @@ public class AccountController {
 	public ModelAndView setAvatar(HttpServletRequest request) throws IOException, ServletException {
 		ModelAndView modelAndView = new ModelAndView();
 		Part filePart = request.getPart("file");
-		String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 		String password = request.getParameter("password");
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
-		new FileWriter().avatarWrite(filePart, fileName, user.getId());
-		user.setImgurl("/images/" + user.getId() + "/" + fileName);
 		if (this.bCryptPasswordEncoder.matches(password, user.getPassword())) {
+			new FileWriter().avatarWrite(filePart, "avatar.png", user.getId());
+			user.setImgurl("/images/" + user.getId() + "/" + "avatar.png");
 			user.setPassword(password);
 			this.userService.saveUser(user);
 		}
-		modelAndView.setViewName("common/home");
+		modelAndView.setViewName("redirect:/common/home");
 		return modelAndView;
 	}
 
