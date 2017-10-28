@@ -30,7 +30,6 @@ public class Issue implements Serializable {
 	 */
 	private static final long serialVersionUID = -5899221217986589147L;
 	private Integer id;
-	private Integer project_id;
 	private Integer sprints_id;
 	private String type;
 	private String summary;
@@ -52,16 +51,6 @@ public class Issue implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	@Column(name = "project_id")
-	public int getProject_id() {
-		return project_id;
-	}
-
-	public void setProject_id(int project_id) {
-		this.project_id = project_id;
-	}
-
 
 	@Column(name = "type")
 	@NotEmpty(message = "*Please, provide type")
@@ -172,7 +161,6 @@ public class Issue implements Serializable {
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((priority == null) ? 0 : priority.hashCode());
-		result = prime * result + ((project_id == null) ? 0 : project_id.hashCode());
 		result = prime * result + ((reporter_id == null) ? 0 : reporter_id.hashCode());
 		result = prime * result + ((sprints_id == null) ? 0 : sprints_id.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
@@ -219,11 +207,6 @@ public class Issue implements Serializable {
 			if (other.priority != null)
 				return false;
 		} else if (!priority.equals(other.priority))
-			return false;
-		if (project_id == null) {
-			if (other.project_id != null)
-				return false;
-		} else if (!project_id.equals(other.project_id))
 			return false;
 		if (reporter_id == null) {
 			if (other.reporter_id != null)
