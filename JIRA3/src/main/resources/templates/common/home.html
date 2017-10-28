@@ -93,6 +93,19 @@
 				font-size: 18px;
 			}
 		}
+
+		footer .navbar-collapse.in {
+			bottom: 70px;
+			position: absolute;
+			background-color: #333;
+			width: 100%;
+		}
+
+		#left-bottom {
+			position: absolute;
+			bottom: 0;
+			right: 0;
+		}
 	</style>
 </head>
 
@@ -105,9 +118,12 @@
 				<div th:if="${isAdmin}">
 					<a ng-href="http://localhost:8080/common/home#!/createProject"><img ng-src="/images/createProject.ico" width="50" height="50"> Project </a>
 				</div>
+				<form th:action="@{/logout}" method="get">
+					<button id="left-bottom" class="btn btn-md btn-danger btn-block" name="registration" type="Submit">Logout</button>
+				</form>
 			</div>
 		</div>
-		<section class="col-md-8">
+		<section class="col-md-9">
 			<div class="panel-group" style="margin-top: 10px">
 				<div ng-view></div>
 				<script type="text/ng-template" id="projects.html">
@@ -120,13 +136,6 @@
 				</script>
 			</div>
 		</section>
-		<nav class="col-md-2">
-			<div class="sidenavr">
-				<form th:action="@{/logout}" method="get">
-					<button class="btn btn-md btn-danger btn-block" name="registration" type="Submit">Logout</button>
-				</form>
-			</div>
-		</nav>
 	</div>
 </body>
 
