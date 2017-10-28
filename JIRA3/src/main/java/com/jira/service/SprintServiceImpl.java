@@ -11,23 +11,23 @@ import com.jira.model.Sprint;
 import com.jira.repository.SprintRepository;
 
 @Service("sprintService")
-public class SprintServiceImpl implements ISprintService{
+public class SprintServiceImpl implements ISprintService {
 	@Autowired
-	private SprintRepository sprintRepository;
+	 private SprintRepository sprintRepository;
 
 	@Override
 	public Sprint findSprintByName(HttpServletRequest request, String sprintName) throws ResourceNotFoundException {
-		//findByOwnerid not ready yet
-//		int owner_id = (int) request.getSession().getAttribute("user_id");
-//		List<Sprint> sprints = sprintRepository.findByOwnerid(owner_id);
-//		for(Sprint sprint : sprints) {
-//			if(sprint.getName().equals(sprintName)) {
-//				return sprint;
-//			}
-//		}
+		// findByOwnerid not ready yet
+		// int owner_id = (int) request.getSession().getAttribute("user_id");
+		// List<Sprint> sprints = sprintRepository.findByOwnerid(owner_id);
+		// for(Sprint sprint : sprints) {
+		// if(sprint.getName().equals(sprintName)) {
+		// return sprint;
+		// }
+		// }
 
 		return null;
-		
+
 	}
 
 	@Override
@@ -35,6 +35,5 @@ public class SprintServiceImpl implements ISprintService{
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	
+
 }

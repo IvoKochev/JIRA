@@ -46,7 +46,7 @@
     <div class="row">
       <nav class="col-md-3">
       </nav>
-      <nav class="col-md-9">
+      <nav class="col-md-8">
         <div class="user-profile">
           <div id="id=details-fragment" class="module">
             <div class="mod-header">
@@ -61,6 +61,11 @@
                       <a ng-href="#">
                         <img th:src="@{${user.imgurl}}" width="50" height="50">
                     </a>
+                      <form action="/avatar" method="post" enctype="multipart/form-data">
+                        <input type="password" name="password" />
+                        <input type="file" name="file" />
+                        <input type="submit" />
+                      </form>
                     </dd>
                   </dl>
                   <dl>
@@ -77,6 +82,12 @@
                     <dt>Password</dt>
                     <dd>
                       <a href="#">Change password</a>
+                    </dd>
+                  </dl>
+                  <dl>
+                    <dt>Role</dt>
+                    <dd>
+                      <a ng:href="#" th:text="${user.roles[0].role}"></a>
                     </dd>
                   </dl>
                 </li>
