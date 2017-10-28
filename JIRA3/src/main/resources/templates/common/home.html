@@ -12,37 +12,132 @@
 	<script src="/js/services.js"></script>
 	<script src="/js/controllers.js"></script>
 	<script src="/js/app.js"></script>
+	<style>
+		body {
+			font-family: "Lato", sans-serif;
+		}
+
+		.sidenav {
+			height: 100%;
+			width: 200px;
+			position: fixed;
+			z-index: 1;
+			top: 0;
+			left: 0;
+			background-color: #111;
+			overflow-x: hidden;
+			padding-top: 20px;
+		}
+
+		.sidenav a {
+			padding: 6px 6px 6px 32px;
+			text-decoration: none;
+			font-size: 25px;
+			color: #818181;
+			display: block;
+		}
+
+		.sidenav a:hover {
+			color: #f1f1f1;
+		}
+
+		.main {
+			margin-left: 200px;
+		}
+
+		@media screen and (max-height: 450px) {
+			.sidenav {
+				padding-top: 15px;
+			}
+			.sidenav a {
+				font-size: 18px;
+			}
+		}
+
+
+
+
+		.sidenavr {
+			height: 100%;
+			width: 200px;
+			position: fixed;
+			z-index: 1;
+			top: 0;
+			right: 0;
+			background-color: #111;
+			overflow-x: hidden;
+			padding-top: 20px;
+		}
+
+		.sidenavr a {
+			padding: 6px 6px 6px 32px;
+			text-decoration: none;
+			font-size: 25px;
+			color: #818181;
+			display: block;
+		}
+
+		.sidenavr a:hover {
+			color: #f1f1f1;
+		}
+
+		.mainr {
+			margin-left: 200px;
+		}
+
+		@media screen and (max-height: 450px) {
+			.sidenavr {
+				padding-top: 15px;
+			}
+			.sidenavr a {
+				font-size: 18px;
+			}
+		}
+
+		footer .navbar-collapse.in {
+			bottom: 70px;
+			position: absolute;
+			background-color: #333;
+			width: 100%;
+		}
+
+		#logof {
+			position: absolute;
+			bottom: 0;
+			right: 0;
+		}
+
+	</style>
 </head>
 
 <body ng-app="jiraProject">
 	<div class="row">
-		<nav class="col-md-2">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<span th:utext="${userName}"></span> <span th:utext="${userEmail}"></span>
-					<a ng-href="http://localhost:8080/common/home#!">
-						 <img th:src="${userImg}" width="80" height="80" alt="">
-					 </a>
+		<div class="col-md-2">
+			<div class="sidenav">
+				<a ng-href="#"><img ng-src="/images/home.png" width="50" height="50"> Home</a>
+				<a ng-href="http://localhost:8080/common/home#!/account"><img ng-src="/images/account.png" width="50" height="50"> Account</a>
+				<div th:if="${isAdmin}">
+					<a ng-href="http://localhost:8080/common/home#!/createProject"><img ng-src="/images/createProject.ico" width="50" height="50"> Project </a>
 				</div>
+				<a  ng-href="#"><img ng-src="/images/info.png" width="50" height="50"> Info</a>
+				<form th:action="@{/logout}" method="get">
+					<button id="logof" class="btn btn-md btn-danger btn-block" name="registration" type="Submit">Logout</button>
+				</form>
 			</div>
-
-		</nav>
-		<section class="col-md-8">
+		</div>
+		<section class="col-md-9">
 			<div class="panel-group" style="margin-top: 10px">
 				<div ng-view></div>
 				<script type="text/ng-template" id="projects.html">
 				</script>
 				<script type="text/ng-template" id="projectView.html">
 				</script>
+				<script type="text/ng-template" id="createProject.html">
+				</script>
 				<script type="text/ng-template" id="404.html">
 				</script>
 			</div>
 		</section>
-		<nav class="col-md-2">
-			<form th:action="@{/logout}" method="get">
-				<button class="btn btn-md btn-danger btn-block" name="registration" type="Submit">Logout</button>
-			</form>
-		</nav>
 	</div>
 </body>
 

@@ -63,6 +63,12 @@ public class LoginController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
 		request.getSession().setAttribute("user_id", user.getId());
+		String s = auth.getAuthorities().toString();
+		if (s.contains("ADMIN")) {
+			modelAndView.addObject("isAdmin", true);
+		} else {
+			modelAndView.addObject("isAdmin", false);
+		}
 		modelAndView.addObject("userImg", "" + user.getImgurl());
 		modelAndView.addObject("userEmail", "" + " (" + user.getEmail() + ")");
 		modelAndView.addObject("userName", "Welcome " + user.getName());

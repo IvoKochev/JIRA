@@ -41,7 +41,9 @@ angular.module('jira.controllers', [])
     });
   }])
   .controller('CreateProjectCtrl', function($scope) {
-    
+
+  }).controller('AccountCtrl', function($scope) {
+    console.log("AccountCtrl");
   }).controller('ErrorCtrl', function($scope) {
     console.log("404Ctrl");
   });

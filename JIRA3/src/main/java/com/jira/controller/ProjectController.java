@@ -6,8 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,13 +42,6 @@ public class ProjectController {
 	@RequestMapping(value = "/common/projects", method = RequestMethod.GET)
 	public ModelAndView adminProjects() {
 		ModelAndView modelAndView = new ModelAndView();
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String s = auth.getAuthorities().toString();
-		if (s.contains("ADMIN")) {
-			modelAndView.addObject("isAdmin", true);
-		} else {
-			modelAndView.addObject("isAdmin", false);
-		}
 		modelAndView.setViewName("/common/projects");
 		return modelAndView;
 	}
