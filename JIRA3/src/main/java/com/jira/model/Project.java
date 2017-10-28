@@ -128,7 +128,7 @@ public class Project {
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "users_projects", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-	@JsonIgnore
+	
 	public Set<User> getUsers() {
 		return users;
 	}

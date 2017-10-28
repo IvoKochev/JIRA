@@ -4,6 +4,11 @@
 <head>
 	<meta charset="utf-8">
 	<title>JIRA Project</title>
+	<style media="screen">
+		.top-buffer {
+			margin-top: 40px;
+		}
+	</style>
 </head>
 
 <body>
@@ -46,12 +51,32 @@
 				</a></td>
 				<td width="250" class="kqXqNO"><span>{{project.category}}</span></td>
 				<td class="kqXqNO"><span>{{project.url}}</span></td>
-
 			</tr>
-
 		</tbody>
-
 	</table>
+	<div class="container">
+		<div class="row">
+			<nav class="col-md-3">
+			</nav>
+			<nav class="col-md-8">
+				<h1>User list</h1>
+			</nav>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-6 col-md-4 col-lg-3" ng-repeat="user in project.users">
+			<div class="row top-buffer">
+				<img src="{{user.imgurl}}" class="col-xs-3" />
+				<div class="row">
+					<strong>{{user.name}}</strong>
+				</div>
+				<div class="row">
+					<strong>email: </strong><a href="#">{{user.email}}</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </body>
 
 </html>
