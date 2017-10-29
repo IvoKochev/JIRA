@@ -4,17 +4,30 @@
 <head>
 	<meta charset="utf-8">
 	<title>JIRA Project</title>
+	<style media="screen">
+		.top-buffer {
+			margin-top: 40px;
+		}
+	</style>
 </head>
 
-<body>
+<body> 
 	<form class="form-horizontal" role="form" autocomplete="off" action="#" th:action="@{/share/project}" method="post">
 		<div class="form-group">
-			<nav class="col-md-2">
+			<div class="col-md-2">
 				<input name="email" type="text" class="form-control" placeholder="Email">
-			</nav>
+			</div>
 			<input type="hidden" value="{{project.id}}" name="projectId" />
 			<nav class="col-md-2">
 				<button class="btn btn-info sm" name="Share" value="Share" type="Submit" th:text="Share"></button>
+			</nav>
+		</div>
+	</form>
+	<form class="form-horizontal" role="form" autocomplete="off" action="#" th:action="@{/common/createSprint}" method="get">
+		<div class="form-group">
+			<input type="hidden" value="{{project.id}}" name="projectId" />
+			<nav class="col-md-2">
+				<button class="btn btn-info sm" name="Share" value="Share" type="Submit" th:text="Sprint"></button>
 			</nav>
 		</div>
 	</form>
@@ -46,12 +59,35 @@
 				</a></td>
 				<td width="250" class="kqXqNO"><span>{{project.category}}</span></td>
 				<td class="kqXqNO"><span>{{project.url}}</span></td>
-
 			</tr>
-
 		</tbody>
-
 	</table>
+	<div class="alert alert-info">
+		<div class="container">
+			<nav class="col-md-4">
+			</nav>
+			<nav class="col-md-8">
+				<h3>User list</h3>
+			</nav>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-6 col-md-4 col-lg-3" ng-repeat="user in project.users">
+			<div class="row top-buffer">
+				<img src="{{user.imgurl}}" class="col-xs-3" />
+				<div class="row">
+					<strong>{{user.name}}</strong>
+				</div>
+				<div class="row">
+					<strong>email: </strong><a href="#">{{user.email}}</a>
+				</div>
+				<div class="row">
+					<strong>rating: </strong><a href="#">{{user.rating}}</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </body>
 
 </html>

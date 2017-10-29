@@ -2,6 +2,7 @@ package com.jira.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,9 +26,12 @@ public class Sprint implements Serializable {
 	private String name;
 	private Integer owner_id;
 	private String sprintgoal;
-	private LocalDateTime start_date;
-	private LocalDateTime end_date;
+	private String start_date;
+	private String end_date;
 	private Project project;
+
+    public Sprint() {
+    }
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -59,20 +63,20 @@ public class Sprint implements Serializable {
 	}
 
 	@Column(name = "start_date")
-	public LocalDateTime getStart_date() {
+	public String getStart_date() {
 		return start_date;
 	}
 
-	public void setStart_date(LocalDateTime start_date) {
+	public void setStart_date(String start_date) {
 		this.start_date = start_date;
 	}
 
 	@Column(name = "end_date")
-	public LocalDateTime getEnd_date() {
+	public String getEnd_date() {
 		return end_date;
 	}
 
-	public void setEnd_date(LocalDateTime end_date) {
+	public void setEnd_date(String end_date) {
 		this.end_date = end_date;
 	}
 
@@ -87,11 +91,11 @@ public class Sprint implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "projects_id")
-	public Project getProject() {
+	public Project getProject_id() {
 		return project;
 	}
 
-	public void setProject(Project project) {
+	public void setProject_id(Project project) {
 		this.project = project;
 	}
 
@@ -103,7 +107,6 @@ public class Sprint implements Serializable {
 		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((owner_id == null) ? 0 : owner_id.hashCode());
-		result = prime * result + ((project == null) ? 0 : project.hashCode());
 		result = prime * result + ((sprintgoal == null) ? 0 : sprintgoal.hashCode());
 		result = prime * result + ((start_date == null) ? 0 : start_date.hashCode());
 		return result;
@@ -134,11 +137,6 @@ public class Sprint implements Serializable {
 			if (other.owner_id != null)
 				return false;
 		} else if (!owner_id.equals(other.owner_id))
-			return false;
-		if (project == null) {
-			if (other.project != null)
-				return false;
-		} else if (!project.equals(other.project))
 			return false;
 		if (sprintgoal == null) {
 			if (other.sprintgoal != null)

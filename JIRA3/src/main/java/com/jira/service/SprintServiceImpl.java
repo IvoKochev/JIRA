@@ -1,39 +1,54 @@
 package com.jira.service;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jira.contract.ISprintService;
 import com.jira.exceptions.ResourceNotFoundException;
+import com.jira.exceptions.SprintException;
 import com.jira.model.Sprint;
 import com.jira.repository.SprintRepository;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+
 
 @Service("sprintService")
 public class SprintServiceImpl implements ISprintService {
-	@Autowired
-	 private SprintRepository sprintRepository;
+    @Autowired
+    private SprintRepository sprintRepository;
 
-	@Override
-	public Sprint findSprintByName(HttpServletRequest request, String sprintName) throws ResourceNotFoundException {
-		// findByOwnerid not ready yet
-		// int owner_id = (int) request.getSession().getAttribute("user_id");
-		// List<Sprint> sprints = sprintRepository.findByOwnerid(owner_id);
-		// for(Sprint sprint : sprints) {
-		// if(sprint.getName().equals(sprintName)) {
-		// return sprint;
-		// }
-		// }
+    @Override
+    public Sprint findSprintById(int id) {
+        return sprintRepository.findById(id);
+    }
 
-		return null;
+    @Override
+    public void removeSprintById(int id) throws ResourceNotFoundException {
+        if(sprintRepository.findById(id) == null) {
+            SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+            Session session = null;
+            Sprint sprint = null;
+            session = sessionFactory.getCurrentSession();
+            sprint = (Sprint)session.load(Sprint.class,id);
+            session.delete(sprint);
+            session.flush() ;
+        } else {
+            throw new ResourceNotFoundException("Sprint not found");
+        }
+    }
 
-	}
+   
+    @Override
+    public void saveSprint(Sprint sprint) throws SprintException{
+        if(sprint != null && sprintRepository.findById(sprint.getId()) == null) {
+            sprintRepository.save(sprint);
+        } else {
+            throw new SprintException("Sprint already exists!");
+        }
+    }
 
-	@Override
-	public boolean removeSprintByName(String sprintName) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
 
 }

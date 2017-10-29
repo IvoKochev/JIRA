@@ -43,7 +43,7 @@ public class Project {
 
 	private Set<User> users;
 	
-	private Set<Sprint> sprints = new HashSet<>();
+	//private Set<Sprint> sprints = new HashSet<>();
 
 	private User owner;
 
@@ -137,16 +137,16 @@ public class Project {
 		this.users = users;
 	}
 	
-	@OneToMany(mappedBy = "project")
-	@Fetch(FetchMode.JOIN)
-    @JsonIgnore
-	public Set<Sprint> getSprints() {
-		return sprints;
-	}
-
-	public void setSprints(Set<Sprint> sprints) {
-		this.sprints = sprints;
-	}
+//	@OneToMany(mappedBy = "project")
+//	@Fetch(FetchMode.JOIN)
+//        @JsonIgnore
+//	public Set<Sprint> getSprints() {
+//		return sprints;
+//	}
+//
+//	public void setSprints(Set<Sprint> sprints) {
+//		this.sprints = sprints;
+//	}
 
 	@Override
 	public int hashCode() {
