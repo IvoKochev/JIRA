@@ -23,6 +23,14 @@
 			</nav>
 		</div>
 	</form>
+	<form class="form-horizontal" role="form" autocomplete="off" action="#" th:action="@{/common/createSprint}" method="post">
+		<div class="form-group">
+			<input type="hidden" value="{{project.id}}" name="projectId" />
+			<nav class="col-md-2">
+				<button class="btn btn-info sm" name="Share" value="Share" type="Submit" th:text="Sprint"></button>
+			</nav>
+		</div>
+	</form>
 	<table class="kffeWc">
 		<thead class="iccVIQ">
 			<tr>
@@ -72,6 +80,9 @@
 				</div>
 				<div class="row">
 					<strong>email: </strong><a href="#">{{user.email}}</a>
+				</div>
+				<div class="row">
+					<strong>rating: </strong><a href="#">{{user.rating}}</a>
 				</div>
 			</div>
 		</div>
