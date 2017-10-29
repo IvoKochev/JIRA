@@ -6,11 +6,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,6 +29,7 @@ import com.jira.repository.UserHasProjectRepository;
 
 @RestController
 public class ProjectController {
+
 	private IProjectService projectService;
 
 	private UserService userService;
@@ -49,6 +53,7 @@ public class ProjectController {
 	@RequestMapping(value = "/common/projectView", method = RequestMethod.GET)
 	public ModelAndView commonProjectViewPage() {
 		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("message", "");
 		modelAndView.setViewName("/common/projectView");
 		return modelAndView;
 	}
@@ -56,7 +61,7 @@ public class ProjectController {
 	@RequestMapping(value = "/common/404", method = RequestMethod.GET)
 	public ModelAndView errorNotFound() {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/common/404");
+		modelAndView.setViewName("common/404");
 		return modelAndView;
 	}
 
@@ -66,9 +71,9 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/common/projectView/{id}", method = RequestMethod.GET)
-	public Project getProjectById(@PathVariable(name = "id") int id, HttpServletRequest request)
+	public Project getProjectById(@PathVariable(name = "id") int id)
 			throws ResourceNotFoundException {
-		return this.projectService.getProjectById(id, request);
+		return this.projectService.getProjectById(id);
 	}
 
 	@RequestMapping(value = "/admin/createProject", method = RequestMethod.GET)
@@ -93,22 +98,28 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/share/project", method = RequestMethod.POST)
-	public ModelAndView share(HttpServletRequest request) {
-		String email = request.getParameter("email");
+	public ModelAndView share(HttpServletRequest request) throws ResourceNotFoundException {
+		ModelAndView modelAndView = new ModelAndView();
 		int projectId = Integer.parseInt(request.getParameter("projectId"));
+		String email = request.getParameter("email");
 		User user = this.userService.findUserByEmail(email);
-		UserHasProject uu = new UserHasProject();
+		if (user == null) {
+			throw new ResourceNotFoundException("Invalid user");
+		}
+		UserHasProject uhp = new UserHasProject();
 		UserHasProjectId uhpi = new UserHasProjectId();
 		uhpi.setUser_id(user.getId());
 		uhpi.setProject_id(projectId);
-		uu.setUserHasProjectID(uhpi);
-		if (user != null) {
-			userHasProjectRepository.save(uu);
-			new Mail(email, "JIRA", "You were added to a new project");
-		}
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/common/home#!/projectView/" + request.getParameter("projectId"));
+		uhp.setUserHasProjectID(uhpi);
+		userHasProjectRepository.save(uhp);
+		new Mail(email, "JIRA", "You were added to a new project");
+		modelAndView.setViewName("redirect:/common/home#!/projectView/" + projectId);
 		return modelAndView;
 	}
-
+	
+	@ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleResourceNotFoundException() {
+        return "User not found";
+    }
 }

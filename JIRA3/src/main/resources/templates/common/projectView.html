@@ -14,9 +14,9 @@
 <body>
 	<form class="form-horizontal" role="form" autocomplete="off" action="#" th:action="@{/share/project}" method="post">
 		<div class="form-group">
-			<nav class="col-md-2">
+			<div class="col-md-2">
 				<input name="email" type="text" class="form-control" placeholder="Email">
-			</nav>
+			</div>
 			<input type="hidden" value="{{project.id}}" name="projectId" />
 			<nav class="col-md-2">
 				<button class="btn btn-info sm" name="Share" value="Share" type="Submit" th:text="Share"></button>
@@ -54,12 +54,12 @@
 			</tr>
 		</tbody>
 	</table>
-	<div class="container">
-		<div class="row">
-			<nav class="col-md-3">
+	<div class="alert alert-info">
+		<div class="container">
+			<nav class="col-md-4">
 			</nav>
 			<nav class="col-md-8">
-				<h1>User list</h1>
+				<h3>User list</h3>
 			</nav>
 		</div>
 	</div>
