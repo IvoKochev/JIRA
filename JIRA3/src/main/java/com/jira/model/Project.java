@@ -1,6 +1,5 @@
 package com.jira.model;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,14 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.NotEmpty;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "projects")
@@ -137,17 +131,6 @@ public class Project {
 		this.users = users;
 	}
 	
-//	@OneToMany(mappedBy = "project")
-//	@Fetch(FetchMode.JOIN)
-//        @JsonIgnore
-//	public Set<Sprint> getSprints() {
-//		return sprints;
-//	}
-//
-//	public void setSprints(Set<Sprint> sprints) {
-//		this.sprints = sprints;
-//	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
