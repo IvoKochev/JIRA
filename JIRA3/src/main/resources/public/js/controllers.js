@@ -33,12 +33,17 @@ angular.module('jira.controllers', [])
       $scope.projects = projects.slice(($scope.page - 1) * pageSize, $scope.page * pageSize);
     });
   })
-  .controller('ProjectViewCtrl', ['$scope', 'ProjectService', '$routeParams', '$http', '$location', '$rootScope', function($scope, ProjectService, $routeParams, $http, $location, $rootScope) {
+  .controller('ProjectViewCtrl', ['$scope', 'ProjectService', '$routeParams', '$http', '$location', '$rootScope', 'Rating', function($scope, ProjectService, $routeParams, $http, $location, $rootScope, Rating) {
     ProjectService.posts($routeParams.id).then(function success(response) {
       $scope.project = response.data;
+
     }, function error(data, status, headers, config) {
       $location.path('/404');
     });
+    $scope.myCallback = function(rating, custumVar) {
+
+      console.log(rating, custumVar);
+    };
   }])
   .controller('CreateProjectCtrl', function($scope) {
 

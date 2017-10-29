@@ -23,7 +23,7 @@
 			</nav>
 		</div>
 	</form>
-	<form class="form-horizontal" role="form" autocomplete="off" action="#" th:action="@{/common/createSprint}" method="post">
+	<form class="form-horizontal" role="form" autocomplete="off" action="#" th:action="@{/common/createSprint}" method="get">
 		<div class="form-group">
 			<input type="hidden" value="{{project.id}}" name="projectId" />
 			<nav class="col-md-2">
@@ -82,6 +82,7 @@
 					<strong>email: </strong><a href="#">{{user.email}}</a>
 				</div>
 				<div class="row">
+					<ng-rate-it ng-model="user.rating" rated="myCallback(rating,user.id)"></ng-rate-it>
 					<strong>rating: </strong><a href="#">{{user.rating}}</a>
 				</div>
 			</div>

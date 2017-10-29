@@ -43,7 +43,7 @@ public class User implements Serializable {
 
 	private int active;
 
-	private int rating;
+	private double rating;
 
 	private Set<Role> roles;
 
@@ -133,11 +133,11 @@ public class User implements Serializable {
 	}
 
 	@Column(name = "rating")
-	public int getRating() {
+	public double getRating() {
 		return rating;
 	}
 
-	public void setRating(int rating) {
+	public void setRating(double rating) {
 		this.rating = rating;
 	}
 
