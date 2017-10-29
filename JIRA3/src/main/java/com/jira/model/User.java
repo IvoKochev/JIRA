@@ -45,6 +45,8 @@ public class User implements Serializable {
 
 	private double rating;
 
+	private int votecounter;
+
 	private Set<Role> roles;
 
 	private Set<Project> projects = new HashSet<>();
@@ -139,6 +141,15 @@ public class User implements Serializable {
 
 	public void setRating(double rating) {
 		this.rating = rating;
+	}
+
+	@Column(name = "votecounter")
+	public int getVotecounter() {
+		return votecounter;
+	}
+
+	public void setVotecounter(int votecounter) {
+		this.votecounter = votecounter;
 	}
 
 }

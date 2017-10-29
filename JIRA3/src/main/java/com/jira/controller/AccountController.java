@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.jira.contract.UserService;
 import com.jira.file.FileWriter;
+import com.jira.model.RatingUser;
 import com.jira.model.User;
 
 @RestController
@@ -53,6 +55,23 @@ public class AccountController {
 			this.userService.saveUser(user);
 		}
 		modelAndView.setViewName("redirect:/common/home");
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/rating", method = RequestMethod.POST)
+	public ModelAndView setRating(@RequestBody RatingUser data) {
+		ModelAndView modelAndView = new ModelAndView();
+		User user = this.userService.findById(data.getUserId());
+		int userCounter = user.getVotecounter();
+		double rating = user.getRating();
+		double allPoint = userCounter * rating;
+		userCounter++;
+		allPoint += data.getRatingId();
+		double newRating = allPoint / userCounter;
+		user.setVotecounter(userCounter);
+		user.setRating(newRating);
+		this.userService.saveUser(user);
+		modelAndView.setViewName("/common/projectView");
 		return modelAndView;
 	}
 

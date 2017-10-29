@@ -18,6 +18,7 @@
 				<input name="email" type="text" class="form-control" placeholder="Email">
 			</div>
 			<input type="hidden" value="{{project.id}}" name="projectId" />
+			<input type="hidden" value="{{project.id}}" name="projectId" />
 			<nav class="col-md-2">
 				<button class="btn btn-info sm" name="Share" value="Share" type="Submit" th:text="Share"></button>
 			</nav>
@@ -84,6 +85,7 @@
 				<div class="row">
 					<ng-rate-it ng-model="user.rating" rated="myCallback(rating,user.id)"></ng-rate-it>
 					<strong>rating: </strong><a href="#">{{user.rating}}</a>
+					<strong>votes: </strong><a href="#">{{user.usercounter}}</a>
 				</div>
 			</div>
 		</div>

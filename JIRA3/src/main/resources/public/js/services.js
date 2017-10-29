@@ -31,8 +31,4 @@ angular.module('adminProjectServices', [])
       },
       posts: _posts
     };
-  }]).factory('Rating', function($http) {
-
-    console.log("param");
-
-  });
+  }]);
