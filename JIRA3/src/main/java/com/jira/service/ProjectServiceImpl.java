@@ -35,7 +35,7 @@ public class ProjectServiceImpl implements IProjectService {
 	}
 
 	@Override
-	public Project getProjectById(int id, HttpServletRequest request) throws ResourceNotFoundException {
+	public Project getProjectById(int id) throws ResourceNotFoundException {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
 		Project p = new Project();

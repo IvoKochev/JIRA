@@ -43,6 +43,10 @@ public class User implements Serializable {
 
 	private int active;
 
+	private double rating;
+
+	private int votecounter;
+
 	private Set<Role> roles;
 
 	private Set<Project> projects = new HashSet<>();
@@ -129,4 +133,23 @@ public class User implements Serializable {
 	public void setProjects(Set<Project> projects) {
 		this.projects = projects;
 	}
+
+	@Column(name = "rating")
+	public double getRating() {
+		return rating;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
+
+	@Column(name = "votecounter")
+	public int getVotecounter() {
+		return votecounter;
+	}
+
+	public void setVotecounter(int votecounter) {
+		this.votecounter = votecounter;
+	}
+
 }

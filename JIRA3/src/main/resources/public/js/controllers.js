@@ -36,9 +36,18 @@ angular.module('jira.controllers', [])
   .controller('ProjectViewCtrl', ['$scope', 'ProjectService', '$routeParams', '$http', '$location', '$rootScope', function($scope, ProjectService, $routeParams, $http, $location, $rootScope) {
     ProjectService.posts($routeParams.id).then(function success(response) {
       $scope.project = response.data;
+
     }, function error(data, status, headers, config) {
       $location.path('/404');
     });
+    $scope.myCallback = function(rating, custumVar) {
+      var data = {
+        ratingId: rating,
+        userId: custumVar
+      };
+      $http.post("/rating", data);
+      console.log(rating, custumVar);
+    };
   }])
   .controller('CreateProjectCtrl', function($scope) {
 

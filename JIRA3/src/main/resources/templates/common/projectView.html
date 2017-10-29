@@ -17,6 +17,10 @@
 			<div class="col-md-2">
 				<input name="email" type="text" class="form-control" placeholder="Email">
 			</div>
+<<<<<<< HEAD
+=======
+			<input type="hidden" value="{{project.id}}" name="projectId" />
+>>>>>>> 466e9a1f139913b05211e7dfae71327289b3b5d0
 			<input type="hidden" value="{{project.id}}" name="projectId" />
 			<nav class="col-md-2">
 				<button class="btn btn-info sm" name="Share" value="Share" type="Submit" th:text="Share"></button>
@@ -82,7 +86,13 @@
 					<strong>email: </strong><a href="#">{{user.email}}</a>
 				</div>
 				<div class="row">
+<<<<<<< HEAD
 					<strong>rating: </strong><a href="#">{{user.rating}}</a>
+=======
+					<ng-rate-it ng-model="user.rating" rated="myCallback(rating,user.id)"></ng-rate-it>
+					<strong>rating: </strong><a href="#">{{user.rating}}</a>
+					<strong>votes: </strong><a href="#">{{user.usercounter}}</a>
+>>>>>>> 466e9a1f139913b05211e7dfae71327289b3b5d0
 				</div>
 			</div>
 		</div>

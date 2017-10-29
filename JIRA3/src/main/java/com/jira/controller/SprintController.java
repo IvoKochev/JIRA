@@ -5,6 +5,7 @@
  */
 package com.jira.controller;
 
+<<<<<<< HEAD
 import com.jira.contract.IProjectService;
 import com.jira.contract.ISprintService;
 import com.jira.exceptions.ResourceNotFoundException;
@@ -19,17 +20,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+=======
+import org.springframework.web.bind.annotation.ModelAttribute;
+>>>>>>> 466e9a1f139913b05211e7dfae71327289b3b5d0
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+<<<<<<< HEAD
+=======
+import com.jira.exceptions.ResourceNotFoundException;
+import com.jira.model.Sprint;
+
+>>>>>>> 466e9a1f139913b05211e7dfae71327289b3b5d0
 /**
  *
  * @author ivo
  */
 @RestController
 public class SprintController {
+<<<<<<< HEAD
     @Autowired
     private SprintRepository sprintRepository;
     @Autowired
@@ -70,4 +81,28 @@ public class SprintController {
         return modelAndView;
     }
     
+=======
+
+
+	@RequestMapping(value = "/common/createSprint", method = RequestMethod.GET)
+	public ModelAndView getSprint() throws ResourceNotFoundException {
+		System.err.println("get controller");
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("sprint", new Sprint());
+		modelAndView.setViewName("common/createSprint");
+
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/common/createSprint", method = RequestMethod.POST)
+	public ModelAndView createSprint(@ModelAttribute Sprint sprint) {
+		System.out.println("post controller");
+		ModelAndView modelAndView = new ModelAndView();
+
+		modelAndView.setViewName("redirect:/common/projectView");
+
+		return modelAndView;
+	}
+
+>>>>>>> 466e9a1f139913b05211e7dfae71327289b3b5d0
 }

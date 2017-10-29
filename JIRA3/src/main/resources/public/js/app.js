@@ -1,4 +1,4 @@
-angular.module('jiraProject', ['ngRoute', 'adminProjectServices', 'jira.controllers'], function() {
+angular.module('jiraProject', ['ngRateIt', 'ngRoute', 'adminProjectServices', 'jira.controllers'], function() {
 
 }).config(['$routeProvider', function($routeProvider) {
   $routeProvider
