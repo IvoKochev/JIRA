@@ -42,4 +42,9 @@ public class UserServiceImpl implements UserService {
 		return this.userRepository.findByid(id);
 	}
 
+	@Override
+	public void updateUserRating(int id, double rating, int votes) {
+		this.userRepository.updateUserRating(id, rating, votes);
+	}
+
 }

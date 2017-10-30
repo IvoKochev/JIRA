@@ -31,4 +31,26 @@ angular.module('adminProjectServices', [])
       },
       posts: _posts
     };
+  }]).factory('SprintService', ['$http', function($http) {
+    var _posts = function posts(param) {
+      console.log(param);
+      return $http.get('/common/projectView/' + param);
+    };
+    var description = '';
+    var title = '';
+    return {
+      title: function() {
+        return title;
+      },
+      setTitle: function(newTitle) {
+        title = newTitle;
+      },
+      description: function() {
+        return description;
+      },
+      setDescription: function(newDescription) {
+        description = newDescription;
+      },
+      posts: _posts
+    };
   }]);

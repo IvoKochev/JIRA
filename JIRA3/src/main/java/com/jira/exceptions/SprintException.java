@@ -11,7 +11,12 @@ package com.jira.exceptions;
  */
 public class SprintException extends Exception{
 
-    public SprintException() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public SprintException() {
     }
 
     public SprintException(String message) {

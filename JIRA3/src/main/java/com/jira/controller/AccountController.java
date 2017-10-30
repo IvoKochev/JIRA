@@ -68,9 +68,7 @@ public class AccountController {
 		userCounter++;
 		allPoint += data.getRatingId();
 		double newRating = allPoint / userCounter;
-		user.setVotecounter(userCounter);
-		user.setRating(newRating);
-		this.userService.saveUser(user);
+		this.userService.updateUserRating(user.getId(), newRating, userCounter);
 		modelAndView.setViewName("/common/projectView");
 		return modelAndView;
 	}

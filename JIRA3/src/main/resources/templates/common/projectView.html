@@ -11,30 +11,26 @@
 	</style>
 </head>
 
-<body> 
+<body>
 	<form class="form-horizontal" role="form" autocomplete="off" action="#" th:action="@{/share/project}" method="post">
 		<div class="form-group">
 			<div class="col-md-2">
 				<input name="email" type="text" class="form-control" placeholder="Email">
 			</div>
-<<<<<<< HEAD
-=======
 			<input type="hidden" value="{{project.id}}" name="projectId" />
->>>>>>> 466e9a1f139913b05211e7dfae71327289b3b5d0
 			<input type="hidden" value="{{project.id}}" name="projectId" />
 			<nav class="col-md-2">
 				<button class="btn btn-info sm" name="Share" value="Share" type="Submit" th:text="Share"></button>
 			</nav>
 		</div>
 	</form>
-	<form class="form-horizontal" role="form" autocomplete="off" action="#" th:action="@{/common/createSprint}" method="get">
+
 		<div class="form-group">
-			<input type="hidden" value="{{project.id}}" name="projectId" />
 			<nav class="col-md-2">
-				<button class="btn btn-info sm" name="Share" value="Share" type="Submit" th:text="Sprint"></button>
+				<a ng-href="http://localhost:8080/common/home#!/createSprint/{{project.id}}"><img ng-src="/images/createProject.ico" width="50" height="50"> Sprint </a>
 			</nav>
 		</div>
-	</form>
+
 	<table class="kffeWc">
 		<thead class="iccVIQ">
 			<tr>
@@ -76,7 +72,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-xs-6 col-md-4 col-lg-3" ng-repeat="user in project.users">
+		<div class="col-xs-6 col-md-4 col-lg-3" ng-repeat="user in project.users  | orderBy:'-rating'">
 			<div class="row top-buffer">
 				<img src="{{user.imgurl}}" class="col-xs-3" />
 				<div class="row">
@@ -86,13 +82,10 @@
 					<strong>email: </strong><a href="#">{{user.email}}</a>
 				</div>
 				<div class="row">
-<<<<<<< HEAD
 					<strong>rating: </strong><a href="#">{{user.rating}}</a>
-=======
 					<ng-rate-it ng-model="user.rating" rated="myCallback(rating,user.id)"></ng-rate-it>
 					<strong>rating: </strong><a href="#">{{user.rating}}</a>
-					<strong>votes: </strong><a href="#">{{user.usercounter}}</a>
->>>>>>> 466e9a1f139913b05211e7dfae71327289b3b5d0
+					<strong>votes: </strong><a href="#">{{user.votecounter}}</a>
 				</div>
 			</div>
 		</div>
