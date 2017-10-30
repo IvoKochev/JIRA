@@ -20,6 +20,7 @@ import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.exceptions.SprintException;
 import com.jira.model.Project;
 import com.jira.model.Sprint;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  *
@@ -55,8 +56,9 @@ public class SprintController {
 		return modelAndView;
 	}
         
-        @RequestMapping(value = "/common/sprintView", method = RequestMethod.GET)
-        public ModelAndView getIssueView() {
+        @RequestMapping(value = "/common/sprintView/{id}", method = RequestMethod.GET)
+        public ModelAndView getIssueView(@PathVariable(name = "id") int id, HttpServletRequest request) {
+            request.setAttribute("sprintId", id);
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("common/sprintView");
             return modelAndView;
