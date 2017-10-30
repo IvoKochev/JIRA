@@ -18,6 +18,7 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Table(name = "issues")
@@ -28,7 +29,7 @@ public class Issue implements Serializable {
 	 */
 	private static final long serialVersionUID = -5899221217986589147L;
 	private Integer id;
-	private Integer sprints_id;
+	private Sprint sprint;
 	private String type;
 	private String summary;
 	private String description;
@@ -97,14 +98,15 @@ public class Issue implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+        
+	@ManyToOne
 	@Column(name = "sprints_id")
-	public Integer getSprints_id() {
-		return sprints_id;
+	public Sprint getSprints_id() {
+		return sprint;
 	}
 
-	public void setSprints_id(Integer sprints_id) {
-		this.sprints_id = sprints_id;
+	public void setSprints_id(Sprint sprint) {
+		this.sprint = sprint;
 	}
 
 	@Column(name = "reporter_id")
@@ -128,7 +130,7 @@ public class Issue implements Serializable {
 
 	@OneToMany(mappedBy = "issue")
 	@Fetch(FetchMode.JOIN)
-    @JsonIgnore
+        @JsonIgnore
 	public Set<Comments> getComments() {
 		return comments;
 	}
@@ -139,7 +141,7 @@ public class Issue implements Serializable {
 
 	@OneToMany(mappedBy = "issue")
 	@Fetch(FetchMode.JOIN)
-    @JsonIgnore
+        @JsonIgnore
 	public Set<Attachment> getAttachments() {
 		return attachments;
 	}
@@ -160,7 +162,6 @@ public class Issue implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((priority == null) ? 0 : priority.hashCode());
 		result = prime * result + ((reporter_id == null) ? 0 : reporter_id.hashCode());
-		result = prime * result + ((sprints_id == null) ? 0 : sprints_id.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((summary == null) ? 0 : summary.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
@@ -210,11 +211,6 @@ public class Issue implements Serializable {
 			if (other.reporter_id != null)
 				return false;
 		} else if (!reporter_id.equals(other.reporter_id))
-			return false;
-		if (sprints_id == null) {
-			if (other.sprints_id != null)
-				return false;
-		} else if (!sprints_id.equals(other.sprints_id))
 			return false;
 		if (status == null) {
 			if (other.status != null)
