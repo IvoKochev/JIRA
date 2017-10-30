@@ -8,18 +8,28 @@
 		.top-buffer {
 			margin-top: 40px;
 		}
+
+		.fixed-panel {
+			min-height: 10;
+			max-height: 10;
+			overflow-y: scroll;
+		}
+
+		.panel-height {
+			height: 350px;
+		}
 	</style>
 </head>
 
 <body>
 	<div class="row">
 		<nav class="col-md-2">
-			<a ng-href="http://localhost:8080/common/home#!/createSprint/{{project.id}}"><img ng-src="/images/createProject.ico" width="50" height="50"> Ceeate sprint </a>
+			<a ng-href="http://localhost:8080/common/home#!/createSprint/{{project.id}}"><img ng-src="/images/createProject.ico" width="60" height="60"> Ceeate sprint </a>
 		</nav>
 		<div class="col-md-6">
 		</div>
 		<nav class="col-md-2">
-			<a ng-href="http://localhost:8080/common/home#!/createIssue/{{project.id}}"><img ng-src="/images/createProject.ico" width="50" height="50"> Issue </a>
+			<a ng-href="http://localhost:8080/common/home#!/createIssue/{{project.id}}"><img ng-src="/images/createProject.ico" width="60" height="60"> Issue </a>
 		</nav>
 		<div class="col-md-6">
 		</div>
@@ -44,8 +54,8 @@
 				<th width="70" class="bKZlcx"><span>Key</span></th>
 				<th width="150" class="dZlBnq"><span>Type</span></th>
 				<th width="200" class="dZlBnq"><span>Owner</span></th>
-				<th width="250" class="dZlBnq"><span>Category</span></th>
 				<th class="lbcrZf"><span>URL</span></th>
+				<th width="200" class="lbcrZf"><span>Category</span></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -63,38 +73,69 @@
 						ng-src="{{project.owner.imgurl}}" width="40" height="40" alt="">
 						{{project.owner.name}}
 				</a></td>
-				<td width="250" class="kqXqNO"><span>{{project.category}}</span></td>
-				<td class="kqXqNO"><span>{{project.url}}</span></td>
-				<td class="kqXqNO"><span>{{project.sprints}}</span></td>
+				<td class="kqXqNO" width="200"><span>{{project.url}}</span></td>
+				<td class="kqXqNO" width="200"><span>{{project.category}}</span></td>
 			</tr>
 		</tbody>
 	</table>
-	<div class="alert alert-info">
-		<div class="container">
-			<nav class="col-md-4">
-			</nav>
-			<nav class="col-md-8">
-				<h4>
-            <strong>User List</strong>
-				</h4>
-			</nav>
+
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<div class="container">
+				<nav class="col-md-4">
+				</nav>
+				<nav class="col-md-8">
+					<h4>
+							<strong>Sprint List</strong>
+					</h4>
+				</nav>
+			</div>
+		</div>
+		<div class="panel-body panel-height" style="max-height: 5;overflow-y: scroll;">
+			<div class="col-xs-6 col-md-4 col-lg-3" ng-repeat="sprint in project.sprints ">
+				<div class="row top-buffer">
+					<td width="200" class="kUfcsh"><span class="gGsHVf"> <a
+								ng-href="http://localhost:8080/common/home#!/sprintView/{{sprint.id}}">
+									<img ng-src="{{sprint.imgurl}}" width="50" height="50">{{sprint.name}}
+							</a>
+						</span></td>
+
+					<div class="row">
+						<strong>Goal: </strong><a>{{sprint.sprintgoal}}</a>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-xs-6 col-md-4 col-lg-3" ng-repeat="user in project.users  | orderBy:'-rating'">
-			<div class="row top-buffer">
-				<img src="{{user.imgurl}}" class="col-xs-3" />
-				<div class="row">
-					<strong>{{user.name}}</strong>
-				</div>
-				<div class="row">
-					<strong>email: </strong><a href="#">{{user.email}}</a>
-				</div>
-				<div class="row">
-					<strong>rating: </strong><a href="#">{{user.rating}}</a>
-					<ng-rate-it max="10" read-only="isVoted" ng-model="user.rating" rated="myCallback(rating,user.id,project.id)"></ng-rate-it>
-					<strong>rating: </strong><a href="#">{{user.rating}}</a>
-					<strong>votes: </strong><a href="#">{{user.votecounter}}</a>
+
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<div class="container">
+				<nav class="col-md-4">
+				</nav>
+				<nav class="col-md-8">
+					<h4>
+	            <strong>User List</strong>
+					</h4>
+				</nav>
+			</div>
+		</div>
+		<div class="panel-body panel-height" style="max-height: 5;overflow-y: scroll;">
+			<div class="col-xs-6 col-md-4 col-lg-3" ng-repeat="user in project.users  | orderBy:'-rating'">
+				<div class="row top-buffer">
+					<img width="60" height="60" src="{{user.imgurl}}" class="col-xs-4" />
+					<div class="row">
+						<strong>{{user.name}}</strong>
+					</div>
+					<div class="row">
+						<strong>email: </strong><a href="#">{{user.email}}</a>
+					</div>
+					<div class="row">
+						<strong>rating: </strong><a href="#">{{user.rating}}</a>
+						<ng-rate-it max="10" read-only="isVoted" ng-model="user.rating" rated="myCallback(rating,user.id,project.id)"></ng-rate-it>
+						<strong>rating: </strong><a href="#">{{user.rating}}</a>
+						<strong>votes: </strong><a href="#">{{user.votecounter}}</a>
+					</div>
 				</div>
 			</div>
 		</div>

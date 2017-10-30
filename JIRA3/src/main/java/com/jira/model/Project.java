@@ -153,7 +153,7 @@ public class Project {
 
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="project")
 	public Set<Sprint> getSprints() {
 		return sprints;
 	}

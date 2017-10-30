@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "sprints")
 public class Sprint implements Serializable {
@@ -27,6 +29,7 @@ public class Sprint implements Serializable {
 	private String start_date;
 	private String end_date;
 	private Project project;
+	private String imgurl;
 
 	public Sprint() {
 	}
@@ -89,12 +92,22 @@ public class Sprint implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "projects_id")
+	@JsonIgnore
 	public Project getProject() {
 		return project;
 	}
 
 	public void setProject(Project project) {
 		this.project = project;
+	}
+	
+	@Column(name = "imgurl")
+	public String getImgurl() {
+		return imgurl;
+	}
+
+	public void setImgurl(String imgurl) {
+		this.imgurl = imgurl;
 	}
 
 	@Override

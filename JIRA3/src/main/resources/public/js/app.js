@@ -20,6 +20,9 @@ angular.module('jiraProject', ['ngRateIt', 'ngRoute', 'adminProjectServices', 'j
     }).when('/createIssue/:id', {
       templateUrl: 'createIssue.html;',
       controller: 'IssueCtrl'
+    }).when('/sprintView/:id', {
+      templateUrl: 'sprintView.html;',
+      controller: 'SprintViewCtrl'
     }).when('/404', {
       templateUrl: '404.html;',
       controller: 'ErrorCtrl'
