@@ -29,15 +29,15 @@ public class Issue implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -5899221217986589147L;
-	private Integer id;
+	private int id;
 	private Sprint sprint;
 	private String type;
 	private String summary;
 	private String description;
 	private String priority;
 	private String status;
-	private Integer reporter_id;
-	private Integer asignee_id;
+	private int reporter_id;
+	private int asignee_id;
 	private Set<Attachment> attachments = new HashSet<>();
 	private Set<Comments> comments = new HashSet<>();
 	
@@ -120,12 +120,12 @@ public class Issue implements Serializable {
 	}
 	
 	@Column(name = "asignee_id")
-	public Integer getAsignee_id() {
+	public int getAsignee_id() {
 		return asignee_id;
 	}
 	
 
-	public void setAsignee_id(Integer asignee_id) {
+	public void setAsignee_id(int asignee_id) {
 		this.asignee_id = asignee_id;
 	}
 
@@ -156,13 +156,10 @@ public class Issue implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((asignee_id == null) ? 0 : asignee_id.hashCode());
 		result = prime * result + ((attachments == null) ? 0 : attachments.hashCode());
 		result = prime * result + ((comments == null) ? 0 : comments.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((priority == null) ? 0 : priority.hashCode());
-		result = prime * result + ((reporter_id == null) ? 0 : reporter_id.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((summary == null) ? 0 : summary.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
@@ -178,11 +175,6 @@ public class Issue implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Issue other = (Issue) obj;
-		if (asignee_id == null) {
-			if (other.asignee_id != null)
-				return false;
-		} else if (!asignee_id.equals(other.asignee_id))
-			return false;
 		if (attachments == null) {
 			if (other.attachments != null)
 				return false;
@@ -198,20 +190,11 @@ public class Issue implements Serializable {
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
+
 		if (priority == null) {
 			if (other.priority != null)
 				return false;
 		} else if (!priority.equals(other.priority))
-			return false;
-		if (reporter_id == null) {
-			if (other.reporter_id != null)
-				return false;
-		} else if (!reporter_id.equals(other.reporter_id))
 			return false;
 		if (status == null) {
 			if (other.status != null)

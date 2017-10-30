@@ -1,5 +1,10 @@
 package com.jira.repository;
 
-public interface IssueRepository {
+import com.jira.model.Issue;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository("issueRepository")
+public interface IssueRepository extends JpaRepository<Issue, Long>{
+    public Issue findById(int id);
 }
