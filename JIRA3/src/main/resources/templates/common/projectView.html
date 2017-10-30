@@ -24,14 +24,13 @@
 			</nav>
 		</div>
 	</form>
-	<form class="form-horizontal" role="form" autocomplete="off" action="#" th:action="@{/common/createSprint}" method="get">
+
 		<div class="form-group">
-			<input type="hidden" value="{{project.id}}" name="projectId" />
 			<nav class="col-md-2">
-				<button class="btn btn-info sm" name="Share" value="Share" type="Submit" th:text="Sprint"></button>
+				<a ng-href="http://localhost:8080/common/home#!/createSprint/{{project.id}}"><img ng-src="/images/createProject.ico" width="50" height="50"> Sprint </a>
 			</nav>
 		</div>
-	</form>
+
 	<table class="kffeWc">
 		<thead class="iccVIQ">
 			<tr>
@@ -86,7 +85,7 @@
 					<strong>rating: </strong><a href="#">{{user.rating}}</a>
 					<ng-rate-it ng-model="user.rating" rated="myCallback(rating,user.id)"></ng-rate-it>
 					<strong>rating: </strong><a href="#">{{user.rating}}</a>
-					<strong>votes: </strong><a href="#">{{user.usercounter}}</a>
+					<strong>votes: </strong><a href="#">{{user.votecounter}}</a>
 				</div>
 			</div>
 		</div>

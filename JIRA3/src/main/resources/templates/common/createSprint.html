@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
 <html>
 
 <head>
@@ -16,68 +15,48 @@
     }
   </style>
 </head>
-	<body>
-		<span th:utext="${projectId}"></span>
-		<div class="jumbotron vertical-center">
-    <div class="container">
-      <div class="row top30">
-        <div class="col-md-6 col-md-offset-3">
-          <form autocomplete="off" action="#" th:action="@{/common/createSprint}" th:object="${sprint}" method="post" class="form-horizontal" role="form">
-            <h2>Sprint Form</h2>
 
-            <div class="form-group">
-              <div class="col-sm-9">
-
-                <input type="text" th:field="*{name}" placeholder="Sprint name" class="form-control" />
-              </div>
-            </div>
-						<div class="form-group">
-	            <div class="col-sm-9">
-	              <input type="text" th:field="*{sprintgoal}" placeholder="Sprint goal" class="form-control" />
-	            </div>
-	          </div>
-						<div class="form-group">
-	            <div class="col-sm-9">
-	              <input type="date" th:field="*{start_date}" placeholder="Start date" class="form-control" />
-	            </div>
-	          </div>
-						<div class="form-group">
-	            <div class="col-sm-9">
-	              <input type="date" th:field="*{end_date}" placeholder="End date" class="form-control" />
-	            </div>
-	          </div>
-						<input type="hidden" th:value="${projectId}" name="projectId" />
-            <div class="form-group">
-              <div class="col-sm-9">
-                <button type="submit" class="btn btn-primary btn-block">Create Sprint</button>
-              </div>
-            </div>
-            <span th:utext="${successMessage}"></span>
-
-=======
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-	<title>Create sprint</title>
-
-</head>
 <body>
-	<div class="jumbotron vertical-center">
+  <div class="jumbotron vertical-center">
     <div class="container">
       <div class="row top30">
         <div class="col-md-6 col-md-offset-3">
           <form autocomplete="off" action="#" th:action="@{/createSprint}" th:object="${sprint}" method="post" class="form-horizontal" role="form">
             <h2>Sprint Form</h2>
+
             <div class="form-group">
               <div class="col-sm-9">
+
                 <input type="text" th:field="*{name}" placeholder="Sprint name" class="form-control" />
               </div>
             </div>
->>>>>>> 466e9a1f139913b05211e7dfae71327289b3b5d0
+            <div class="form-group">
+              <div class="col-sm-9">
+                <input type="text" th:field="*{sprintgoal}" placeholder="Sprint goal" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-9">
+                <input type="date" th:field="*{start_date}" placeholder="Start date" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-9">
+                <input type="date" th:field="*{end_date}" placeholder="End date" class="form-control" />
+              </div>
+            </div>
+            <input type="hidden" ng-value="{{projectId}}" name="projectId" />
+            <div class="form-group">
+              <div class="col-sm-9">
+                <button type="submit" class="btn btn-primary btn-block">Create Sprint</button>
+              </div>
+            </div>
           </form>
         </div>
       </div>
     </div>
   </div>
+
 </body>
+
 </html>

@@ -9,4 +9,5 @@ public interface UserService {
 
 	public User findById(int id);
 
+	public void updateUserRating(int id, double rating,int votes);
 }
