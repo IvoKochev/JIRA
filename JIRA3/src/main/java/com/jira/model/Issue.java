@@ -19,6 +19,7 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name = "issues")
@@ -100,7 +101,7 @@ public class Issue implements Serializable {
 	}
         
 	@ManyToOne
-	@Column(name = "sprints_id")
+	@JoinColumn(name = "sprints_id")
 	public Sprint getSprints_id() {
 		return sprint;
 	}
