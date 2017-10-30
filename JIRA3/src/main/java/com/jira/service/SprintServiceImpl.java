@@ -42,11 +42,7 @@ public class SprintServiceImpl implements ISprintService {
    
     @Override
     public void saveSprint(Sprint sprint) throws SprintException{
-        if(sprint != null && sprintRepository.findById(sprint.getId()) == null) {
-            sprintRepository.save(sprint);
-        } else {
-            throw new SprintException("Sprint already exists!");
-        }
+       this.sprintRepository.save(sprint);
     }
 
 	

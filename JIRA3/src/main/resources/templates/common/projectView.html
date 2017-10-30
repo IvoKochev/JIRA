@@ -65,6 +65,7 @@
 				</a></td>
 				<td width="250" class="kqXqNO"><span>{{project.category}}</span></td>
 				<td class="kqXqNO"><span>{{project.url}}</span></td>
+				<td class="kqXqNO"><span>{{project.sprints}}</span></td>
 			</tr>
 		</tbody>
 	</table>
@@ -91,7 +92,7 @@
 				</div>
 				<div class="row">
 					<strong>rating: </strong><a href="#">{{user.rating}}</a>
-					<ng-rate-it read-only="isVoted" star-width="30" start-height="30" ng-model="user.rating" rated="myCallback(rating,user.id,project.id)"></ng-rate-it>
+					<ng-rate-it max="10" read-only="isVoted" ng-model="user.rating" rated="myCallback(rating,user.id,project.id)"></ng-rate-it>
 					<strong>rating: </strong><a href="#">{{user.rating}}</a>
 					<strong>votes: </strong><a href="#">{{user.votecounter}}</a>
 				</div>
