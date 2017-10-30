@@ -62,7 +62,7 @@ angular.module('jira.controllers', [])
     $scope.projectId = $routeParams.id;
   }])
   .controller('IssueCtrl', ['$scope', '$routeParams', '$http', '$location', '$rootScope', function($scope, $routeParams, $http, $location, $rootScope) {
-    $scope.projectId = $routeParams.id;
+     console.log("IssueCtrl");
   }])
   .controller('ErrorCtrl', function($scope) {
 
