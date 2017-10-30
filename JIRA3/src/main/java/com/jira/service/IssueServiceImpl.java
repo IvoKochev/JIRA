@@ -1,21 +1,12 @@
 package com.jira.service;
 
-import com.jira.contract.IIssueService;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import com.jira.contract.IIssueService;
 import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.model.Issue;
 import com.jira.repository.IssueRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 @Service

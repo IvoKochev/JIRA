@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -19,7 +20,6 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name = "issues")
@@ -100,15 +100,7 @@ public class Issue implements Serializable {
 		this.status = status;
 	}
         
-	@ManyToOne
-	@JoinColumn(name = "sprints_id")
-	public Sprint getSprints_id() {
-		return sprint;
-	}
-
-	public void setSprints_id(Sprint sprint) {
-		this.sprint = sprint;
-	}
+	
 
 	@Column(name = "reporter_id")
 	public Integer getReporter_id() {
@@ -150,6 +142,16 @@ public class Issue implements Serializable {
 	
 	public void setAttachments(Set<Attachment> attachments) {
 		this.attachments = attachments;
+	}
+	@ManyToOne
+	@JoinColumn(name = "sprints_id")
+	@JsonIgnore
+	public Sprint getSprint() {
+		return sprint;
+	}
+
+	public void setSprint(Sprint sprint) {
+		this.sprint = sprint;
 	}
 
 	@Override

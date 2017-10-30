@@ -112,7 +112,6 @@ public class Project {
 
 	@ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "owner_id")
-
 	public User getOwner() {
 		return owner;
 	}

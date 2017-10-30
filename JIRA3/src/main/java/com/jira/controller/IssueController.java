@@ -33,7 +33,7 @@ public class IssueController {
         issue.setAsignee_id(4);
         issue.setReporter_id(4);
         Sprint sprint = sprintService.findSprintById(2);
-        issue.setSprints_id(sprint);
+        issue.setSprint(sprint);
         issue.setStatus("TO DO");
         issueService.saveIssue(issue);
         ModelAndView modelAndView = new ModelAndView();

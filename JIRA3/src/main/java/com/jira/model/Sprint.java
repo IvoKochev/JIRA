@@ -1,6 +1,7 @@
 package com.jira.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -30,7 +32,8 @@ public class Sprint implements Serializable {
 	private String end_date;
 	private Project project;
 	private String imgurl;
-
+    private Set<Issue> issues;
+	
 	public Sprint() {
 	}
 
@@ -121,6 +124,14 @@ public class Sprint implements Serializable {
 		result = prime * result + ((sprintgoal == null) ? 0 : sprintgoal.hashCode());
 		result = prime * result + ((start_date == null) ? 0 : start_date.hashCode());
 		return result;
+	}
+    @OneToMany(mappedBy="sprint")
+	public Set<Issue> getIssues() {
+		return issues;
+	}
+
+	public void setIssues(Set<Issue> issues) {
+		this.issues = issues;
 	}
 
 	@Override

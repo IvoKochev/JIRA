@@ -1,8 +1,6 @@
 package com.jira.contract;
 
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.model.Issue;
 

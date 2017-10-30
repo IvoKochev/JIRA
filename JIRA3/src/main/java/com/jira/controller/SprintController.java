@@ -68,6 +68,9 @@ public class SprintController {
 
 	@RequestMapping(value = "/common/sprintView/{id}", method = RequestMethod.GET)
 	public List<Issue> getIssueViewPost(@PathVariable(value = "id") int id) {
+		Sprint sprint = this.sprintService.findSprintById(id);
+		System.out.println(sprint.getIssues());
+		System.out.println(sprint);
 		System.out.println(id);
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("common/sprintView");
