@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -18,7 +19,6 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.persistence.ManyToOne;
 
 @Entity
 @Table(name = "issues")
@@ -99,8 +99,8 @@ public class Issue implements Serializable {
 		this.status = status;
 	}
         
-//	@ManyToOne
-	//@Column(name = "sprints_id")
+	@ManyToOne
+	@Column(name = "sprints_id")
 	public Sprint getSprints_id() {
 		return sprint;
 	}
@@ -128,9 +128,9 @@ public class Issue implements Serializable {
 		this.asignee_id = asignee_id;
 	}
 
-//	@OneToMany(mappedBy = "issue")
-	//@Fetch(FetchMode.JOIN)
-      //  @JsonIgnore
+	@OneToMany(mappedBy = "issue")
+	@Fetch(FetchMode.JOIN)
+        @JsonIgnore
 	public Set<Comments> getComments() {
 		return comments;
 	}
@@ -139,9 +139,9 @@ public class Issue implements Serializable {
 		this.comments = comments;
 	}
 
-	//@OneToMany(mappedBy = "issue")
-//	@Fetch(FetchMode.JOIN)
-      //  @JsonIgnore
+	@OneToMany(mappedBy = "issue")
+	@Fetch(FetchMode.JOIN)
+        @JsonIgnore
 	public Set<Attachment> getAttachments() {
 		return attachments;
 	}
