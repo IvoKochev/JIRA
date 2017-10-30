@@ -12,24 +12,30 @@
 </head>
 
 <body>
-	<form class="form-horizontal" role="form" autocomplete="off" action="#" th:action="@{/share/project}" method="post">
-		<div class="form-group">
-			<div class="col-md-2">
-				<input name="email" type="text" class="form-control" placeholder="Email">
+	<div class="row">
+		<nav class="col-md-2">
+			<a ng-href="http://localhost:8080/common/home#!/createSprint/{{project.id}}"><img ng-src="/images/createProject.ico" width="50" height="50"> Ceeate sprint </a>
+		</nav>
+		<div class="col-md-6">
+		</div>
+		<nav class="col-md-2">
+			<a ng-href="http://localhost:8080/common/home#!/createIssue/{{project.id}}"><img ng-src="/images/createProject.ico" width="50" height="50"> Issue </a>
+		</nav>
+		<div class="col-md-6">
+		</div>
+		<form class="form-horizontal" role="form" autocomplete="off" action="#" th:action="@{/share/project}" method="post">
+			<div class="form-group">
+				<div class="col-md-2">
+					<input name="email" type="text" class="form-control" placeholder="Email">
+				</div>
+				<input type="hidden" value="{{project.id}}" name="projectId" />
+				<input type="hidden" value="{{project.id}}" name="projectId" />
+				<nav class="col-md-2">
+					<button class="btn btn-info sm" name="Share" value="Share" type="Submit" th:text="Share"></button>
+				</nav>
 			</div>
-			<input type="hidden" value="{{project.id}}" name="projectId" />
-			<input type="hidden" value="{{project.id}}" name="projectId" />
-			<nav class="col-md-2">
-				<button class="btn btn-info sm" name="Share" value="Share" type="Submit" th:text="Share"></button>
-			</nav>
-		</div>
-	</form>
-
-		<div class="form-group">
-			<nav class="col-md-2">
-				<a ng-href="http://localhost:8080/common/home#!/createSprint/{{project.id}}"><img ng-src="/images/createProject.ico" width="50" height="50"> Sprint </a>
-			</nav>
-		</div>
+		</form>
+	</div>
 
 	<table class="kffeWc">
 		<thead class="iccVIQ">
@@ -67,7 +73,9 @@
 			<nav class="col-md-4">
 			</nav>
 			<nav class="col-md-8">
-				<h3>User list</h3>
+				<h4>
+            <strong>User List</strong>
+				</h4>
 			</nav>
 		</div>
 	</div>
@@ -83,14 +91,29 @@
 				</div>
 				<div class="row">
 					<strong>rating: </strong><a href="#">{{user.rating}}</a>
-					<ng-rate-it ng-model="user.rating" rated="myCallback(rating,user.id)"></ng-rate-it>
+					<ng-rate-it read-only="isVoted" star-width="30" start-height="30" ng-model="user.rating" rated="myCallback(rating,user.id,project.id)"></ng-rate-it>
 					<strong>rating: </strong><a href="#">{{user.rating}}</a>
 					<strong>votes: </strong><a href="#">{{user.votecounter}}</a>
 				</div>
 			</div>
 		</div>
 	</div>
-
+	<!-- <ng-rate-it
+	ng-model = "String, Number, Array"
+	min = "5"
+	max = "Double"
+	step = "Double"
+	read-only = "Boolean"
+	pristine = "Boolean"
+	resetable = "Boolean"
+	star-width = "Integer"
+	star-height = "Integer"
+	rated = "Function(rating)"
+	reset = "Function(rating)"
+	before-rated = "Function(newRating): return promise"
+	before-reset = "Function(rating): return promise"
+	>
+</ng-rate-it> -->
 </body>
 
 </html>
