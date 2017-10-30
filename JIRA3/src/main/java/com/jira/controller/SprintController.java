@@ -27,33 +27,30 @@ import com.jira.model.Sprint;
  */
 @RestController
 public class SprintController {
+	@Autowired
+	private ISprintService sprintService;
+	@Autowired
+	private IProjectService projectService;
 
+	@RequestMapping(value = "/common/createSprint", method = RequestMethod.GET)
+	public ModelAndView getSprint() throws ResourceNotFoundException {
+		Sprint sprint = new Sprint();
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("sprint", sprint);
+		modelAndView.setViewName("common/createSprint");
+		return modelAndView;
+	}
 
-
-    private ISprintService sprintService;
-    @Autowired
-    private IProjectService projectService;
-    
-    @RequestMapping(value = "/common/createSprint", method = RequestMethod.GET)
-    public ModelAndView getSprint(HttpServletRequest request) throws ResourceNotFoundException{
-        Sprint sprint = new Sprint();
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("sprint", sprint);
-        modelAndView.setViewName("common/createSprint");
-        
-        return modelAndView;
-    }
-    
-    @RequestMapping(value = "/common/createSprint", method = RequestMethod.POST)
-    public ModelAndView createSprint(@ModelAttribute Sprint sprint, HttpServletRequest request) throws SprintException {        
-        int id = Integer.parseInt(request.getParameter("projectId"));
-        Project project = projectService.getProjectById(id);
-        int owner_id = (int) request.getSession().getAttribute("user_id");
-        sprint.setProject_id(project);
-        sprint.setOwner_id(owner_id);
-        ModelAndView modelAndView = new ModelAndView();
-        sprintService.saveSprint(sprint);
-        modelAndView.setViewName("redirect:/common/projectView");
-        return modelAndView;
-    }
+	@RequestMapping(value = "/createSprint", method = RequestMethod.POST)
+	public ModelAndView createSprint(@ModelAttribute Sprint sprint, HttpServletRequest request) throws SprintException {
+		int id = Integer.parseInt(request.getParameter("projectId"));
+		Project project = projectService.getProjectById(id);
+		int owner_id = (int) request.getSession().getAttribute("user_id");
+		sprint.setProject(project);
+		sprint.setOwner_id(owner_id);
+		ModelAndView modelAndView = new ModelAndView();
+		sprintService.saveSprint(sprint);
+		modelAndView.setViewName("redirect:/common/home#!/projectView/" + id);
+		return modelAndView;
+	}
 }

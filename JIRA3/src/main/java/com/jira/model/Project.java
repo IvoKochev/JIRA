@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -36,8 +37,8 @@ public class Project {
 	private String imgurl;
 
 	private Set<User> users;
-	
-	//private Set<Sprint> sprints = new HashSet<>();
+
+	private Set<Sprint> sprints;
 
 	private User owner;
 
@@ -111,7 +112,7 @@ public class Project {
 
 	@ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "owner_id")
-	
+
 	public User getOwner() {
 		return owner;
 	}
@@ -122,7 +123,7 @@ public class Project {
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "users_projects", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-	
+
 	public Set<User> getUsers() {
 		return users;
 	}
@@ -130,7 +131,7 @@ public class Project {
 	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -152,5 +153,12 @@ public class Project {
 
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	public Set<Sprint> getSprints() {
+		return sprints;
+	}
 
+	public void setSprints(Set<Sprint> sprints) {
+		this.sprints = sprints;
+	}
 }

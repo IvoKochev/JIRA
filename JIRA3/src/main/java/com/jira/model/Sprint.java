@@ -19,7 +19,7 @@ public class Sprint implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 7483346645618876141L;
-	
+
 	private int id;
 	private String name;
 	private Integer owner_id;
@@ -28,8 +28,8 @@ public class Sprint implements Serializable {
 	private String end_date;
 	private Project project;
 
-    public Sprint() {
-    }
+	public Sprint() {
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,7 +41,7 @@ public class Sprint implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	@Column(name = "name")
 	public String getName() {
 		return name;
@@ -89,11 +89,11 @@ public class Sprint implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "projects_id")
-	public Project getProject_id() {
+	public Project getProject() {
 		return project;
 	}
 
-	public void setProject_id(Project project) {
+	public void setProject(Project project) {
 		this.project = project;
 	}
 
@@ -148,7 +148,5 @@ public class Sprint implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
 
 }
