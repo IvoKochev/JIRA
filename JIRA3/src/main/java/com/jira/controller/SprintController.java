@@ -27,9 +27,7 @@ import com.jira.model.Sprint;
  */
 @RestController
 public class SprintController {
-
-
-
+    @Autowired
     private ISprintService sprintService;
     @Autowired
     private IProjectService projectService;

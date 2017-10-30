@@ -18,6 +18,7 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -39,6 +40,11 @@ public class Issue implements Serializable {
 	private Integer asignee_id;
 	private Set<Attachment> attachments = new HashSet<>();
 	private Set<Comments> comments = new HashSet<>();
+
+        public Issue() {
+        }
+        
+        
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -100,7 +106,7 @@ public class Issue implements Serializable {
 	}
         
 	@ManyToOne
-	@Column(name = "sprints_id")
+	@JoinColumn(name = "sprints_id")
 	public Sprint getSprints_id() {
 		return sprint;
 	}

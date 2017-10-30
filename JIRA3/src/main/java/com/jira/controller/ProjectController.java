@@ -71,7 +71,7 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/common/projectView/{id}", method = RequestMethod.GET)
-	public Project getProjectById(@PathVariable(name = "id") int id)
+            public Project getProjectById(@PathVariable(name = "id") int id)
 			throws ResourceNotFoundException {
 		return this.projectService.getProjectById(id);
 	}
