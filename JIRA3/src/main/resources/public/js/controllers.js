@@ -65,7 +65,7 @@ angular.module('jira.controllers', [])
     console.log("IssueCtrl");
   }]).controller('SprintViewCtrl', ['$scope', 'SprintViewService', '$routeParams', '$http', '$location', '$rootScope', function($scope, SprintViewService, $routeParams, $http, $location, $rootScope) {
     SprintViewService.posts($routeParams.id).then(function success(response) {
-      $scope.project = response.data;
+      $scope.issues = response.data;
     }, function error(data, status, headers, config) {
       $location.path('/404');
     });

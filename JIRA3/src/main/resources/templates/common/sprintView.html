@@ -7,8 +7,9 @@
 </head>
 
 <body>
-  <h1>Sprint View</h1>
-  <span>{{sprintId}}</span>
+  <div class="row" ng-repeat="issue in issues ">
+    <strong>{{issue.type}}</strong>
+  </div>
 </body>
 
 </html>

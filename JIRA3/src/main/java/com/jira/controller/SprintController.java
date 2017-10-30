@@ -5,12 +5,13 @@
  */
 package com.jira.controller;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +24,6 @@ import com.jira.exceptions.SprintException;
 import com.jira.model.Issue;
 import com.jira.model.Project;
 import com.jira.model.Sprint;
-import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  *
@@ -67,14 +67,9 @@ public class SprintController {
 	}
 
 	@RequestMapping(value = "/common/sprintView/{id}", method = RequestMethod.GET)
-	public List<Issue> getIssueViewPost(@PathVariable(value = "id") int id) {
+	public Set<Issue> getIssueViewPost(@PathVariable(value = "id") int id) {
 		Sprint sprint = this.sprintService.findSprintById(id);
-		System.out.println(sprint.getIssues());
-		System.out.println(sprint);
-		System.out.println(id);
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("common/sprintView");
-		return null;
+		return sprint.getIssues();
 	}
 
 }
