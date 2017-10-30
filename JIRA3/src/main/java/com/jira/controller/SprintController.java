@@ -8,13 +8,13 @@ package com.jira.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
+
 
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-=======
+
 import org.springframework.web.bind.annotation.ModelAttribute;
->>>>>>> 284b6239770d4ee556ff2a64fdf007ba7f50437b
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,10 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.jira.contract.IProjectService;
 import com.jira.contract.ISprintService;
-<<<<<<< HEAD
 
-=======
->>>>>>> 284b6239770d4ee556ff2a64fdf007ba7f50437b
+
 import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.exceptions.SprintException;
 import com.jira.model.Project;
@@ -39,12 +37,10 @@ import com.jira.repository.SprintRepository;
 @RestController
 public class SprintController {
 
-<<<<<<< HEAD
+
 
     private SprintRepository sprintRepository;
-=======
->>>>>>> 284b6239770d4ee556ff2a64fdf007ba7f50437b
-    @Autowired
+
     private ISprintService sprintService;
     @Autowired
     private IProjectService projectService;

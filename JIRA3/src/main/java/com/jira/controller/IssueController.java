@@ -20,9 +20,10 @@ import org.springframework.web.servlet.ModelAndView;
 public class IssueController {
 
 	
-    @RequestMapping(value = "/common/{id}/createIssue", method = RequestMethod.GET)
-    public ModelAndView test(@PathVariable(name = "id") int id) {
-        System.out.println(id);
-        return null;
+    @RequestMapping(value = "/common/createIssue", method = RequestMethod.GET)
+    public ModelAndView test() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("common/createIssue");
+        return modelAndView;
     }
 }
