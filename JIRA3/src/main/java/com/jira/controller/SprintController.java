@@ -59,5 +59,12 @@ public class SprintController {
 		modelAndView.setViewName("redirect:/common/home#!/projectView/" + id);
 		return modelAndView;
 	}
+        
+        @RequestMapping(value = "/common/sprintView", method = RequestMethod.GET)
+        public ModelAndView getIssueView() {
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("common/sprintView");
+            return modelAndView;
+        }
 
 }
