@@ -7,5 +7,5 @@ import com.jira.model.Issue;
 
 @Repository("issueRepository")
 public interface IssueRepository extends JpaRepository<Issue, Long> {
-	public Issue findById(Integer id);
+	public Issue findById(int id);
 }
