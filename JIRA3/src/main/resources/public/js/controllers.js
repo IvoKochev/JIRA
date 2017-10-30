@@ -69,8 +69,13 @@ angular.module('jira.controllers', [])
     }, function error(data, status, headers, config) {
       $location.path('/404');
     });
-  }]).controller('IssueViewCtrl', ['$scope', '$routeParams', '$http', '$location', '$rootScope', function($scope, $routeParams, $http, $location, $rootScope) {
-    $scope.projectId = $routeParams.id;
+  }]).controller('IssueViewCtrl', ['$scope', 'IssueViewService', '$routeParams', '$http', '$location', '$rootScope', function($scope, IssueViewService, $routeParams, $http, $location, $rootScope) {
+    IssueViewService.posts($routeParams.id).then(function success(response) {
+      $scope.issue = response.data;
+      console.log($scope.issue);
+    }, function error(data, status, headers, config) {
+      $location.path('/404');
+    });
   }])
   .controller('ErrorCtrl', function($scope) {
 
