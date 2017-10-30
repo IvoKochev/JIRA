@@ -5,6 +5,8 @@
  */
 package com.jira.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import com.jira.contract.IProjectService;
 import com.jira.contract.ISprintService;
 import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.exceptions.SprintException;
+import com.jira.model.Issue;
 import com.jira.model.Project;
 import com.jira.model.Sprint;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,10 +32,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RestController
 public class SprintController {
 
-    @Autowired
-    private ISprintService sprintService;
-    @Autowired
-    private IProjectService projectService;
+	@Autowired
+	private ISprintService sprintService;
+	@Autowired
+	private IProjectService projectService;
 
 	@RequestMapping(value = "/common/createSprint", method = RequestMethod.GET)
 	public ModelAndView getSprint() throws ResourceNotFoundException {
@@ -55,13 +58,20 @@ public class SprintController {
 		modelAndView.setViewName("redirect:/common/home#!/projectView/" + id);
 		return modelAndView;
 	}
-        
-        @RequestMapping(value = "/common/sprintView/{id}", method = RequestMethod.GET)
-        public ModelAndView getIssueView(@PathVariable(name = "id") int id, HttpServletRequest request) {
-            request.setAttribute("sprintId", id);
-            ModelAndView modelAndView = new ModelAndView();
-            modelAndView.setViewName("common/sprintView");
-            return modelAndView;
-        }
+
+	@RequestMapping(value = "/common/sprintView", method = RequestMethod.GET)
+	public ModelAndView getIssueView() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("common/sprintView");
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/common/sprintView/{id}", method = RequestMethod.GET)
+	public List<Issue> getIssueViewPost(@PathVariable(value = "id") int id) {
+		System.out.println(id);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("common/sprintView");
+		return null;
+	}
 
 }

@@ -63,8 +63,12 @@ angular.module('jira.controllers', [])
   }])
   .controller('IssueCtrl', ['$scope', '$routeParams', '$http', '$location', '$rootScope', function($scope, $routeParams, $http, $location, $rootScope) {
     console.log("IssueCtrl");
-  }]).controller('SprintViewCtrl', ['$scope', '$routeParams', '$http', '$location', '$rootScope', function($scope, $routeParams, $http, $location, $rootScope) {
-    console.log("sprintViewCtrl");
+  }]).controller('SprintViewCtrl', ['$scope', 'SprintViewService', '$routeParams', '$http', '$location', '$rootScope', function($scope, SprintViewService, $routeParams, $http, $location, $rootScope) {
+    SprintViewService.posts($routeParams.id).then(function success(response) {
+      $scope.project = response.data;
+    }, function error(data, status, headers, config) {
+      $location.path('/404');
+    });
   }])
   .controller('ErrorCtrl', function($scope) {
 

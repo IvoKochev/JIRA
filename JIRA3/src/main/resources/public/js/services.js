@@ -31,10 +31,10 @@ angular.module('adminProjectServices', [])
       },
       posts: _posts
     };
-  }]).factory('SprintService', ['$http', function($http) {
+  }]).factory('SprintViewService', ['$http', function($http) {
     var _posts = function posts(param) {
       console.log(param);
-      return $http.get('/common/projectView/' + param);
+      return $http.get('/common/sprintView/' + param);
     };
     var description = '';
     var title = '';
