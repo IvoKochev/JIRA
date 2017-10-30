@@ -32,11 +32,6 @@ public class SprintController {
     private ISprintService sprintService;
     @Autowired
     private IProjectService projectService;
-    
-    
-
-
-	
 
 	@RequestMapping(value = "/common/createSprint", method = RequestMethod.GET)
 	public ModelAndView getSprint() throws ResourceNotFoundException {

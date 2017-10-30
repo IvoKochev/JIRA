@@ -109,41 +109,55 @@
 			bottom: 0;
 			right: 0;
 		}
+
+
+
+		.container {
+			padding-right: 15px;
+			padding-left: 15px;
+			margin-right: auto;
+			margin-left: auto;
+		}
 	</style>
 </head>
 
 <body ng-app="jiraProject">
-	<div class="row">
-		<div class="col-md-2">
-			<div class="sidenav">
-				<a ng-href="#"><img ng-src="/images/home.png" width="50" height="50"> Home</a>
-				<a ng-href="http://localhost:8080/common/home#!/account"><img ng-src="/images/account.png" width="50" height="50"> Account</a>
-				<div th:if="${isAdmin}">
-					<a ng-href="http://localhost:8080/common/home#!/createProject"><img ng-src="/images/createProject.ico" width="50" height="50"> Project </a>
+	<div class="wrapper container">
+		<div class="row">
+			<div class="col-md-2">
+				<div class="sidenav">
+					<a ng-href="#"><img ng-src="/images/home.png" width="50" height="50"> Home</a>
+					<a ng-href="http://localhost:8080/common/home#!/account"><img ng-src="/images/account.png" width="50" height="50"> Account</a>
+					<div th:if="${isAdmin}">
+						<a ng-href="http://localhost:8080/common/home#!/createProject"><img ng-src="/images/createProject.ico" width="50" height="50"> Project </a>
+					</div>
+					<a ng-href="#"><img ng-src="/images/info.png" width="50" height="50"> Info</a>
+					<form th:action="@{/logout}" method="get">
+						<button id="logof" class="btn btn-md btn-danger btn-block" name="registration" type="Submit">Logout</button>
+					</form>
 				</div>
-				<a ng-href="#"><img ng-src="/images/info.png" width="50" height="50"> Info</a>
-				<form th:action="@{/logout}" method="get">
-					<button id="logof" class="btn btn-md btn-danger btn-block" name="registration" type="Submit">Logout</button>
-				</form>
 			</div>
+			<section class="col-md-12">
+				<div class="panel-group" style="margin-top: 10px">
+					<div ng-view>
+						<script type="text/ng-template" id="projects.html">
+						</script>
+						<script type="text/ng-template" id="projectView.html">
+						</script>
+						<script type="text/ng-template" id="createProject.html">
+						</script>
+						<script type="text/ng-template" id="createSprint.html">
+						</script>
+						<script type="text/ng-template" id="createIssue.html">
+						</script>
+						<script type="text/ng-template" id="sprintView.html">
+						</script>
+						<script type="text/ng-template" id="404.html">
+						</script>
+					</div>
+				</div>
+			</section>
 		</div>
-		<section class="col-md-9">
-			<div class="panel-group" style="margin-top: 10px">
-				<div ng-view></div>
-				<script type="text/ng-template" id="projects.html">
-				</script>
-				<script type="text/ng-template" id="projectView.html">
-				</script>
-				<script type="text/ng-template" id="createProject.html">
-				</script>
-				<script type="text/ng-template" id="createSprint.html">
-				</script>
-				<script type="text/ng-template" id="createIssue.html">
-				</script>
-				<script type="text/ng-template" id="404.html">
-				</script>
-			</div>
-		</section>
 	</div>
 </body>
 

@@ -16,7 +16,7 @@ public class FileWriter {
 	public void avatarWrite(Part filePart, String fileName, int id) throws IOException {
 		InputStream fileContent = filePart.getInputStream();
 		Image image = ImageIO.read(fileContent);
-		BufferedImage bi = this.createResizedCopy(image, 50, 50, false);
+		BufferedImage bi = this.createResizedCopy(image, 100, 100, false);
 		File file = new File("/home/slavi/JiraImages/" + id);
 		if (!file.exists()) {
 			file.mkdir();
