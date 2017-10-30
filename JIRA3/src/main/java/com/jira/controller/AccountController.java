@@ -59,8 +59,7 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "/rating", method = RequestMethod.POST)
-	public ModelAndView setRating(@RequestBody RatingUser data) {
-		ModelAndView modelAndView = new ModelAndView();
+	public void setRating(@RequestBody RatingUser data) {
 		User user = this.userService.findById(data.getUserId());
 		int userCounter = user.getVotecounter();
 		double rating = user.getRating();
@@ -69,8 +68,5 @@ public class AccountController {
 		allPoint += data.getRatingId();
 		double newRating = allPoint / userCounter;
 		this.userService.updateUserRating(user.getId(), newRating, userCounter);
-		modelAndView.setViewName("/common/projectView");
-		return modelAndView;
 	}
-
 }

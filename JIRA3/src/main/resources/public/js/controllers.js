@@ -40,10 +40,13 @@ angular.module('jira.controllers', [])
     }, function error(data, status, headers, config) {
       $location.path('/404');
     });
-    $scope.myCallback = function(rating, custumVar) {
+    $scope.isVoted = false;
+    $scope.myCallback = function(rating, custumVar, project) {
+      $scope.isVoted = true;
       var data = {
         ratingId: rating,
-        userId: custumVar
+        userId: custumVar,
+        projectId: project
       };
       $http.post("/rating", data);
       console.log(rating, custumVar);
@@ -56,6 +59,9 @@ angular.module('jira.controllers', [])
 
   })
   .controller('SprintCtrl', ['$scope', '$routeParams', '$http', '$location', '$rootScope', function($scope, $routeParams, $http, $location, $rootScope) {
+    $scope.projectId = $routeParams.id;
+  }])
+  .controller('IssueCtrl', ['$scope', '$routeParams', '$http', '$location', '$rootScope', function($scope, $routeParams, $http, $location, $rootScope) {
     $scope.projectId = $routeParams.id;
   }])
   .controller('ErrorCtrl', function($scope) {
