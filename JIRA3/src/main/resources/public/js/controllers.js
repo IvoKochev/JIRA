@@ -69,6 +69,8 @@ angular.module('jira.controllers', [])
     }, function error(data, status, headers, config) {
       $location.path('/404');
     });
+  }]).controller('IssueViewCtrl', ['$scope', '$routeParams', '$http', '$location', '$rootScope', function($scope, $routeParams, $http, $location, $rootScope) {
+    $scope.projectId = $routeParams.id;
   }])
   .controller('ErrorCtrl', function($scope) {
 
