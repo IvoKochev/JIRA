@@ -37,11 +37,8 @@ public class SprintController {
     @RequestMapping(value = "/common/createSprint", method = RequestMethod.GET)
     public ModelAndView getSprint(HttpServletRequest request) throws ResourceNotFoundException{
         Sprint sprint = new Sprint();
-        int id = Integer.parseInt(request.getParameter("projectId"));
-        sprint.setOwner_id(id);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("sprint", sprint);
-        modelAndView.addObject("projectId", id);
         modelAndView.setViewName("common/createSprint");
         
         return modelAndView;
