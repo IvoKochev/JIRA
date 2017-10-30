@@ -72,7 +72,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-xs-6 col-md-4 col-lg-3" ng-repeat="user in project.users">
+		<div class="col-xs-6 col-md-4 col-lg-3" ng-repeat="user in project.users  | orderBy:'-rating'">
 			<div class="row top-buffer">
 				<img src="{{user.imgurl}}" class="col-xs-3" />
 				<div class="row">
