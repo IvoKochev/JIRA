@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -18,8 +19,6 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Entity
 @Table(name = "issues")
@@ -40,11 +39,6 @@ public class Issue implements Serializable {
 	private Integer asignee_id;
 	private Set<Attachment> attachments = new HashSet<>();
 	private Set<Comments> comments = new HashSet<>();
-
-        public Issue() {
-        }
-        
-        
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -106,7 +100,7 @@ public class Issue implements Serializable {
 	}
         
 	@ManyToOne
-	@JoinColumn(name = "sprints_id")
+	@Column(name = "sprints_id")
 	public Sprint getSprints_id() {
 		return sprint;
 	}
