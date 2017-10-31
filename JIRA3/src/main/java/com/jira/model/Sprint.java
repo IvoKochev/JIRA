@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "sprints")
@@ -47,6 +48,7 @@ public class Sprint implements Serializable {
 	}
 
 	@Column(name = "name")
+        @NotEmpty(message = "*Please provide a name")
 	public String getName() {
 		return name;
 	}
@@ -56,6 +58,7 @@ public class Sprint implements Serializable {
 	}
 
 	@Column(name = "sprintgoal")
+        @NotEmpty(message = "*Please provide a sprint goal")
 	public String getSprintgoal() {
 		return sprintgoal;
 	}
@@ -65,6 +68,7 @@ public class Sprint implements Serializable {
 	}
 
 	@Column(name = "start_date")
+        @NotEmpty(message = "*Please provide a starting date")
 	public String getStart_date() {
 		return start_date;
 	}
@@ -74,6 +78,7 @@ public class Sprint implements Serializable {
 	}
 
 	@Column(name = "end_date")
+        @NotEmpty(message = "*Please provide an ending date")
 	public String getEnd_date() {
 		return end_date;
 	}

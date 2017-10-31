@@ -55,7 +55,6 @@ public class Issue implements Serializable {
 	}
 
 	@Column(name = "type")
-	@NotEmpty(message = "*Please, provide type")
 	public String getType() {
 		return type;
 	}
@@ -84,7 +83,6 @@ public class Issue implements Serializable {
 	}
 
 	@Column(name = "priority")
-	@NotEmpty(message = "Please, provide priority")
 	public String getPriority() {
 		return priority;
 	}

@@ -90,7 +90,7 @@ public class IssueController {
                 issueService.saveIssue(issue);
             }
             ModelAndView modelAndView = new ModelAndView();
-            modelAndView.setViewName("redirect:/common/home#!/issueView/" + id);
+            modelAndView.setViewName("redirect:/common/home#!/sprintView/" + id);
             return modelAndView;
         }
        
