@@ -22,26 +22,25 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @RestController
 public class CommentController {
-    @Autowired
-    private IIssueService issueService;
-    
-    @Autowired
-    private ICommentsService commentService;
-    
-    
-    @RequestMapping(value = "/createComment", method=RequestMethod.POST)
-    public ModelAndView createComment(HttpServletRequest request) {
-        String text = request.getParameter("comment");
-        int user_id = (int) request.getSession().getAttribute("user_id");
-        int id = Integer.parseInt(request.getParameter("issueId"));
-        Comments comment = new Comments();
-        comment.setText(text);
-        Issue issue = issueService.getIssue(id);
-        comment.setIssue(issue);
-        comment.setUser_id(user_id);
-        commentService.saveComment(comment);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("common/issueView");
-        return modelAndView;
-    }
+	@Autowired
+	private IIssueService issueService;
+
+	@Autowired
+	private ICommentsService commentService;
+
+	@RequestMapping(value = "/createComment", method = RequestMethod.POST)
+	public ModelAndView createComment(HttpServletRequest request) {
+		String text = request.getParameter("comment");
+		int user_id = (int) request.getSession().getAttribute("user_id");
+		int id = Integer.parseInt(request.getParameter("issueId"));
+		Comments comment = new Comments();
+		comment.setText(text);
+		Issue issue = issueService.getIssue(id);
+		comment.setIssue(issue);
+		comment.setUser_id(user_id);
+		commentService.saveComment(comment);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirect:/common/home#!/issueView/" + id);
+		return modelAndView;
+	}
 }

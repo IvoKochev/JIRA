@@ -58,7 +58,7 @@ public class Attachment {
 	
 	@ManyToOne
 	@JoinColumn(name = "issues_id")
-        @JsonIgnore
+    @JsonIgnore
 	public Issue getIssue() {
 		return issue;
 	}

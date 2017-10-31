@@ -57,7 +57,7 @@ public class Comments implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "issues_id")
-        @JsonIgnore
+    @JsonIgnore
 	public Issue getIssue() {
 		return issue;
 	}

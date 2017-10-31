@@ -1,13 +1,7 @@
 package com.jira.controller;
 
-import com.jira.contract.IIssueService;
-import com.jira.contract.ISprintService;
-import com.jira.model.Attachment;
-import com.jira.model.Comments;
-import com.jira.model.Issue;
-import com.jira.model.Sprint;
-import com.jira.repository.IssueRepository;
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.jira.contract.IIssueService;
+import com.jira.contract.ISprintService;
+import com.jira.model.Issue;
+import com.jira.model.Sprint;
+import com.jira.repository.IssueRepository;
 
 @RestController
 public class IssueController {
@@ -49,10 +49,6 @@ public class IssueController {
 	@RequestMapping(value = "/common/issueView", method = RequestMethod.GET)
 	public ModelAndView getIssueViewTemplate() {
 		ModelAndView modelAndView = new ModelAndView();
-                Comments comment = new Comments();
-                Attachment attachment = new Attachment();
-                modelAndView.addObject("comment", comment);
-                modelAndView.addObject("attachment", attachment);
 		modelAndView.setViewName("common/issueView");
 		return modelAndView;
 	}
