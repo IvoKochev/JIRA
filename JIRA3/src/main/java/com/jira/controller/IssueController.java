@@ -15,6 +15,7 @@ import com.jira.contract.ISprintService;
 import com.jira.model.Issue;
 import com.jira.model.Sprint;
 import com.jira.repository.IssueRepository;
+import com.jira.repository.UserRepository;
 
 @RestController
 public class IssueController {
@@ -24,6 +25,9 @@ public class IssueController {
 	private ISprintService sprintService;
 	@Autowired
 	IssueRepository issueRepository;
+        @Autowired
+        UserRepository userRepository;
+        
 
 	@RequestMapping(value = "/common/createIssue", method = RequestMethod.GET)
 	public ModelAndView issueCreateTemplate() {
@@ -58,8 +62,9 @@ public class IssueController {
 
 	@RequestMapping(value = "/common/issueView/{id}", method = RequestMethod.GET)
 	public Issue getIssue(@PathVariable(value = "id") int id) {
-		System.err.println(id);
 		Issue issue = issueRepository.findById(id);
+                issue.setAsignee(userRepository.findByid(issue.getAsignee_id()));
+                issue.setReporter(userRepository.findByid(issue.getReporter_id()));
 		return issue;
 	}
 }

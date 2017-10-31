@@ -16,21 +16,7 @@
 </head>
 
 <body>
-  <div class="container">
-    <div class="row force-to-bottom text-center">
-      <form autocomplete="off" th:action="@{/createComment}" method="post" class="form-horizontal" role="form">
-        <div class="form-group">
-          <div class="col-sm-9">
-            <input type="text" name="comment" placeholder="Comment" class="form-control">
-          </div>
-        </div>
-        <input type="hidden" value="{{issue.id}}" name="issueId" />
-        <div class="col-sm-9">
-          <button type="submit" class="btn btn-primary">Create Comment</button>
-        </div>
-      </form>
-    </div>
-  </div>
+
   <div class="alert alert-info">
     <div class="container">
       <nav class="col-md-4">
@@ -50,6 +36,8 @@
         <th width="100" class="dZlBnq"><span>Description</span></th>
         <th width="200" class="dZlBnq"><span>Priotiry</span></th>
         <th width="200" class="dZlBnq"><span>Status</span></th>
+        <th width="100" class="dZlBnq"><span>Reporter</span></th>
+        <th width="100" class="dZlBnq"><span>Asignee</span></th>
       </tr>
     </thead>
     <tbody>
@@ -59,6 +47,8 @@
         <td width="100" class="kqXqNO"><span class="jPYEPF"> {{issue.priority}}</span> </td>
         <td width="250" class="kqXqNO"><span>{{issue.status}}</span></td>
         <td width="250" class="kqXqNO"><span>{{issue.description}}</span></td>
+        <td width="100" class="kqXqNO"><span class="jPYEPF"> {{issue.reporter.name}}</span> </td>
+        <td width="100" class="kqXqNO"><span class="jPYEPF"> {{issue.asignee.name}}</span> </td>
       </tr>
     </tbody>
   </table>

@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Transient;
+
 
 @Entity
 @Table(name = "issues")
@@ -36,6 +38,8 @@ public class Issue implements Serializable {
 	private String status;
 	private int reporter_id;
 	private int asignee_id;
+        private User asignee;
+        private User reporter;
 	private Set<Attachment> attachments = new HashSet<>();
 	//private Set<Comments> comments = new HashSet<>();
 	
@@ -209,9 +213,26 @@ public class Issue implements Serializable {
 //			return false;
 //		return true;
 //	}
+        @Transient
+        public User getAsignee() {
+            return asignee;
+        }
+        
+        public void setAsignee(User asignee) {
+            this.asignee = asignee;
+        }
+        
+        @Transient
+        public User getReporter() {
+            return reporter;
+        }
+
+        public void setReporter(User reporter) {
+            this.reporter = reporter;
+        }
 
 	
-
+        
 	
 }
 
