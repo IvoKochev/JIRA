@@ -2,8 +2,11 @@ package com.jira.controller;
 
 import com.jira.contract.IIssueService;
 import com.jira.contract.ISprintService;
+import com.jira.model.Attachment;
+import com.jira.model.Comments;
 import com.jira.model.Issue;
 import com.jira.model.Sprint;
+import com.jira.repository.IssueRepository;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,6 +22,7 @@ public class IssueController {
 	private IIssueService issueService;
 	@Autowired
 	private ISprintService sprintService;
+        @Autowired IssueRepository issueRepository;
 
 	@RequestMapping(value = "/common/createIssue", method = RequestMethod.GET)
 	public ModelAndView issueCreateTemplate() {
@@ -31,9 +35,9 @@ public class IssueController {
 
 	@RequestMapping(value = "/createIssue", method = RequestMethod.POST)
 	public ModelAndView createIssue(@ModelAttribute Issue issue, HttpServletRequest request) {
-		issue.setAsignee_id(4);
-		issue.setReporter_id(4);
-		Sprint sprint = sprintService.findSprintById(2);
+		issue.setAsignee_id(22);
+		issue.setReporter_id(22);
+		Sprint sprint = sprintService.findSprintById(19);
 		issue.setSprint(sprint);
 		issue.setStatus("TO DO");
 		issueService.saveIssue(issue);
@@ -45,6 +49,10 @@ public class IssueController {
 	@RequestMapping(value = "/common/issueView", method = RequestMethod.GET)
 	public ModelAndView getIssueViewTemplate() {
 		ModelAndView modelAndView = new ModelAndView();
+                Comments comment = new Comments();
+                Attachment attachment = new Attachment();
+                modelAndView.addObject("comment", comment);
+                modelAndView.addObject("attachment", attachment);
 		modelAndView.setViewName("common/issueView");
 		return modelAndView;
 	}
@@ -52,6 +60,7 @@ public class IssueController {
 	@RequestMapping(value = "/common/issueView/{id}", method = RequestMethod.GET)
 	public Issue getIssue(@PathVariable(value = "id") int id) {
 		System.err.println(id);
-		return null;
+                Issue issue = issueRepository.findById(id);
+		return issue;
 	}
 }

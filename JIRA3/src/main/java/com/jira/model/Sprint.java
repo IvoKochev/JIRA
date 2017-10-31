@@ -32,7 +32,7 @@ public class Sprint implements Serializable {
 	private String end_date;
 	private Project project;
 	private String imgurl;
-    private Set<Issue> issues;
+        private Set<Issue> issues;
 	
 	public Sprint() {
 	}
@@ -125,7 +125,7 @@ public class Sprint implements Serializable {
 		result = prime * result + ((start_date == null) ? 0 : start_date.hashCode());
 		return result;
 	}
-    @OneToMany(mappedBy="sprint")
+        @OneToMany(mappedBy="sprint")
 	public Set<Issue> getIssues() {
 		return issues;
 	}
