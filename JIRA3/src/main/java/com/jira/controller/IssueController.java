@@ -11,14 +11,23 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jira.contract.IIssueService;
+import com.jira.contract.IProjectService;
 import com.jira.contract.ISprintService;
 import com.jira.model.Issue;
+import com.jira.model.Project;
 import com.jira.model.Sprint;
+import com.jira.model.User;
 import com.jira.repository.IssueRepository;
+import com.jira.repository.ProjectRepository;
 import com.jira.repository.UserRepository;
+import com.jira.service.ProjectServiceImpl;
+import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 public class IssueController {
+        @Autowired
+        private IProjectService projectService;
 	@Autowired
 	private IIssueService issueService;
 	@Autowired
@@ -67,4 +76,22 @@ public class IssueController {
                 issue.setReporter(userRepository.findByid(issue.getReporter_id()));
 		return issue;
 	}
+        
+        @RequestMapping(value = "/setAsignee", method = RequestMethod.POST)
+        public ModelAndView setAsignee(HttpServletRequest request) {
+            String email = request.getParameter("asignee");
+            int id = Integer.parseInt(request.getParameter("issueId"));
+            Issue issue = issueService.getIssue(id);
+            Sprint sprint = sprintService.findSprintById(issue.getSprint().getId());
+            Project project = projectService.getProjectById(sprint.getProject().getId());
+            User user = userRepository.findByEmail(email);
+            if(user != null && user.getProjects().contains(project)) {
+                issue.setAsignee_id(user.getId());
+                issueService.saveIssue(issue);
+            }
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("common/issueView");
+            return modelAndView;
+        }
+       
 }

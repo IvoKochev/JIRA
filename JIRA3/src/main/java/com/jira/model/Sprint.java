@@ -32,7 +32,7 @@ public class Sprint implements Serializable {
 	private String end_date;
 	private Project project;
 	private String imgurl;
-    private Set<Issue> issues;
+        private Set<Issue> issues;
 
 
 	@Id

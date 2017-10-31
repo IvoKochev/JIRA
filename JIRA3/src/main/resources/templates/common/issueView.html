@@ -13,6 +13,7 @@
     }
 
   </style>
+
 </head>
 
 <body>
@@ -78,6 +79,22 @@
       <button type="submit" class="btn btn-primary btn-block">Add attachment</button>
     </div>
     </div>
+  </form>
+
+    <form autocomplete="off" th:action="@{/setAsignee}" method="post" class="form-horizontal" role="form">
+    <div class="form-group">
+      <div class="col-sm-9">
+    <input type = "text" name = "asignee" placeholder="Asignee e-mail" class="form-control">
+  </div>
+  </div>
+    <input type="hidden" value="{{issue.id}}" name="issueId" />
+
+    <div class="form-group">
+      <div class="col-sm-9">
+        <button type="submit" class="btn btn-primary btn-block">Set Asignee</button>
+      </div>
+      </div>
+
   </form>
 </body>
 
