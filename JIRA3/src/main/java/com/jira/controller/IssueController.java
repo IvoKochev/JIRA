@@ -94,4 +94,15 @@ public class IssueController {
             return modelAndView;
         }
        
+        @RequestMapping(value = "/setStatus", method = RequestMethod.POST)
+        public ModelAndView setStatus(HttpServletRequest request) {
+            int id = Integer.parseInt(request.getParameter("issueId"));
+            String status = request.getParameter("status");
+            Issue issue = issueService.getIssue(id);
+            issue.setStatus(status);
+            issueService.saveIssue(issue);
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("common/issueView");
+            return modelAndView;
+        }
 }

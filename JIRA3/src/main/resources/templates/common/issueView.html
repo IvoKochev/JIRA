@@ -94,6 +94,25 @@
         <button type="submit" class="btn btn-primary btn-block">Set Asignee</button>
       </div>
       </div>
+    </form>
+
+      <form autocomplete="off" th:action="@{/setStatus}" method="post" class="form-horizontal" role="form">
+        <div class="form-group">
+          <div class="col-sm-9">
+            <select name = "status" class="form-control">
+              <option value="TO DO">TO DO</option>
+              <option value="IN PROGRESS">IN PROGRESS</option>
+              <option value="DONE">DONE</option>
+            </select>
+          </div>
+        </div>
+      <input type="hidden" value="{{issue.id}}" name="issueId" />
+
+      <div class="form-group">
+        <div class="col-sm-9">
+          <button type="submit" class="btn btn-primary btn-block">Set Status</button>
+        </div>
+        </div>
 
   </form>
 </body>
