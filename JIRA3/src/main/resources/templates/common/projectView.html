@@ -34,7 +34,7 @@
 			<form class="form-horizontal" role="form" autocomplete="off" action="#" th:action="@{/share/project}" method="post">
 				<div class="form-group">
 					<div class="col-md-2">
-						<input name="email" type="text" class="form-control" placeholder="Email">
+						<input name="email" type="email" class="form-control" placeholder="Email">
 					</div>
 					<input type="hidden" value="{{project.id}}" name="projectId" />
 					<nav class="col-md-2">
@@ -124,9 +124,19 @@
 						<div class="row">
 							<strong>{{user.name}}</strong>
 						</div>
-						<div class="row">
-							<strong>email: </strong><a href="#">{{user.email}}</a>
-						</div>
+						<form  th:action="@{/sendMail}" method="post">
+							<div class="dropdown">
+								<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Send mail
+	                    <span class="caret"></span></button>
+								<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+									<input type="hidden" name="email" value="{{user.email}}">
+									<input type="hidden" name="projectId" value="{{project.id}}">
+									<input type="text" name="subject" placeholder="subject">
+									<textarea name="body" rows="6" cols="40" placeholder="message"></textarea>
+									<button type="submit" class="btn btn-primary btn-block">Send</button>
+								</ul>
+							</div>
+						</form>
 						<div class="row">
 							<strong>rating: </strong><a href="#">{{user.rating}}</a>
 							<ng-rate-it max="10" read-only="isVoted" ng-model="user.rating" rated="myCallback(rating,user.id,project.id)"></ng-rate-it>

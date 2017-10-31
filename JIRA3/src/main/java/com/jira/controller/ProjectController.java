@@ -71,8 +71,7 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/common/projectView/{id}", method = RequestMethod.GET)
-            public Project getProjectById(@PathVariable(name = "id") int id)
-			throws ResourceNotFoundException {
+	public Project getProjectById(@PathVariable(name = "id") int id) throws ResourceNotFoundException {
 		return this.projectService.getProjectById(id);
 	}
 
@@ -116,10 +115,22 @@ public class ProjectController {
 		modelAndView.setViewName("redirect:/common/home#!/projectView/" + projectId);
 		return modelAndView;
 	}
-	
+
+	@RequestMapping(value = "/sendMail", method = RequestMethod.POST)
+	public ModelAndView sendMail(HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView();
+		int id = Integer.parseInt(request.getParameter("projectId"));
+		String email = request.getParameter("email");
+		String subject = request.getParameter("subject");
+		String body = request.getParameter("body");
+		new Mail(email, subject, body);
+		modelAndView.setViewName("redirect:/common/home#!/projectView/" + id);
+		return modelAndView;
+	}
+
 	@ExceptionHandler(ResourceNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handleResourceNotFoundException() {
-        return "User not found";
-    }
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public String handleResourceNotFoundException() {
+		return "User not found";
+	}
 }

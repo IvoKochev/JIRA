@@ -53,6 +53,7 @@ public class SprintController {
 		int owner_id = (int) request.getSession().getAttribute("user_id");
 		sprint.setProject(project);
 		sprint.setOwner_id(owner_id);
+		sprint.setImgurl("/images/sprint.jpg");
 		ModelAndView modelAndView = new ModelAndView();
 		sprintService.saveSprint(sprint);
 		modelAndView.setViewName("redirect:/common/home#!/projectView/" + id);

@@ -31,7 +31,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="ewoyXV" ng-repeat="issue in issues">
+      <tr class="ewoyXV" ng-repeat="issue in issues | orderBy:'priority'">
         <td width="100" class="kUfcsh"><span class="gGsHVf"> <a
               ng-href="http://localhost:8080/common/home#!/issueView/{{issue.id}}">{{issue.type}}
             </a>

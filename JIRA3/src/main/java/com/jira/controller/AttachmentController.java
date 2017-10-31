@@ -1,18 +1,15 @@
 package com.jira.controller;
 
-import com.jira.file.FileWriter;
+import java.io.IOException;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.web.bind.annotation.RequestBody;
+import javax.servlet.http.Part;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.jira.model.Attachment;
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.Part;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.jira.file.FileWriter;
 
 @RestController
 public class AttachmentController {

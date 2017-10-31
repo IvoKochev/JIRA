@@ -5,7 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +14,8 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.Part;
 
 public class FileWriter {
+
+	private OutputStream out;
 
 	public void avatarWrite(Part filePart, String fileName, int id) throws IOException {
 		InputStream fileContent = filePart.getInputStream();
@@ -52,7 +53,7 @@ public class FileWriter {
            if(!file1.exists()) {
                file1.createNewFile();
            }
-           OutputStream out = new FileOutputStream(file1);
+           out = new FileOutputStream(file1);
            InputStream filecontent = filePart.getInputStream();
            int read = 0;
            while((read = filecontent.read()) != -1) {

@@ -22,7 +22,8 @@ public class IssueController {
 	private IIssueService issueService;
 	@Autowired
 	private ISprintService sprintService;
-        @Autowired IssueRepository issueRepository;
+	@Autowired
+	IssueRepository issueRepository;
 
 	@RequestMapping(value = "/common/createIssue", method = RequestMethod.GET)
 	public ModelAndView issueCreateTemplate() {
@@ -36,15 +37,15 @@ public class IssueController {
 	@RequestMapping(value = "/createIssue", method = RequestMethod.POST)
 	public ModelAndView createIssue(@ModelAttribute Issue issue, HttpServletRequest request) {
 		int user_id = (int) request.getSession().getAttribute("user_id");
-                issue.setAsignee_id(user_id);
+		issue.setAsignee_id(user_id);
 		issue.setReporter_id(user_id);
-                int id = Integer.parseInt(request.getParameter("sprintId"));
+		int id = Integer.parseInt(request.getParameter("sprintId"));
 		Sprint sprint = sprintService.findSprintById(id);
 		issue.setSprint(sprint);
 		issue.setStatus("TO DO");
 		issueService.saveIssue(issue);
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/common/projectView");
+		modelAndView.setViewName("redirect:/common/home#!/sprintView/" + id);
 		return modelAndView;
 	}
 
@@ -58,7 +59,7 @@ public class IssueController {
 	@RequestMapping(value = "/common/issueView/{id}", method = RequestMethod.GET)
 	public Issue getIssue(@PathVariable(value = "id") int id) {
 		System.err.println(id);
-                Issue issue = issueRepository.findById(id);
+		Issue issue = issueRepository.findById(id);
 		return issue;
 	}
 }
