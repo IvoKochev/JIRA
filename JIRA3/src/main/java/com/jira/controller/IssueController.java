@@ -90,7 +90,7 @@ public class IssueController {
                 issueService.saveIssue(issue);
             }
             ModelAndView modelAndView = new ModelAndView();
-            modelAndView.setViewName("common/issueView");
+            modelAndView.setViewName("redirect:/common/home#!/issueView/" + id);
             return modelAndView;
         }
        
@@ -102,7 +102,7 @@ public class IssueController {
             issue.setStatus(status);
             issueService.saveIssue(issue);
             ModelAndView modelAndView = new ModelAndView();
-            modelAndView.setViewName("common/issueView");
+            modelAndView.setViewName("redirect:/common/home#!/issueView/" + id);
             return modelAndView;
         }
         
@@ -114,7 +114,7 @@ public class IssueController {
             issue.setPriority(priority);
             issueService.saveIssue(issue);
             ModelAndView modelAndView = new ModelAndView();
-            modelAndView.setViewName("common/issueView");
+            modelAndView.setViewName("redirect:/common/home#!/issueView/" + id);
             return modelAndView;
         }
 }
