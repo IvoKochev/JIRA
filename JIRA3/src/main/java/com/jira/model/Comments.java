@@ -1,5 +1,6 @@
 package com.jira.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -16,7 +17,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 
 @Entity
-@Table(name = "Comments")
+@Table(name = "comments")
 public class Comments implements Serializable{
 	/**
 	 * 
@@ -56,6 +57,7 @@ public class Comments implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "issues_id")
+        @JsonIgnore
 	public Issue getIssue() {
 		return issue;
 	}

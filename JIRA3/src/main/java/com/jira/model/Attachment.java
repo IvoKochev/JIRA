@@ -6,6 +6,7 @@
  */
 package com.jira.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -57,6 +58,7 @@ public class Attachment {
 	
 	@ManyToOne
 	@JoinColumn(name = "issues_id")
+        @JsonIgnore
 	public Issue getIssue() {
 		return issue;
 	}

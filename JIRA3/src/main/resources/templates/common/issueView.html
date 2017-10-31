@@ -2,19 +2,56 @@
 <html>
 
 <head>
-	<meta charset="utf-8">
-	<title>JIRA Project</title>
-	<style media="screen">
-		.top-buffer {
-			margin-top: 40px;
-		}
-	</style>
+  <meta charset="utf-8">
+  <title>Sprint</title>
 </head>
+
 <body>
+  <div class="alert alert-info">
+    <div class="container">
+      <nav class="col-md-4">
+      </nav>
+      <nav class="col-md-8">
+        <h3>
+           <strong>Issue</strong>
+        </h3>
+      </nav>
+    </div>
+  </div>
+  <table class="kffeWc">
+    <thead class="iccVIQ">
+      <tr>
+        <th width="100" class="geZoUn"><span>Type</span></th>
+        <th width="200" class="bKZlcx"><span>Summary</span></th>
+        <th width="100" class="dZlBnq"><span>Description</span></th>
+        <th width="200" class="dZlBnq"><span>Priotiry</span></th>
+        <th width="200" class="dZlBnq"><span>Status</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td width="100" class="kUfcsh"><span class="gGsHVf"> {{issue.type}}</span></td>
+        <td width="200" class="drqBbD"><span class="fuVjLH">{{issue.summary}}</span></td>
+        <td width="100" class="kqXqNO"><span class="jPYEPF"> {{issue.priority}}</span> </td>
+        <td width="250" class="kqXqNO"><span>{{issue.status}}</span></td>
+        <td width="250" class="kqXqNO"><span>{{issue.description}}</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <form autocomplete="off" th:action="@{/createComment}" method="post" class="form-horizontal" role="form">
+  <div class="form-group">
+    <div class="col-sm-9">
+  <input type = "text" name = "comment" placeholder="Comment" class="form-control">
+</div>
+</div>
+  <input type="hidden" value="{{issue.id}}" name="issueId" />
 
-  <h1> Tuk sme </h1>
-  <textarea id = "myTextArea" rows = "4"  cols = "30"> </textarea>
-
+  <div class="form-group">
+    <div class="col-sm-9">
+      <button type="submit" class="btn btn-primary btn-block">Create Comment</button>
+    </div>
+    </div>
+  </form>
 
 </body>
 </html>
