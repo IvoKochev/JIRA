@@ -62,7 +62,8 @@ angular.module('jira.controllers', [])
     $scope.projectId = $routeParams.id;
   }])
   .controller('IssueCtrl', ['$scope', '$routeParams', '$http', '$location', '$rootScope', function($scope, $routeParams, $http, $location, $rootScope) {
-    console.log("IssueCtrl");
+  $scope.sprintId = $routeParams.id;
+
   }]).controller('SprintViewCtrl', ['$scope', 'SprintViewService', '$routeParams', '$http', '$location', '$rootScope', function($scope, SprintViewService, $routeParams, $http, $location, $rootScope) {
     SprintViewService.posts($routeParams.id).then(function success(response) {
       $scope.issues = response.data;
