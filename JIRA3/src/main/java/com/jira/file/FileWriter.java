@@ -5,8 +5,11 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.Part;
@@ -38,4 +41,24 @@ public class FileWriter {
 		g.dispose();
 		return scaledBI;
 	}
+        
+        public void writeAttachment(Part filePart, String attachmentName, int id) throws IOException {
+           
+           File file = new File("/home/ivo/Ivo/JiraAttachments/" + id);
+           if(!file.exists()) {
+              file.mkdir();
+           }
+           File file1 = new File("/home/ivo/Ivo/JiraAttachments/" + id + "/" + attachmentName);
+           if(!file1.exists()) {
+               file1.createNewFile();
+           }
+           OutputStream out = new FileOutputStream(file1);
+           InputStream filecontent = filePart.getInputStream();
+           int read = 0;
+           while((read = filecontent.read()) != -1) {
+               out.write(read);
+           }
+           
+           
+        }
 }

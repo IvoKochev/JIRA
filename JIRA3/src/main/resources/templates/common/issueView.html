@@ -52,6 +52,20 @@
     </div>
     </div>
   </form>
+  <form autocomplete="off" th:action="@{/addAttachment}" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
+  <div class="form-group">
+    <div class="col-sm-9">
+  <input type = "file" name = "attachment" placeholder="Attachment" class="form-control">
+  </div>
+  </div>
+  <input type="hidden" value="{{issue.id}}" name="issueId" />
+  <div class="form-group">
+    <div class="col-sm-9">
+      <button type="submit" class="btn btn-primary btn-block">Add attachment</button>
+    </div>
+    </div>
+  </form>
+
 
 </body>
 </html>
