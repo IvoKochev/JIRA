@@ -105,4 +105,16 @@ public class IssueController {
             modelAndView.setViewName("common/issueView");
             return modelAndView;
         }
+        
+        @RequestMapping(value = "/setPriority", method = RequestMethod.POST)
+        public ModelAndView setPriority(HttpServletRequest request) {
+            String priority = request.getParameter("priority");
+            int id = Integer.parseInt(request.getParameter("issueId"));
+            Issue issue = issueService.getIssue(id);
+            issue.setPriority(priority);
+            issueService.saveIssue(issue);
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("common/issueView");
+            return modelAndView;
+        }
 }

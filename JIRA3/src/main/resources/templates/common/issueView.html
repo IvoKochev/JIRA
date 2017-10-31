@@ -45,9 +45,9 @@
       <tr>
         <td width="100" class="kUfcsh"><span class="gGsHVf"> {{issue.type}}</span></td>
         <td width="200" class="drqBbD"><span class="fuVjLH">{{issue.summary}}</span></td>
-        <td width="100" class="kqXqNO"><span class="jPYEPF"> {{issue.priority}}</span> </td>
+        <td width="100" class="kqXqNO"><span class="jPYEPF"> {{issue.description}}</span> </td>
+        <td width="250" class="kqXqNO"><span>{{issue.priority}}</span></td>
         <td width="250" class="kqXqNO"><span>{{issue.status}}</span></td>
-        <td width="250" class="kqXqNO"><span>{{issue.description}}</span></td>
         <td width="100" class="kqXqNO"><span class="jPYEPF"> {{issue.reporter.name}}</span> </td>
         <td width="100" class="kqXqNO"><span class="jPYEPF"> {{issue.asignee.name}}</span> </td>
       </tr>
@@ -115,6 +115,28 @@
         </div>
 
   </form>
+
+  <form autocomplete="off" th:action="@{/setPriority}" method="post" class="form-horizontal" role="form">
+    <div class="form-group">
+      <div class="col-sm-9">
+        <select name = "priority" class="form-control">
+          <option value="Highest">Highest</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+          <option value="Lowest">Lowest</option>
+        </select>
+      </div>
+    </div>
+  <input type="hidden" value="{{issue.id}}" name="issueId" />
+
+  <div class="form-group">
+    <div class="col-sm-9">
+      <button type="submit" class="btn btn-primary btn-block">Set Priority</button>
+    </div>
+    </div>
+
+</form>
 </body>
 
 </html>
