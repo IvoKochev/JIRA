@@ -35,9 +35,11 @@ public class IssueController {
 
 	@RequestMapping(value = "/createIssue", method = RequestMethod.POST)
 	public ModelAndView createIssue(@ModelAttribute Issue issue, HttpServletRequest request) {
-		issue.setAsignee_id(22);
-		issue.setReporter_id(22);
-		Sprint sprint = sprintService.findSprintById(19);
+		int user_id = (int) request.getSession().getAttribute("user_id");
+                issue.setAsignee_id(user_id);
+		issue.setReporter_id(user_id);
+                int id = Integer.parseInt(request.getParameter("sprintId"));
+		Sprint sprint = sprintService.findSprintById(id);
 		issue.setSprint(sprint);
 		issue.setStatus("TO DO");
 		issueService.saveIssue(issue);
