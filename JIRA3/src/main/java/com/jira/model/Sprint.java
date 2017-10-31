@@ -33,9 +33,7 @@ public class Sprint implements Serializable {
 	private Project project;
 	private String imgurl;
     private Set<Issue> issues;
-	
-	public Sprint() {
-	}
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

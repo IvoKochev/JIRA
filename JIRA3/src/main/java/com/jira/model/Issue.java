@@ -123,7 +123,7 @@ public class Issue implements Serializable {
 
 	@OneToMany(mappedBy = "issue")
 	@Fetch(FetchMode.JOIN)
-        @JsonIgnore
+    @JsonIgnore
 	public Set<Comments> getComments() {
 		return comments;
 	}
