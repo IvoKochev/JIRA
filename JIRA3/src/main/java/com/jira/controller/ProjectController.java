@@ -3,6 +3,7 @@ package com.jira.controller;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jira.contract.IProjectService;
@@ -45,65 +46,57 @@ public class ProjectController {
 		this.userService = userService;
 	}
 
-	@RequestMapping(value = "/common/projects", method = RequestMethod.GET)
-	public ModelAndView adminProjects() {
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("/common/projects");
-		return modelAndView;
+	@GetMapping("/common/projects")
+	public String adminProjects(Model model) {
+		return "/common/projects";
 	}
 
-	@RequestMapping(value = "/common/projectView", method = RequestMethod.GET)
-	public ModelAndView commonProjectViewPage() {
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("message", "");
-		modelAndView.setViewName("/common/projectView");
-		return modelAndView;
+	@GetMapping("/common/projectView")
+	public String commonProjectViewPage(Model model) {
+		return "/common/projectView";
 	}
 
-	@RequestMapping(value = "/common/404", method = RequestMethod.GET)
-	public ModelAndView errorNotFound() {
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("common/404");
-		return modelAndView;
+	@GetMapping("/common/404")
+	public String errorNotFound(Model model) {
+		return "common/404";
 	}
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@GetMapping("/list")
 	@ResponseBody
 	public Set<Project> getProjectList() throws ResourceNotFoundException {
 		return this.projectService.getProjectList();
 	}
 
-	@RequestMapping(value = "/common/projectView/{id}", method = RequestMethod.GET)
+	@GetMapping("/common/projectView/{id}")
+	@ResponseBody
 	public Project getProjectById(@PathVariable(name = "id") int id) throws ResourceNotFoundException {
 		return this.projectService.getProjectById(id);
 	}
 
-	@RequestMapping(value = "/admin/createProject", method = RequestMethod.GET)
+	@GetMapping("/admin/createProject")
 	public String createProject(Model model) {
 		if (!model.containsAttribute("project")) {
-			System.err.println("KOZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 			model.addAttribute("project", new Project());
 		}
 		return "/admin/createProject";
 	}
 
-	@RequestMapping(value = "/createProject", method = RequestMethod.POST)
-	public String createNewUser(Model model, @Valid Project project, BindingResult bindingResult,
-			RedirectAttributes attr, HttpServletRequest request) {
+	@PostMapping("/createProject")
+	public String createNewUser(Model model, @ModelAttribute("project") final @Valid Project project,
+			final BindingResult bindingResult, RedirectAttributes attr, HttpSession session,
+			HttpServletRequest request) {
 		if (bindingResult.hasErrors()) {
-			bindingResult.rejectValue("name", "kurec");
 			attr.addFlashAttribute("org.springframework.validation.BindingResult.project", bindingResult);
 			attr.addFlashAttribute("project", project);
-			return "redirect:" + request.getContextPath() + "/common/home#!/createProject";
+			return "redirect:/common/home#!/createProject";
 		}
 		this.projectService.save(project, request);
 
 		return "redirect:/common/home";
 	}
 
-	@RequestMapping(value = "/share/project", method = RequestMethod.POST)
-	public ModelAndView share(HttpServletRequest request) throws ResourceNotFoundException {
-		ModelAndView modelAndView = new ModelAndView();
+	@PostMapping("/share/project")
+	public String share(Model model, HttpServletRequest request) throws ResourceNotFoundException {
 		int projectId = Integer.parseInt(request.getParameter("projectId"));
 		String email = request.getParameter("email");
 		User user = this.userService.findUserByEmail(email);
@@ -117,20 +110,17 @@ public class ProjectController {
 		uhp.setUserHasProjectID(uhpi);
 		userHasProjectRepository.save(uhp);
 		new Mail(email, "JIRA", "You were added to a new project");
-		modelAndView.setViewName("redirect:/common/home#!/projectView/" + projectId);
-		return modelAndView;
+		return "redirect:/common/home#!/projectView/" + projectId;
 	}
 
-	@RequestMapping(value = "/sendMail", method = RequestMethod.POST)
-	public ModelAndView sendMail(HttpServletRequest request) {
-		ModelAndView modelAndView = new ModelAndView();
+	@PostMapping("/sendMail")
+	public String sendMail(Model model, HttpServletRequest request) {
 		int id = Integer.parseInt(request.getParameter("projectId"));
 		String email = request.getParameter("email");
 		String subject = request.getParameter("subject");
 		String body = request.getParameter("body");
 		new Mail(email, subject, body);
-		modelAndView.setViewName("redirect:/common/home#!/projectView/" + id);
-		return modelAndView;
+		return "redirect:/common/home#!/projectView/" + id;
 	}
 
 	@ExceptionHandler(ResourceNotFoundException.class)
