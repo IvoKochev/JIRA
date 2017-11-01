@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.jira.contract.UserService;
 import com.jira.model.User;
@@ -21,59 +21,49 @@ public class LoginController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = { "/", "/login" }, method = RequestMethod.GET)
-	public ModelAndView login() {
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("login");
-		return modelAndView;
+	@GetMapping(value = { "/", "/login" })
+	public String login() {
+		return "login";
 	}
 
-	@RequestMapping(value = "/registration", method = RequestMethod.GET)
-	public ModelAndView registration() {
-		ModelAndView modelAndView = new ModelAndView();
+	@GetMapping("/registration")
+	public String registration(Model model) {
 		User user = new User();
-		modelAndView.addObject("user", user);
-		modelAndView.setViewName("registration");
-		return modelAndView;
+		model.addAttribute("user", user);
+		return "registration";
 	}
 
-	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public ModelAndView createNewUser(@Valid User user, final BindingResult bindingResult) {
-		ModelAndView modelAndView = new ModelAndView();
+	@PostMapping("/registration")
+	public String createNewUser(Model model, @Valid User user, final BindingResult bindingResult) {
 		User userExists = userService.findUserByEmail(user.getEmail());
 		if (userExists != null) {
 			bindingResult.rejectValue("email", "error.user",
 					"There is already a user registered with the email provided");
 		}
 		if (bindingResult.hasErrors()) {
-			modelAndView.setViewName("registration");
-		} else {
-			user.setImgurl("/images/account.png");
-			userService.saveUser(user);
-			modelAndView.addObject("successMessage", "User has been registered successfully");
-			modelAndView.addObject("user", new User());
-			modelAndView.setViewName("registration");
-
+			return "registration";
 		}
-		return modelAndView;
+		user.setImgurl("/images/account.png");
+		userService.saveUser(user);
+		model.addAttribute("successMessage", "User has been registered successfully");
+		model.addAttribute("user", new User());
+		return "registration";
 	}
 
-	@RequestMapping(value = "/common/home", method = RequestMethod.GET)
-	public ModelAndView adminHome(HttpServletRequest request) {
-		ModelAndView modelAndView = new ModelAndView();
+	@GetMapping("/common/home")
+	public String adminHome(Model model, HttpServletRequest request) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
 		request.getSession().setAttribute("user_id", user.getId());
 		String s = auth.getAuthorities().toString();
 		if (s.contains("ADMIN")) {
-			modelAndView.addObject("isAdmin", true);
+			model.addAttribute("isAdmin", true);
 		} else {
-			modelAndView.addObject("isAdmin", false);
+			model.addAttribute("isAdmin", false);
 		}
-		modelAndView.addObject("userImg", "" + user.getImgurl());
-		modelAndView.addObject("userEmail", "" + " (" + user.getEmail() + ")");
-		modelAndView.addObject("userName", "Welcome " + user.getName());
-		modelAndView.setViewName("common/home");
-		return modelAndView;
+		model.addAttribute("userImg", "" + user.getImgurl());
+		model.addAttribute("userEmail", "" + " (" + user.getEmail() + ")");
+		model.addAttribute("userName", "Welcome " + user.getName());
+		return "common/home";
 	}
 }
