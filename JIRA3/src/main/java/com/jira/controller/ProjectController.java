@@ -25,25 +25,15 @@ import com.jira.contract.UserService;
 import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.mail.Mail;
 import com.jira.model.Project;
-import com.jira.model.User;
-import com.jira.model.UserHasProject;
-import com.jira.model.UserHasProjectId;
-import com.jira.repository.UserHasProjectRepository;
 
 @Controller
 public class ProjectController {
 
 	private IProjectService projectService;
 
-	private UserService userService;
-
-	@Autowired
-	private UserHasProjectRepository userHasProjectRepository;
-
 	@Autowired
 	public ProjectController(IProjectService projectService, UserService userService) {
 		this.projectService = projectService;
-		this.userService = userService;
 	}
 
 	@GetMapping("/common/projects")
@@ -97,19 +87,7 @@ public class ProjectController {
 
 	@PostMapping("/share/project")
 	public String share(Model model, HttpServletRequest request) throws ResourceNotFoundException {
-		int projectId = Integer.parseInt(request.getParameter("projectId"));
-		String email = request.getParameter("email");
-		User user = this.userService.findUserByEmail(email);
-		if (user == null) {
-			throw new ResourceNotFoundException("Invalid user");
-		}
-		UserHasProject uhp = new UserHasProject();
-		UserHasProjectId uhpi = new UserHasProjectId();
-		uhpi.setUser_id(user.getId());
-		uhpi.setProject_id(projectId);
-		uhp.setUserHasProjectID(uhpi);
-		userHasProjectRepository.save(uhp);
-		new Mail(email, "JIRA", "You were added to a new project");
+		int projectId = this.projectService.sendMeil(request);
 		return "redirect:/common/home#!/projectView/" + projectId;
 	}
 

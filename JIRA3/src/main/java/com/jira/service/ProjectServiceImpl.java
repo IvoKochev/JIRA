@@ -15,9 +15,13 @@ import org.springframework.stereotype.Service;
 import com.jira.contract.IProjectService;
 import com.jira.contract.UserService;
 import com.jira.exceptions.ResourceNotFoundException;
+import com.jira.mail.Mail;
 import com.jira.model.Project;
 import com.jira.model.User;
+import com.jira.model.UserHasProject;
+import com.jira.model.UserHasProjectId;
 import com.jira.repository.ProjectRepository;
+import com.jira.repository.UserHasProjectRepository;
 
 @Service("projectService")
 public class ProjectServiceImpl implements IProjectService {
@@ -26,6 +30,9 @@ public class ProjectServiceImpl implements IProjectService {
 	private ProjectRepository projectRepository;
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private UserHasProjectRepository userHasProjectRepository;
 
 	@Override
 	public Set<Project> getProjectList() throws ResourceNotFoundException {
@@ -54,5 +61,25 @@ public class ProjectServiceImpl implements IProjectService {
 		project.setUsers(new HashSet<>(Arrays.asList(user)));
 		project.setOwner(user);
 		this.projectRepository.save(project);
+	}
+
+	@Override
+	public int sendMeil(HttpServletRequest request) {
+		int projectId = Integer.parseInt(request.getParameter("projectId"));
+		String email = request.getParameter("email");
+		User user = this.userService.findUserByEmail(email);
+		if (user == null) {
+			throw new ResourceNotFoundException("Invalid user");
+		}
+		UserHasProject uhp = new UserHasProject();
+		UserHasProjectId uhpi = new UserHasProjectId();
+		uhpi.setUser_id(user.getId());
+		uhpi.setProject_id(projectId);
+		uhp.setUserHasProjectID(uhpi);
+		userHasProjectRepository.save(uhp);
+		new Mail(email, "JIRA", "You were added to a new project");
+		
+		return projectId;
+
 	}
 }
