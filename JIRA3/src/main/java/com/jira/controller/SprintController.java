@@ -18,12 +18,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jira.contract.IProjectService;
 import com.jira.contract.ISprintService;
 import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.exceptions.SprintException;
 import com.jira.model.Issue;
-import com.jira.model.Project;
 import com.jira.model.Sprint;
 
 /**
@@ -35,8 +33,6 @@ public class SprintController {
 
 	@Autowired
 	private ISprintService sprintService;
-	@Autowired
-	private IProjectService projectService;
 
 	@GetMapping("/common/createSprint")
 	public String getSprint(Model model) throws ResourceNotFoundException {
@@ -48,13 +44,7 @@ public class SprintController {
 	@PostMapping("/createSprint")
 	public String createSprint(Model model, @ModelAttribute("sprint") Sprint sprint, HttpServletRequest request)
 			throws SprintException {
-		int id = Integer.parseInt(request.getParameter("projectId"));
-		Project project = projectService.getProjectById(id);
-		int owner_id = (int) request.getSession().getAttribute("user_id");
-		sprint.setProject(project);
-		sprint.setOwner_id(owner_id);
-		sprint.setImgurl("/images/sprint.jpg");
-		sprintService.saveSprint(sprint);
+		int id = sprintService.saveSprint(sprint, request);
 		return "redirect:/common/home#!/projectView/" + id;
 	}
 

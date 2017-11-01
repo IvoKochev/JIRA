@@ -3,11 +3,15 @@ package com.jira.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jira.contract.IIssueService;
@@ -20,7 +24,7 @@ import com.jira.model.User;
 import com.jira.repository.IssueRepository;
 import com.jira.repository.UserRepository;
 
-@RestController
+@Controller
 public class IssueController {
 	@Autowired
 	private IProjectService projectService;
@@ -29,21 +33,18 @@ public class IssueController {
 	@Autowired
 	private ISprintService sprintService;
 	@Autowired
-	IssueRepository issueRepository;
+	private IssueRepository issueRepository;
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 
-	@RequestMapping(value = "/common/createIssue", method = RequestMethod.GET)
-	public ModelAndView issueCreateTemplate() {
-		Issue issue = new Issue();
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("issue", issue);
-		modelAndView.setViewName("common/createIssue");
-		return modelAndView;
+	@GetMapping("/common/createIssue")
+	public String issueCreateTemplate(Model model) {
+		model.addAttribute("issue", new Issue());
+		return "common/createIssue";
 	}
 
-	@RequestMapping(value = "/createIssue", method = RequestMethod.POST)
-	public ModelAndView createIssue(@ModelAttribute Issue issue, HttpServletRequest request) {
+	@PostMapping("/createIssue")
+	public String createIssue(@ModelAttribute Issue issue, HttpServletRequest request) {
 		int user_id = (int) request.getSession().getAttribute("user_id");
 		issue.setAsignee_id(user_id);
 		issue.setReporter_id(user_id);
@@ -52,9 +53,7 @@ public class IssueController {
 		issue.setSprint(sprint);
 		issue.setStatus("TO DO");
 		issueService.saveIssue(issue);
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/common/home#!/sprintView/" + id);
-		return modelAndView;
+		return "redirect:/common/home#!/sprintView/" + id;
 	}
 
 	@RequestMapping(value = "/common/issueView", method = RequestMethod.GET)
@@ -65,6 +64,7 @@ public class IssueController {
 	}
 
 	@RequestMapping(value = "/common/issueView/{id}", method = RequestMethod.GET)
+	@ResponseBody
 	public Issue getIssue(@PathVariable(value = "id") int id) {
 		Issue issue = issueRepository.findById(id);
 		issue.setAsignee(userRepository.findByid(issue.getAsignee_id()));
