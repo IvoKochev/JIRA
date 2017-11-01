@@ -24,10 +24,6 @@ import com.jira.exceptions.SprintException;
 import com.jira.model.Issue;
 import com.jira.model.Sprint;
 
-/**
- *
- * @author ivo
- */
 @Controller
 public class SprintController {
 
