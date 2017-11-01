@@ -23,7 +23,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.jira.contract.IProjectService;
 import com.jira.contract.UserService;
 import com.jira.exceptions.ResourceNotFoundException;
-import com.jira.mail.Mail;
 import com.jira.model.Project;
 
 @Controller
@@ -87,17 +86,13 @@ public class ProjectController {
 
 	@PostMapping("/share/project")
 	public String share(Model model, HttpServletRequest request) throws ResourceNotFoundException {
-		int projectId = this.projectService.sendMeil(request);
+		int projectId = this.projectService.shareProject(request);
 		return "redirect:/common/home#!/projectView/" + projectId;
 	}
 
 	@PostMapping("/sendMail")
 	public String sendMail(Model model, HttpServletRequest request) {
-		int id = Integer.parseInt(request.getParameter("projectId"));
-		String email = request.getParameter("email");
-		String subject = request.getParameter("subject");
-		String body = request.getParameter("body");
-		new Mail(email, subject, body);
+		int id = this.projectService.sendMail(request);
 		return "redirect:/common/home#!/projectView/" + id;
 	}
 

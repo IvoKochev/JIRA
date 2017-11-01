@@ -64,7 +64,7 @@ public class ProjectServiceImpl implements IProjectService {
 	}
 
 	@Override
-	public int sendMeil(HttpServletRequest request) {
+	public int shareProject(HttpServletRequest request) {
 		int projectId = Integer.parseInt(request.getParameter("projectId"));
 		String email = request.getParameter("email");
 		User user = this.userService.findUserByEmail(email);
@@ -78,8 +78,18 @@ public class ProjectServiceImpl implements IProjectService {
 		uhp.setUserHasProjectID(uhpi);
 		userHasProjectRepository.save(uhp);
 		new Mail(email, "JIRA", "You were added to a new project");
-		
+
 		return projectId;
 
+	}
+
+	@Override
+	public int sendMail(HttpServletRequest request) {
+		int id = Integer.parseInt(request.getParameter("projectId"));
+		String email = request.getParameter("email");
+		String subject = request.getParameter("subject");
+		String body = request.getParameter("body");
+		new Mail(email, subject, body);
+		return id;
 	}
 }

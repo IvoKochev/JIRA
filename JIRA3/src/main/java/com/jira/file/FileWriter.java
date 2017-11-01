@@ -45,11 +45,11 @@ public class FileWriter {
         
         public void writeAttachment(Part filePart, String attachmentName, int id) throws IOException {
            
-           File file = new File("/home/ivo/Ivo/JiraAttachments/" + id);
+           File file = new File("/home/slavi/JiraAttachments/" + id);
            if(!file.exists()) {
-              file.mkdir();
+              file.mkdirs();
            }
-           File file1 = new File("/home/ivo/Ivo/JiraAttachments/" + id + "/" + attachmentName);
+           File file1 = new File("/home/slavi/JiraAttachments/" + id + "/" + attachmentName);
            if(!file1.exists()) {
                file1.createNewFile();
            }

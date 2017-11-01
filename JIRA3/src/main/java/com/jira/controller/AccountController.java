@@ -10,18 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.jira.contract.UserService;
 import com.jira.file.FileWriter;
 import com.jira.model.RatingUser;
 import com.jira.model.User;
 
-@RestController
+@Controller
 public class AccountController {
 
 	@Autowired
@@ -30,20 +30,17 @@ public class AccountController {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	@RequestMapping(value = "/common/account", method = RequestMethod.GET)
-	public ModelAndView getAccount() {
-		ModelAndView modelAndView = new ModelAndView();
+	@GetMapping("/common/account")
+	public String getAccount(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
 		user.setPassword(null);
-		modelAndView.addObject("user", user);
-		modelAndView.setViewName("common/account");
-		return modelAndView;
+		model.addAttribute("user", user);
+		return "common/account";
 	}
 
-	@RequestMapping(value = "/avatar", method = RequestMethod.POST)
-	public ModelAndView setAvatar(HttpServletRequest request) throws IOException, ServletException {
-		ModelAndView modelAndView = new ModelAndView();
+	@PostMapping("/avatar")
+	public String setAvatar(HttpServletRequest request) throws IOException, ServletException {
 		Part filePart = request.getPart("file");
 		String password = request.getParameter("password");
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -54,11 +51,10 @@ public class AccountController {
 			user.setPassword(password);
 			this.userService.saveUser(user);
 		}
-		modelAndView.setViewName("redirect:/common/home");
-		return modelAndView;
+		return "redirect:/common/home";
 	}
 
-	@RequestMapping(value = "/rating", method = RequestMethod.POST)
+	@PostMapping("/rating")
 	public void setRating(@RequestBody RatingUser data) {
 		User user = this.userService.findById(data.getUserId());
 		int userCounter = user.getVotecounter();
