@@ -26,7 +26,7 @@
 
             <div class="form-group">
               <div class="col-sm-9">
-
+                <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="validation-message"></label>
                 <input type="text" th:field="*{name}" placeholder="Sprint name" class="form-control" />
               </div>
             </div>
@@ -44,7 +44,7 @@
             </div>
             <div class="form-group">
               <div class="col-sm-9">
-                
+
                 <input type="date" th:field="*{end_date}" placeholder="End date" class="form-control" />
               </div>
             </div>

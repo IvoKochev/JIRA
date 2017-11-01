@@ -1,10 +1,12 @@
 package com.jira.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,11 +46,15 @@ public class IssueController {
 	}
 
 	@PostMapping("/createIssue")
-	public String createIssue(@ModelAttribute Issue issue, HttpServletRequest request) {
+	public String createIssue(@Valid @ModelAttribute Issue issue, BindingResult bindingResult,
+			HttpServletRequest request) {
+		int id = Integer.parseInt(request.getParameter("sprintId"));
+		if (bindingResult.hasErrors()) {
+			return "redirect:/common/home#!/createIssue/" + id;
+		}
 		int user_id = (int) request.getSession().getAttribute("user_id");
 		issue.setAsignee_id(user_id);
 		issue.setReporter_id(user_id);
-		int id = Integer.parseInt(request.getParameter("sprintId"));
 		Sprint sprint = sprintService.findSprintById(id);
 		issue.setSprint(sprint);
 		issue.setStatus("TO DO");

@@ -17,8 +17,12 @@ public class AttachmentController {
 	@PostMapping("/addAttachment")
 	public String addAttachment(HttpServletRequest request) throws IOException, ServletException {
 		Part attachment = request.getPart("attachment");
+		int issueId = (int) Integer.parseInt(request.getParameter("issueId"));
+		if (attachment == null) {
+			return "redirect:/common/home#!/issueView/" + issueId;
+		}
 		int id = (int) request.getSession().getAttribute("user_id");
 		new FileWriter().writeAttachment(attachment, "firstAttachment", id);
-		return "redirect:/common/home#!";
+		return "redirect:/common/home#!/issueView/" + issueId;
 	}
 }

@@ -5,22 +5,23 @@
  */
 package com.jira.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.jira.contract.ICommentsService;
 import com.jira.contract.IIssueService;
 import com.jira.model.Comments;
 import com.jira.model.Issue;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
  * @author ivo
  */
-@RestController
+@Controller
 public class CommentController {
 	@Autowired
 	private IIssueService issueService;
@@ -29,18 +30,19 @@ public class CommentController {
 	private ICommentsService commentService;
 
 	@RequestMapping(value = "/createComment", method = RequestMethod.POST)
-	public ModelAndView createComment(HttpServletRequest request) {
-		String text = request.getParameter("comment");
-		int user_id = (int) request.getSession().getAttribute("user_id");
+	public String createComment(HttpServletRequest request) {
 		int id = Integer.parseInt(request.getParameter("issueId"));
+		String text = request.getParameter("comment");
+		if(text==null || text.equals("")) {
+			return "redirect:/common/home#!/issueView/" + id;
+		}
+		int user_id = (int) request.getSession().getAttribute("user_id");
 		Comments comment = new Comments();
 		comment.setText(text);
 		Issue issue = issueService.getIssue(id);
 		comment.setIssue(issue);
 		comment.setUser_id(user_id);
 		commentService.saveComment(comment);
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/common/home#!/issueView/" + id);
-		return modelAndView;
+		return "redirect:/common/home#!/issueView/" + id;
 	}
 }

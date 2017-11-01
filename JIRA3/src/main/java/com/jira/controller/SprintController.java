@@ -8,10 +8,12 @@ package com.jira.controller;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,9 +40,14 @@ public class SprintController {
 	}
 
 	@PostMapping("/createSprint")
-	public String createSprint(Model model, @ModelAttribute("sprint") Sprint sprint, HttpServletRequest request)
-			throws SprintException {
-		int id = sprintService.saveSprint(sprint, request);
+	public String createSprint(Model model, @Valid @ModelAttribute("sprint") Sprint sprint, BindingResult bindingResult,
+			HttpServletRequest request) throws SprintException {
+		int id = Integer.parseInt(request.getParameter("projectId"));
+		if (bindingResult.hasErrors()) {
+			System.err.println("sadfadffadf");
+			return "redirect:/common/home#!/createSprint/" + id;
+		}
+		sprintService.saveSprint(sprint, request);
 		return "redirect:/common/home#!/projectView/" + id;
 	}
 

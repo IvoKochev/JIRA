@@ -33,8 +33,7 @@ public class Sprint implements Serializable {
 	private String end_date;
 	private Project project;
 	private String imgurl;
-        private Set<Issue> issues;
-
+	private Set<Issue> issues;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,7 +47,7 @@ public class Sprint implements Serializable {
 	}
 
 	@Column(name = "name")
-        @NotEmpty(message = "*Please provide a name")
+	@NotEmpty(message = "*Please provide a name")
 	public String getName() {
 		return name;
 	}
@@ -58,7 +57,7 @@ public class Sprint implements Serializable {
 	}
 
 	@Column(name = "sprintgoal")
-        @NotEmpty(message = "*Please provide a sprint goal")
+	@NotEmpty(message = "*Please provide a sprint goal")
 	public String getSprintgoal() {
 		return sprintgoal;
 	}
@@ -68,7 +67,7 @@ public class Sprint implements Serializable {
 	}
 
 	@Column(name = "start_date")
-        @NotEmpty(message = "*Please provide a starting date")
+	@NotEmpty(message = "*Please provide a starting date")
 	public String getStart_date() {
 		return start_date;
 	}
@@ -78,7 +77,7 @@ public class Sprint implements Serializable {
 	}
 
 	@Column(name = "end_date")
-        @NotEmpty(message = "*Please provide an ending date")
+	@NotEmpty(message = "*Please provide an ending date")
 	public String getEnd_date() {
 		return end_date;
 	}
@@ -106,7 +105,7 @@ public class Sprint implements Serializable {
 	public void setProject(Project project) {
 		this.project = project;
 	}
-	
+
 	@Column(name = "imgurl")
 	public String getImgurl() {
 		return imgurl;
@@ -128,7 +127,8 @@ public class Sprint implements Serializable {
 		result = prime * result + ((start_date == null) ? 0 : start_date.hashCode());
 		return result;
 	}
-    @OneToMany(mappedBy="sprint")
+
+	@OneToMany(mappedBy = "sprint")
 	public Set<Issue> getIssues() {
 		return issues;
 	}
