@@ -7,15 +7,17 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jira.contract.IProjectService;
 import com.jira.contract.UserService;
@@ -27,7 +29,7 @@ import com.jira.model.UserHasProject;
 import com.jira.model.UserHasProjectId;
 import com.jira.repository.UserHasProjectRepository;
 
-@RestController
+@Controller
 public class ProjectController {
 
 	private IProjectService projectService;
@@ -66,6 +68,7 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@ResponseBody
 	public Set<Project> getProjectList() throws ResourceNotFoundException {
 		return this.projectService.getProjectList();
 	}
@@ -76,24 +79,26 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/admin/createProject", method = RequestMethod.GET)
-	public ModelAndView createProject() {
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("project", new Project());
-		modelAndView.setViewName("/admin/createProject");
-		return modelAndView;
+	public String createProject(Model model) {
+		if (!model.containsAttribute("project")) {
+			System.err.println("KOZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+			model.addAttribute("project", new Project());
+		}
+		return "/admin/createProject";
 	}
 
 	@RequestMapping(value = "/createProject", method = RequestMethod.POST)
-	public ModelAndView createNewUser(@Valid @ModelAttribute("pForm") Project project, BindingResult bindingResult,
-			HttpServletRequest request) {
-		ModelAndView modelAndView = new ModelAndView();
+	public String createNewUser(Model model, @Valid Project project, BindingResult bindingResult,
+			RedirectAttributes attr, HttpServletRequest request) {
 		if (bindingResult.hasErrors()) {
-			modelAndView.setViewName("redirect:/common/home#!/admin/createProject");
-		} else {
-			this.projectService.save(project, request);
-			modelAndView.setViewName("redirect:/common/home");
+			bindingResult.rejectValue("name", "kurec");
+			attr.addFlashAttribute("org.springframework.validation.BindingResult.project", bindingResult);
+			attr.addFlashAttribute("project", project);
+			return "redirect:" + request.getContextPath() + "/common/home#!/createProject";
 		}
-		return modelAndView;
+		this.projectService.save(project, request);
+
+		return "redirect:/common/home";
 	}
 
 	@RequestMapping(value = "/share/project", method = RequestMethod.POST)

@@ -18,11 +18,7 @@ import com.jira.model.Project;
 import com.jira.model.Sprint;
 import com.jira.model.User;
 import com.jira.repository.IssueRepository;
-import com.jira.repository.ProjectRepository;
 import com.jira.repository.UserRepository;
-import com.jira.service.ProjectServiceImpl;
-import java.io.IOException;
-import javax.servlet.http.HttpServletResponse;
 
 @RestController
 public class IssueController {

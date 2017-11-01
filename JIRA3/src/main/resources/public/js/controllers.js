@@ -53,7 +53,7 @@ angular.module('jira.controllers', [])
     };
   }])
   .controller('CreateProjectCtrl', function($scope) {
-
+      console.log("PPP");
   })
   .controller('AccountCtrl', function($scope) {
 
