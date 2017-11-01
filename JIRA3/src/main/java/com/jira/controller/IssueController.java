@@ -80,8 +80,13 @@ public class IssueController {
 
 	@RequestMapping(value = "/setAsignee", method = RequestMethod.POST)
 	public ModelAndView setAsignee(HttpServletRequest request) {
+                ModelAndView modelAndView = new ModelAndView();
 		String email = request.getParameter("asignee");
-		int id = Integer.parseInt(request.getParameter("issueId"));
+                int id = Integer.parseInt(request.getParameter("issueId"));
+                if(email == null || email.isEmpty()) {
+                    modelAndView.setViewName("redirect:/common/home#!/issueView/" + id);
+                    return modelAndView;
+                }
 		Issue issue = issueService.getIssue(id);
 		Sprint sprint = sprintService.findSprintById(issue.getSprint().getId());
 		Project project = projectService.getProjectById(sprint.getProject().getId());
@@ -90,8 +95,7 @@ public class IssueController {
 			issue.setAsignee_id(user.getId());
 			issueService.saveIssue(issue);
 		}
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/common/home#!/sprintView/" + id);
+		modelAndView.setViewName("redirect:/common/home#!/issueView/" + id);
 		return modelAndView;
 	}
 
