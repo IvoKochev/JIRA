@@ -10,18 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.jira.contract.UserService;
 import com.jira.file.FileWriter;
 import com.jira.model.RatingUser;
 import com.jira.model.User;
 
-@Controller
+@RestController
 public class AccountController {
 
 	@Autowired
@@ -30,17 +30,20 @@ public class AccountController {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	@GetMapping("/common/account")
-	public String getAccount(Model model) {
+	@RequestMapping(value = "/common/account", method = RequestMethod.GET)
+	public ModelAndView getAccount() {
+		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
 		user.setPassword(null);
-		model.addAttribute("user", user);
-		return "common/account";
+		modelAndView.addObject("user", user);
+		modelAndView.setViewName("common/account");
+		return modelAndView;
 	}
 
-	@PostMapping("/avatar")
-	public String setAvatar(HttpServletRequest request) throws IOException, ServletException {
+	@RequestMapping(value = "/avatar", method = RequestMethod.POST)
+	public ModelAndView setAvatar(HttpServletRequest request) throws IOException, ServletException {
+		ModelAndView modelAndView = new ModelAndView();
 		Part filePart = request.getPart("file");
 		String password = request.getParameter("password");
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -51,11 +54,13 @@ public class AccountController {
 			user.setPassword(password);
 			this.userService.saveUser(user);
 		}
-		return "redirect:/common/home";
+		modelAndView.setViewName("redirect:/common/home");
+		return modelAndView;
 	}
 
-	@PostMapping("/rating")
-	public void setRating(@RequestBody RatingUser data) {
+	@RequestMapping(value = "/rating", method = RequestMethod.POST)
+	public ModelAndView setRating(@RequestBody RatingUser data) {
+		ModelAndView modelAndView = new ModelAndView();
 		User user = this.userService.findById(data.getUserId());
 		int userCounter = user.getVotecounter();
 		double rating = user.getRating();
@@ -63,6 +68,9 @@ public class AccountController {
 		userCounter++;
 		allPoint += data.getRatingId();
 		double newRating = allPoint / userCounter;
-		this.userService.updateUserRating(user.getId(), newRating, userCounter);
+		this.userService.updateUserRating(data.getUserId(), newRating, userCounter);
+		modelAndView.setViewName("/common/projectView");
+		return modelAndView;
 	}
+
 }
