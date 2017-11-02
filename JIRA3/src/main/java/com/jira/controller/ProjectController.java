@@ -16,10 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jira.contract.IProjectService;
@@ -28,7 +27,7 @@ import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.model.Project;
 
 @Controller
-//@SessionAttributes({ "project" })
+@SessionAttributes("project")
 public class ProjectController {
 
 	private IProjectService projectService;
@@ -38,10 +37,10 @@ public class ProjectController {
 		this.projectService = projectService;
 	}
 
-//	@ModelAttribute("project")
-//	public Project getExampleForm() {
-//		return new Project();
-//	}
+	@ModelAttribute("project")
+	public Project getExampleForm() {
+		return new Project();
+	}
 
 	@GetMapping("/common/projects")
 	public String adminProjects(Model model) {
@@ -70,23 +69,21 @@ public class ProjectController {
 		return this.projectService.getProjectById(id);
 	}
 
-	@RequestMapping(value = "/admin/createProject", method = RequestMethod.GET)
+	@GetMapping("/createProject")
 	public String createProject(Model model) {
-		// if (!model.containsAttribute("project")) {
-		System.err.println("ssssssssssssss");
-		model.addAttribute("project", new Project());
-		// }
+		if (!model.containsAttribute("project")) {
+			model.addAttribute("project", new Project());
+		}
 		return "/admin/createProject";
 	}
 
-	@RequestMapping(value = "/createProject", method = RequestMethod.POST)
+	@PostMapping(value = "/createProject")
 	public String createNewUser(@Valid @ModelAttribute("project") final Project project,
 			final BindingResult bindingResult, RedirectAttributes attr, HttpSession session,
 			HttpServletRequest request) {
 		if (bindingResult.hasErrors()) {
-			// attr.addFlashAttribute("org.springframework.validation.BindingResult.project",
-			// bindingResult);
-			// attr.addFlashAttribute("project", project);
+			attr.addFlashAttribute("org.springframework.validation.BindingResult.project", bindingResult);
+			attr.addFlashAttribute("project", project);
 			return "redirect:/common/home#!/createProject";
 		}
 		this.projectService.save(project, request);

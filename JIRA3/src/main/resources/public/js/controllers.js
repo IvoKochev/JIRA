@@ -1,7 +1,7 @@
 angular.module('jira.controllers', [])
   .controller('ProjectsCtrl', function($scope, ProjectList) {
     $scope.page = 1;
-    var pageSize = 16;
+    var pageSize = 5;
     var projects;
     $scope.isPrevDisabled = true;
     $scope.isNextDisabled = false;

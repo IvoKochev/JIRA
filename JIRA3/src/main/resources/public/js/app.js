@@ -9,7 +9,7 @@ angular.module('jiraProject', ['ngRateIt', 'ngRoute', 'adminProjectServices', 'j
       templateUrl: 'projectView.html;',
       controller: 'ProjectViewCtrl'
     }).when('/createProject', {
-      templateUrl: '/admin/createProject.html;',
+      templateUrl: '/createProject.html;',
       controller: 'CreateProjectCtrl'
     }).when('/account', {
       templateUrl: '/common/account.html;',
