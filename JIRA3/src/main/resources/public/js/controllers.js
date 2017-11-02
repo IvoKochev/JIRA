@@ -41,9 +41,9 @@ angular.module('jira.controllers', [])
     var sprints;
     var users;
     $scope.isPrevDisabledS = true;
-    $scope.isNextDisabledS = false;
+    $scope.isNextDisabledS = true;
     $scope.isPrevDisabledU = true;
-    $scope.isNextDisabledU = false;
+    $scope.isNextDisabledU = true;
 
 
 
@@ -69,8 +69,6 @@ angular.module('jira.controllers', [])
       $scope.isPrevDisabledS = false;
       $scope.sprints = sprints.slice(($scope.pageS - 1) * pageSizeS, $scope.pageS * pageSizeS);
     };
-
-
 
     $scope.goToPrevPageU = function() {
       if ($scope.pageU === 1) {
@@ -100,10 +98,16 @@ angular.module('jira.controllers', [])
       $scope.project = response.data;
       sprints = $scope.project.sprints;
       $scope.sprints = sprints.slice(($scope.pageS - 1) * pageSizeS, $scope.pageS * pageSizeS);
+      if ($scope.sprints.length * $scope.pageS< sprints.length) {
+        $scope.isNextDisabledS = false;
+      }
       var usersTemp = $scope.project.users;
       u = $filter('orderBy')(usersTemp, '-rating');
       users = u;
       $scope.users = users.slice(($scope.pageU - 1) * pageSizeU, $scope.pageU * pageSizeU);
+      if ($scope.users.length * $scope.pageU < users.length) {
+        $scope.isNextDisabledU = false;
+      }
 
     }, function error(data, status, headers, config) {
       $location.path('/404');
@@ -134,10 +138,10 @@ angular.module('jira.controllers', [])
   }]).controller('SprintViewCtrl', ['$scope', 'SprintViewService', '$routeParams', '$http', '$location', '$rootScope', function($scope, SprintViewService, $routeParams, $http, $location, $rootScope) {
     SprintViewService.posts($routeParams.id).then(function success(response) {
       $scope.page = 1;
-      var pageSize = 3;
+      var pageSize = 14;
       var issues;
       $scope.isPrevDisabled = true;
-      $scope.isNextDisabled = false;
+      $scope.isNextDisabled = true;
 
       $scope.goToPrevPage = function() {
         if ($scope.page === 1) {
@@ -163,8 +167,10 @@ angular.module('jira.controllers', [])
       };
       $scope.sprintId = $routeParams.id;
       issues = response.data;
-
       $scope.issues = issues.slice(($scope.page - 1) * pageSize, $scope.page * pageSize);
+      if ($scope.issues.length * $scope.page < issues.length) {
+        $scope.isNextDisabled = false;
+      }
     }, function error(data, status, headers, config) {
       $location.path('/404');
     });

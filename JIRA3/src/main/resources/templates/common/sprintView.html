@@ -25,7 +25,7 @@
         </nav>
         <nav class="col-md-8">
           <h3>
-           <strong>Issue List List</strong>
+           <strong>Issue List</strong>
         </h3>
         </nav>
       </div>
@@ -44,7 +44,7 @@
         <tr class="ewoyXV" ng-repeat="issue in issues | orderBy:'priority'">
           <td width="250" class="kUfcsh"><span class="gGsHVf"> <a
               ng-href="http://localhost:8080/common/home#!/issueView/{{issue.id}}">
-              <img ng-src="{{issue.img_url}}" width="60" height="60">{{issue.type}}
+              <img ng-src="{{issue.img_url}}" width="60" height="60"> {{issue.type}}
             </a>
           </span></td>
           <td width="850" class="drqBbD"><span class="fuVjLH">{{issue.summary}}</span>

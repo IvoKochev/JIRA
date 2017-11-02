@@ -84,8 +84,15 @@
 		</table>
 
 		<div class=" col-md-6">
-
+			<nav class="col-md-12">
+				<h3>
+				 <strong>Sprint list</strong>
+			</h3>
+			</nav>
 			<div class=" col-md-12">
+				<div ng:if="!sprints.length> 0">
+					<strong>Still there are no sprints for the project</strong>
+				</div>
 				<div class=" col-md-4" ng-repeat="sprint in sprints ">
 					<div class="row top-buffer">
 						<td width="200" class="kUfcsh"><span class="gGsHVf"> <a
@@ -93,7 +100,6 @@
 									<img ng-src="{{sprint.imgurl}}" width="50" height="50">{{sprint.name}}
 							</a>
 						</span></td>
-
 						<div class="row">
 							<strong>End date: </strong><a>{{sprint.end_date}}</a>
 						</div>
@@ -103,6 +109,11 @@
 		</div>
 
 		<div class=" col-md-6">
+
+			<h3><strong>User list</strong></h3>
+			<div ng:if="!users.length> 0">
+				<strong>Still there are no users for the project</strong>
+			</div>
 			<div class="col-lg-6" ng-repeat="user in users  | orderBy:'-rating'">
 				<div class="row top-buffer">
 					<img width="60" height="60" src="{{user.imgurl}}" class="col-xs-4" />
