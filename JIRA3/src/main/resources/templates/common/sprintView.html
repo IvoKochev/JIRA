@@ -33,7 +33,8 @@
     <tbody>
       <tr class="ewoyXV" ng-repeat="issue in issues | orderBy:'priority'">
         <td width="100" class="kUfcsh"><span class="gGsHVf"> <a
-              ng-href="http://localhost:8080/common/home#!/issueView/{{issue.id}}">{{issue.type}}
+              ng-href="http://localhost:8080/common/home#!/issueView/{{issue.id}}">
+              <img ng-src="{{issue.img_url}}" width="60" height="60">{{issue.type}}
             </a>
           </span></td>
         <td width="200" class="drqBbD"><span class="fuVjLH">{{issue.summary}}</span>

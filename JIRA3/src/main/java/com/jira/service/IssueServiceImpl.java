@@ -8,30 +8,42 @@ import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.model.Issue;
 import com.jira.repository.IssueRepository;
 
-
 @Service
 public class IssueServiceImpl implements IIssueService {
 
-    @Autowired
-    private IssueRepository issueRepository;
-    
-    @Override
-    public void saveIssue(Issue issue) {
-        if(issue != null) {
-            issueRepository.save(issue);
-        }
-    }
+	@Autowired
+	private IssueRepository issueRepository;
 
-    @Override
-    public void updateIssue(Issue issue) throws ResourceNotFoundException {
-        //to be done
-    }
-    @Override
-    public Issue getIssue(int id) {
-        return issueRepository.findById(id);
-    }
+	@Override
+	public void saveIssue(Issue issue) {
+		if (issue != null) {
+			switch (issue.getType()) {
+			case "Epic":
+				issue.setImg_url("/images/epic.png");
+				break;
+			case "Story":
+				issue.setImg_url("/images/story.png");
+				break;
+			case "Task":
+				issue.setImg_url("/images/task.png");
+				break;
 
-   
+			default:
+				issue.setImg_url("/images/bug.png");
+				break;
+			}
+			issueRepository.save(issue);
+		}
+	}
 
-	
+	@Override
+	public void updateIssue(Issue issue) throws ResourceNotFoundException {
+		// to be done
+	}
+
+	@Override
+	public Issue getIssue(int id) {
+		return issueRepository.findById(id);
+	}
+
 }

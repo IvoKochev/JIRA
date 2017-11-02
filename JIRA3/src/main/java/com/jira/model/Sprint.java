@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -48,6 +50,7 @@ public class Sprint implements Serializable {
 
 	@Column(name = "name")
 	@NotEmpty(message = "*Please provide a name")
+	@Length(max = 12, message = "*Sprint name must have at max 12 characters")
 	public String getName() {
 		return name;
 	}
