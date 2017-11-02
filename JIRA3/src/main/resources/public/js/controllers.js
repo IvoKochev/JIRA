@@ -33,9 +33,77 @@ angular.module('jira.controllers', [])
       $scope.projects = projects.slice(($scope.page - 1) * pageSize, $scope.page * pageSize);
     });
   })
-  .controller('ProjectViewCtrl', ['$scope', 'ProjectService', '$routeParams', '$http', '$location', '$rootScope', function($scope, ProjectService, $routeParams, $http, $location, $rootScope) {
+  .controller('ProjectViewCtrl', ['$scope', 'ProjectService', '$routeParams', '$http', '$location', '$rootScope','$filter', function($scope, ProjectService, $routeParams, $http, $location, $rootScope, $filter) {
+    $scope.pageS = 1;
+    $scope.pageU = 1;
+    var pageSizeS = 21;
+    var pageSizeU = 8;
+    var sprints;
+    var users;
+    $scope.isPrevDisabledS = true;
+    $scope.isNextDisabledS = false;
+    $scope.isPrevDisabledU = true;
+    $scope.isNextDisabledU = false;
+
+
+
+    $scope.goToPrevPageS = function() {
+      if ($scope.pageS === 1) {
+        return;
+      }
+      --$scope.pageS;
+      if ($scope.pageS === 1) {
+        $scope.isPrevDisabledS = true;
+      }
+      $scope.isNextDisabledS = false;
+      $scope.sprints = sprints.slice(($scope.pageS - 1) * pageSizeS, $scope.pageS * pageSizeS);
+    };
+    $scope.goToNextPageS = function() {
+      if ($scope.pageS >= sprints.length / pageSizeS) {
+        return;
+      }
+      ++$scope.pageS;
+      if ($scope.pageS >= sprints.length / pageSizeS) {
+        $scope.isNextDisabledS = true;
+      }
+      $scope.isPrevDisabledS = false;
+      $scope.sprints = sprints.slice(($scope.pageS - 1) * pageSizeS, $scope.pageS * pageSizeS);
+    };
+
+
+
+    $scope.goToPrevPageU = function() {
+      if ($scope.pageU === 1) {
+        return;
+      }
+      --$scope.pageU;
+      if ($scope.pageU === 1) {
+        $scope.isPrevDisabledU = true;
+      }
+      $scope.isNextDisabledU = false;
+      $scope.users = users.slice(($scope.pageU - 1) * pageSizeU, $scope.pageU * pageSizeU);
+    };
+    $scope.goToNextPageU = function() {
+      if ($scope.pageU >= users.length / pageSizeU) {
+        return;
+      }
+      ++$scope.pageU;
+      if ($scope.pageU >= users.length / pageSizeU) {
+        $scope.isNextDisabledU = true;
+      }
+      $scope.isPrevDisabledU = false;
+      $scope.users = users.slice(($scope.pageU - 1) * pageSizeU, $scope.pageU * pageSizeU);
+    };
+
+
     ProjectService.posts($routeParams.id).then(function success(response) {
       $scope.project = response.data;
+      sprints = $scope.project.sprints;
+      $scope.sprints = sprints.slice(($scope.pageS - 1) * pageSizeS, $scope.pageS * pageSizeS);
+      var usersTemp = $scope.project.users;
+      u = $filter('orderBy')(usersTemp, '-rating');
+      users = u;
+      $scope.users = users.slice(($scope.pageU - 1) * pageSizeU, $scope.pageU * pageSizeU);
 
     }, function error(data, status, headers, config) {
       $location.path('/404');
@@ -53,7 +121,7 @@ angular.module('jira.controllers', [])
     };
   }])
   .controller('CreateProjectCtrl', function($scope) {
-      console.log("PPP");
+    console.log("PPP");
   })
   .controller('AccountCtrl', function($scope) {
 
@@ -62,7 +130,7 @@ angular.module('jira.controllers', [])
     $scope.projectId = $routeParams.id;
   }])
   .controller('IssueCtrl', ['$scope', '$routeParams', '$http', '$location', '$rootScope', function($scope, $routeParams, $http, $location, $rootScope) {
-  $scope.sprintId = $routeParams.id;
+    $scope.sprintId = $routeParams.id;
 
   }]).controller('SprintViewCtrl', ['$scope', 'SprintViewService', '$routeParams', '$http', '$location', '$rootScope', function($scope, SprintViewService, $routeParams, $http, $location, $rootScope) {
     SprintViewService.posts($routeParams.id).then(function success(response) {

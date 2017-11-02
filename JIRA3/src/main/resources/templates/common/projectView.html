@@ -76,20 +76,10 @@
 			</tbody>
 		</table>
 
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<div class="container">
-					<nav class="col-md-4">
-					</nav>
-					<nav class="col-md-8">
-						<h4>
-							<strong>Sprint List</strong>
-					</h4>
-					</nav>
-				</div>
-			</div>
-			<div class="panel-body panel-height" style="max-height: 5;overflow-y: scroll;">
-				<div class="col-xs-6 col-md-4 col-lg-3" ng-repeat="sprint in project.sprints ">
+		<div class=" col-md-6">
+
+			<div class=" col-md-12">
+				<div class=" col-md-4" ng-repeat="sprint in sprints ">
 					<div class="row top-buffer">
 						<td width="200" class="kUfcsh"><span class="gGsHVf"> <a
 								ng-href="http://localhost:8080/common/home#!/sprintView/{{sprint.id}}">
@@ -105,49 +95,61 @@
 			</div>
 		</div>
 
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<div class="container">
-					<nav class="col-md-4">
-					</nav>
-					<nav class="col-md-8">
-						<h4>
-	            <strong>User List</strong>
-					</h4>
-					</nav>
-				</div>
-			</div>
-			<div class="panel-body panel-height" style="max-height: 5;overflow-y: scroll;">
-				<div class="col-xs-6 col-md-4 col-lg-3" ng-repeat="user in project.users  | orderBy:'-rating'">
-					<div class="row top-buffer">
-						<img width="60" height="60" src="{{user.imgurl}}" class="col-xs-4" />
-						<div class="row">
-							<strong>{{user.name}}</strong>
-						</div>
-						<form  th:action="@{/sendMail}" method="post">
-							<div class="dropdown">
-								<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Send mail
+		<div class=" col-md-6">
+			<div class="col-lg-6" ng-repeat="user in users  | orderBy:'-rating'">
+				<div class="row top-buffer">
+					<img width="60" height="60" src="{{user.imgurl}}" class="col-xs-4" />
+					<div class="row">
+						<strong>{{user.name}}</strong>
+					</div>
+					<form th:action="@{/sendMail}" method="post">
+						<div class="dropdown">
+							<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Send mail
 	                    <span class="caret"></span></button>
-								<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-									<input type="hidden" name="email" value="{{user.email}}">
-									<input type="hidden" name="projectId" value="{{project.id}}">
-									<input type="text" name="subject" placeholder="subject">
-									<textarea name="body" rows="6" cols="40" placeholder="message"></textarea>
-									<button type="submit" class="btn btn-primary btn-block">Send</button>
-								</ul>
-							</div>
-						</form>
-						<div class="row">
-							<strong>rating: </strong><a href="#">{{user.rating}}</a>
-							<ng-rate-it max="10" read-only="isVoted" ng-model="user.rating" rated="myCallback(rating,user.id,project.id)"></ng-rate-it>
-							<strong>rating: </strong><a href="#">{{user.rating}}</a>
-							<strong>votes: </strong><a href="#">{{user.votecounter}}</a>
+							<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+								<input type="hidden" name="email" value="{{user.email}}">
+								<input type="hidden" name="projectId" value="{{project.id}}">
+								<input type="text" name="subject" placeholder="subject">
+								<textarea name="body" rows="6" cols="40" placeholder="message"></textarea>
+								<button type="submit" class="btn btn-primary btn-block">Send</button>
+							</ul>
 						</div>
+					</form>
+					<div class="row">
+						<ng-rate-it max="10" read-only="isVoted" ng-model="user.rating" rated="myCallback(rating,user.id,project.id)"></ng-rate-it>
+						<strong>rating: </strong><a href="#">{{user.rating}}</a>
+						<div class="row">
+						</div>
+						<strong>votes: </strong><a href="#">{{user.votecounter}}</a>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- <ng-rate-it
+	</div>
+	<div class="navbar-fixed-bottom">
+		<div class="container">
+			<div class="row">
+				<button ng-if="isPrevDisabledS" class="btn col-xs-2" disabled="disabled">Prev</button>
+				<button ng-if="!isPrevDisabledS" class="btn-primary btn col-xs-2" ng-click="goToPrevPageS()">Prev</button>
+				<button ng-if="isNextDisabledS" class="btn col-xs-2" disabled="disabled">Next</button>
+				<button ng-if="!isNextDisabledS" class="btn-primary btn col-xs-2" ng-click="goToNextPageS()">Next</button>
+				<div class="col-md-4">
+				</div>
+				<button ng-if="isPrevDisabledU" class="btn col-xs-2" disabled="disabled">Prev</button>
+				<button ng-if="!isPrevDisabledU" class="btn-primary btn col-xs-2" ng-click="goToPrevPageU()">Prev</button>
+				<button ng-if="isNextDisabledU" class="btn col-xs-2" disabled="disabled">Next</button>
+				<button ng-if="!isNextDisabledU" class="btn-primary btn col-xs-2" ng-click="goToNextPageU()">Next</button>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+	<!-- <ng-rate-it
 	ng-model = "String, Number, Array"
 	min = "5"
 	max = "Double"
@@ -163,7 +165,7 @@
 	before-reset = "Function(rating): return promise"
 	>
 </ng-rate-it> -->
-	</div>
+
 </body>
 
 </html>
