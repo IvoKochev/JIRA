@@ -11,7 +11,7 @@ angular.module('adminProjectServices', [])
     };
   }).factory('ProjectService', ['$http', function($http) {
     var _posts = function posts(param) {
-      console.log(param);
+    
       return $http.get('/common/projectView/' + param);
     };
     var description = '';
@@ -33,7 +33,7 @@ angular.module('adminProjectServices', [])
     };
   }]).factory('SprintViewService', ['$http', function($http) {
     var _posts = function posts(param) {
-      console.log(param);
+
       return $http.get('/common/sprintView/' + param);
     };
     var description = '';
@@ -55,7 +55,7 @@ angular.module('adminProjectServices', [])
     };
   }]).factory('IssueViewService', ['$http', function($http) {
     var _posts = function posts(param) {
-      console.log(param);
+
       return $http.get('/common/issueView/' + param);
     };
     var description = '';

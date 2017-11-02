@@ -33,7 +33,7 @@ angular.module('jira.controllers', [])
       $scope.projects = projects.slice(($scope.page - 1) * pageSize, $scope.page * pageSize);
     });
   })
-  .controller('ProjectViewCtrl', ['$scope', 'ProjectService', '$routeParams', '$http', '$location', '$rootScope','$filter', function($scope, ProjectService, $routeParams, $http, $location, $rootScope, $filter) {
+  .controller('ProjectViewCtrl', ['$scope', 'ProjectService', '$routeParams', '$http', '$location', '$rootScope', '$filter', function($scope, ProjectService, $routeParams, $http, $location, $rootScope, $filter) {
     $scope.pageS = 1;
     $scope.pageU = 1;
     var pageSizeS = 21;
@@ -117,11 +117,10 @@ angular.module('jira.controllers', [])
         projectId: project
       };
       $http.post("/rating", data);
-      console.log(rating, custumVar);
     };
   }])
   .controller('CreateProjectCtrl', function($scope) {
-    console.log("PPP");
+
   })
   .controller('AccountCtrl', function($scope) {
 
@@ -134,15 +133,45 @@ angular.module('jira.controllers', [])
 
   }]).controller('SprintViewCtrl', ['$scope', 'SprintViewService', '$routeParams', '$http', '$location', '$rootScope', function($scope, SprintViewService, $routeParams, $http, $location, $rootScope) {
     SprintViewService.posts($routeParams.id).then(function success(response) {
-      $scope.issues = response.data;
+      $scope.page = 1;
+      var pageSize = 3;
+      var issues;
+      $scope.isPrevDisabled = true;
+      $scope.isNextDisabled = false;
+
+      $scope.goToPrevPage = function() {
+        if ($scope.page === 1) {
+          return;
+        }
+        --$scope.page;
+        if ($scope.page === 1) {
+          $scope.isPrevDisabled = true;
+        }
+        $scope.isNextDisabled = false;
+        $scope.issues = issues.slice(($scope.page - 1) * pageSize, $scope.page * pageSize);
+      };
+      $scope.goToNextPage = function() {
+        if ($scope.page >= issues.length / pageSize) {
+          return;
+        }
+        ++$scope.page;
+        if ($scope.page >= issues.length / pageSize) {
+          $scope.isNextDisabled = true;
+        }
+        $scope.isPrevDisabled = false;
+        $scope.issues = issues.slice(($scope.page - 1) * pageSize, $scope.page * pageSize);
+      };
       $scope.sprintId = $routeParams.id;
+      issues = response.data;
+
+      $scope.issues = issues.slice(($scope.page - 1) * pageSize, $scope.page * pageSize);
     }, function error(data, status, headers, config) {
       $location.path('/404');
     });
   }]).controller('IssueViewCtrl', ['$scope', 'IssueViewService', '$routeParams', '$http', '$location', '$rootScope', function($scope, IssueViewService, $routeParams, $http, $location, $rootScope) {
     IssueViewService.posts($routeParams.id).then(function success(response) {
       $scope.issue = response.data;
-      console.log($scope.issue);
+
     }, function error(data, status, headers, config) {
       $location.path('/404');
     });
