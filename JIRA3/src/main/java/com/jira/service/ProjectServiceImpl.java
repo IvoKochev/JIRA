@@ -1,7 +1,9 @@
 package com.jira.service;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +19,7 @@ import com.jira.contract.UserService;
 import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.mail.Mail;
 import com.jira.model.Project;
+import com.jira.model.Sprint;
 import com.jira.model.User;
 import com.jira.model.UserHasProject;
 import com.jira.model.UserHasProjectId;
@@ -45,12 +48,21 @@ public class ProjectServiceImpl implements IProjectService {
 	public Project getProjectById(int id) throws ResourceNotFoundException {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
-		Project p = new Project();
-		p.setId(id);
-		if (user.getProjects().contains(p)) {
-			return this.projectRepository.findById(id);
+		Project project = new Project();
+		project.setId(id);
+		if (!user.getProjects().contains(project)) {
+			throw new ResourceNotFoundException();
 		}
-		throw new ResourceNotFoundException();
+		project = this.projectRepository.findById(id);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm"); // Or whatever format fits best your needs.
+		Iterator<Sprint> sprintIter = project.getSprints().iterator();
+		while (sprintIter.hasNext()) {
+			Sprint sprint = (Sprint) sprintIter.next();
+			sprint.setEndDate(sdf.format(sprint.getEnd_date()));
+			sprint.setStartDate(sdf.format(sprint.getStart_date()));
+		}
+
+		return project;
 	}
 
 	@Override
@@ -64,7 +76,7 @@ public class ProjectServiceImpl implements IProjectService {
 	}
 
 	@Override
-	public int shareProject(HttpServletRequest request) {
+	public int shareProject(HttpServletRequest request) throws ResourceNotFoundException {
 		int projectId = Integer.parseInt(request.getParameter("projectId"));
 		String email = request.getParameter("email");
 		User user = this.userService.findUserByEmail(email);
@@ -81,6 +93,15 @@ public class ProjectServiceImpl implements IProjectService {
 
 		return projectId;
 
+	}
+
+	@Override
+	public void deleteProject(int id) {
+		this.projectRepository.deleteProject(id);
+	}
+
+	public void delete(int id) {
+		this.projectRepository.delete(id);
 	}
 
 	@Override

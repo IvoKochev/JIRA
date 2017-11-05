@@ -49,6 +49,16 @@
 					</nav>
 				</div>
 			</form>
+			<form class="form-horizontal" role="form" autocomplete="off" action="#" th:action="@{/deleteProject}" method="post">
+				<div class="form-group">
+					<input type="hidden" value="{{project.id}}" name="projectId" />
+					<nav class="col-md-2">
+						<!-- <div ng-if=""> -->
+						<button class="btn btn-danger sm" name="delete" value="delete" type="Submit" th:text="Delete"></button>
+						<!-- </div> -->
+					</nav>
+				</div>
+			</form>
 		</div>
 
 		<table class="kffeWc">
@@ -73,10 +83,10 @@
 					</td>
 					<td width="150" class="kqXqNO"><span class="jPYEPF"></span> <span>{{project.projecttype}}</span>
 					</td>
-					<td width="200" class="kqXqNO"><a href="/"> <img
+					<td width="200" class="kqXqNO"> <img
 						ng-src="{{project.owner.imgurl}}" width="40" height="40" alt="">
 						{{project.owner.name}}
-				</a></td>
+				</td>
 					<td class="kqXqNO" width="200"><span>{{project.url}}</span></td>
 					<td class="kqXqNO" width="200"><span>{{project.category}}</span></td>
 				</tr>
@@ -100,9 +110,7 @@
 									<img ng-src="{{sprint.imgurl}}" width="50" height="50">{{sprint.name}}
 							</a>
 						</span></td>
-						<div class="row">
-							<strong>End date: </strong><a>{{sprint.end_date}}</a>
-						</div>
+						<strong>End date: {{sprint.endDate}}</strong>
 					</div>
 				</div>
 			</div>
@@ -120,6 +128,15 @@
 					<div class="row">
 						<strong>{{user.name}}</strong>
 					</div>
+					<form autocomplete="off" th:action="@{/removeUser}" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
+			      <div class="form-group">
+			        <div class="col-sm-9">
+								<input type="hidden" value="{{project.id}}" name="projectId" />
+								<input type="hidden" value="{{user.id}}" name="userId" />
+			          <button type="submit" class="btn btn-primary">Remove User</button>
+			        </div>
+			      </div>
+			    </form>
 					<form th:action="@{/sendMail}" method="post">
 						<div class="dropdown">
 							<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Send mail
@@ -135,10 +152,10 @@
 					</form>
 					<div class="row">
 						<ng-rate-it max="10" read-only="isVoted" ng-model="user.rating" rated="myCallback(rating,user.id,project.id)"></ng-rate-it>
-						<strong>rating: </strong><a href="#">{{user.rating}}</a>
+						<strong>rating: </strong>{{user.rating}}
 						<div class="row">
 						</div>
-						<strong>votes: </strong><a href="#">{{user.votecounter}}</a>
+						<strong>votes: </strong>{{user.votecounter}}
 					</div>
 				</div>
 			</div>
@@ -183,6 +200,7 @@
 	before-reset = "Function(rating): return promise"
 	>
 </ng-rate-it> -->
+
 
 </body>
 

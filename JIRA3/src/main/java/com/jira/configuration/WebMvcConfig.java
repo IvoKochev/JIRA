@@ -21,7 +21,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/images/**").addResourceLocations("file://" + "/home/slavi/JiraImages/");
+		registry.addResourceHandler("/images/**").addResourceLocations("file://" + "/home/ivo/ivo/Jira/JiraImages/");
 	}
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {

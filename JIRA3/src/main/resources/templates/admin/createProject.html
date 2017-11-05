@@ -48,9 +48,12 @@
             <div class="form-group">
               <div class="col-sm-9">
                 <select th:field="*{category}" placeholder="Project type" class="form-control">
-              <option value="Category1">Category1</option>
-              <option value="Category2">Category2</option>
-              <option value="Category3">Category3</option>
+              <option value="Category1">Java</option>
+              <option value="Category2">C++</option>
+              <option value="Category3">C</option>
+              <option value="Category4">C#</option>
+              <option value="Category5">JavaScript</option>
+              <option value="Category6">Python</option>
             </select> <label th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="validation-message"></label>
               </div>
             </div>

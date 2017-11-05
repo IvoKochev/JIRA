@@ -1,5 +1,6 @@
 package com.jira.contract;
 
+import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.model.User;
 
 public interface UserService {
@@ -9,5 +10,7 @@ public interface UserService {
 
 	public User findById(int id);
 
-	public void updateUserRating(int id, double rating,int votes);
+	public void updateUserRating(int id, double rating, int votes);
+
+	public void removeUsersIssues(int userId, int projectId) throws ResourceNotFoundException;
 }

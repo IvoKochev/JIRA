@@ -8,6 +8,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,14 +25,22 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jira.contract.IProjectService;
 import com.jira.contract.UserService;
+import com.jira.error.AbstractError;
+import com.jira.exceptions.AccessDeniedException;
 import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.model.Project;
+import com.jira.model.User;
+import com.jira.repository.UserHasProjectRepository;
 
 @Controller
 @SessionAttributes("project")
-public class ProjectController {
+public class ProjectController extends AbstractError {
 
 	private IProjectService projectService;
+	@Autowired
+	private UserHasProjectRepository userHasProjectRepository;
+	@Autowired
+	private UserService userService;
 
 	@Autowired
 	public ProjectController(IProjectService projectService, UserService userService) {
@@ -102,9 +112,46 @@ public class ProjectController {
 		return "redirect:/common/home#!/projectView/" + id;
 	}
 
+	@PostMapping("/deleteProject")
+	public String deleteProject(HttpServletRequest request) throws AccessDeniedException, ResourceNotFoundException {
+		int id = (int) Integer.parseInt(request.getParameter("projectId"));
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+		Project project = this.projectService.getProjectById(id);
+
+		if (project.getOwner().getId() != user.getId()) {
+			throw new AccessDeniedException();
+		}
+		this.userHasProjectRepository.deleteProject(id);
+		this.projectService.deleteProject(id);
+		return "redirect:/common/home#!";
+	}
+
+	@PostMapping("/removeUser")
+	public String removeUser(HttpServletRequest request) throws ResourceNotFoundException, AccessDeniedException {
+		int userId = Integer.parseInt(request.getParameter("userId"));
+		int projectId = Integer.parseInt(request.getParameter("projectId"));
+		int currentUserId = (int) request.getSession().getAttribute("user_id");
+		Project project = projectService.getProjectById(projectId);
+		int projectOwnerId = project.getOwner().getId();
+		if (currentUserId != projectOwnerId) {
+			throw new AccessDeniedException();
+		}
+		if (projectOwnerId == userId) {
+			return "redirect:/common/home#!/projectView/" + projectId;
+		}
+		userService.removeUsersIssues(userId, projectId);
+		userHasProjectRepository.removeUserFromProject(userId, projectId);
+		return "redirect:/common/home#!/projectView/" + projectId;
+	}
+
+	@Override
 	@ExceptionHandler(ResourceNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public String handleResourceNotFoundException() {
-		return "User not found";
+	public String resourceNotFound(Model model) {
+		model.addAttribute("img", "/images/error/404.jpg");
+		model.addAttribute("message", "Resource Not Found");
+		model.addAttribute("errorStatus", "404 Not Found ");
+		return "/common/error";
 	}
 }

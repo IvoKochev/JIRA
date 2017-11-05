@@ -17,9 +17,6 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.persistence.Transient;
-
 @Entity
 @Table(name = "issues")
 public class Issue implements Serializable {
@@ -29,19 +26,18 @@ public class Issue implements Serializable {
 	 */
 	private static final long serialVersionUID = -5899221217986589147L;
 	private int id;
+	private String name;
 	private Sprint sprint;
 	private String type;
 	private String summary;
 	private String description;
 	private String priority;
 	private String status;
-	private int reporter_id;
-	private int asignee_id;
 	private User asignee;
 	private User reporter;
-	private String img_url;
+	private String imgUrl;
 	private Set<Attachment> attachments = new HashSet<>();
-	// private Set<Comments> comments = new HashSet<>();
+	private Set<Comments> comments = new HashSet<>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -100,22 +96,13 @@ public class Issue implements Serializable {
 		this.status = status;
 	}
 
-	@Column(name = "reporter_id")
-	public Integer getReporter_id() {
-		return reporter_id;
+	@OneToMany(mappedBy = "issue")
+	public Set<Comments> getComments() {
+		return comments;
 	}
 
-	public void setReporter_id(Integer reporter_id) {
-		this.reporter_id = reporter_id;
-	}
-
-	@Column(name = "asignee_id")
-	public int getAsignee_id() {
-		return asignee_id;
-	}
-
-	public void setAsignee_id(int asignee_id) {
-		this.asignee_id = asignee_id;
+	public void setComments(Set<Comments> comments) {
+		this.comments = comments;
 	}
 
 	// @OneToMany(mappedBy = "issue")
@@ -126,6 +113,15 @@ public class Issue implements Serializable {
 	// public void setComments(Set<Comments> comments) {
 	// this.comments = comments;
 	// }
+	@Column(name = "name")
+	@NotEmpty
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	@OneToMany(mappedBy = "issue")
 	public Set<Attachment> getAttachments() {
@@ -138,13 +134,41 @@ public class Issue implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "sprints_id")
-	@JsonIgnore
 	public Sprint getSprint() {
 		return sprint;
 	}
 
 	public void setSprint(Sprint sprint) {
 		this.sprint = sprint;
+	}
+
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "asignee_id")
+	public User getAsignee() {
+		return asignee;
+	}
+
+	public void setAsignee(User asignee) {
+		this.asignee = asignee;
+	}
+
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "reporter_id")
+	public User getReporter() {
+		return reporter;
+	}
+
+	public void setReporter(User reporter) {
+		this.reporter = reporter;
+	}
+
+	@Column(name = "img_url")
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 	// @Override
@@ -210,31 +234,4 @@ public class Issue implements Serializable {
 	// return false;
 	// return true;
 	// }
-	@Transient
-	public User getAsignee() {
-		return asignee;
-	}
-
-	public void setAsignee(User asignee) {
-		this.asignee = asignee;
-	}
-
-	@Transient
-	public User getReporter() {
-		return reporter;
-	}
-
-	public void setReporter(User reporter) {
-		this.reporter = reporter;
-	}
-
-	@Column(name = "img_url")
-	public String getImg_url() {
-		return img_url;
-	}
-
-	public void setImg_url(String img_url) {
-		this.img_url = img_url;
-	}
-
 }

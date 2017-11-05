@@ -18,8 +18,12 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "projects")
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class Project {
 
 	private int id;
@@ -110,7 +114,7 @@ public class Project {
 		this.imgurl = imgurl;
 	}
 
-	@ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "owner_id")
 	public User getOwner() {
 		return owner;
@@ -120,7 +124,7 @@ public class Project {
 		this.owner = owner;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "users_projects", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 
 	public Set<User> getUsers() {
@@ -152,7 +156,7 @@ public class Project {
 
 	}
 
-	@OneToMany(mappedBy="project")
+	@OneToMany(mappedBy = "project")
 	public Set<Sprint> getSprints() {
 		return sprints;
 	}

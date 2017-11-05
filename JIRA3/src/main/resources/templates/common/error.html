@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title th:utext="${errorStatus}">.</title>
+
+  <style media="screen">
+    .vertical-center {
+      min-height: 90%;
+      /* Fallback for browsers do NOT support vh unit */
+      min-height: 94vh;
+      /* These two lines are counted as one :-)       */
+      display: flex;
+      align-items: center;
+    }
+
+    .horizontal-center {
+      min-width: : 90%;
+      /* Fallback for browsers do NOT support vh unit */
+      min-width: : 94vh;
+      /* These two lines are counted as one :-)       */
+      display: flex;
+      align-items: center;
+    }
+
+    .content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="content">
+    <div class="">
+      <img class="img-responsive center-block" th:src="${img}" width="400" height="400" alt="">
+    </div>
+    <div class="">
+      <strong><span th:utext="${message}"></span></strong>
+    </div>
+  </div>
+</body>
+
+</html>

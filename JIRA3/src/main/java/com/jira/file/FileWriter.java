@@ -21,11 +21,11 @@ public class FileWriter {
 		InputStream fileContent = filePart.getInputStream();
 		Image image = ImageIO.read(fileContent);
 		BufferedImage bi = this.createResizedCopy(image, 100, 100, false);
-		File file = new File("/home/slavi/JiraImages/" + id);
+		File file = new File("/home/ivo/ivo/Jira/JiraImages/" + id);
 		if (!file.exists()) {
-			file.mkdir();
+			file.mkdirs();
 		}
-		ImageIO.write(bi, "png", new File("/home/slavi/JiraImages/" + id + "/" + fileName));
+		ImageIO.write(bi, "png", new File("/home/ivo/ivo/Jira/JiraImages/" + id + "/" + fileName));
 	}
 
 	private BufferedImage createResizedCopy(Image originalImage, int scaledWidth, int scaledHeight,
@@ -42,24 +42,23 @@ public class FileWriter {
 		g.dispose();
 		return scaledBI;
 	}
-        
-        public void writeAttachment(Part filePart, String attachmentName, int id) throws IOException {
-           
-           File file = new File("/home/slavi/JiraAttachments/" + id);
-           if(!file.exists()) {
-              file.mkdirs();
-           }
-           File file1 = new File("/home/slavi/JiraAttachments/" + id + "/" + attachmentName);
-           if(!file1.exists()) {
-               file1.createNewFile();
-           }
-           out = new FileOutputStream(file1);
-           InputStream filecontent = filePart.getInputStream();
-           int read = 0;
-           while((read = filecontent.read()) != -1) {
-               out.write(read);
-           }
-           
-           
-        }
+
+	public void writeAttachment(Part filePart, int attachmentName, int id) throws IOException {
+
+		File file = new File("/home/ivo/ivo/Jira/JiraAttachments/" + id);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		File file1 = new File("/home/ivo/ivo/Jira/JiraAttachments/" + id + "/" + attachmentName);
+		if (!file1.exists()) {
+			file1.createNewFile();
+		}
+		out = new FileOutputStream(file1);
+		InputStream filecontent = filePart.getInputStream();
+		int read = 0;
+		while ((read = filecontent.read()) != -1) {
+			out.write(read);
+		}
+
+	}
 }

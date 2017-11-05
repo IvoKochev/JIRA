@@ -33,8 +33,8 @@ public class CommentServiceImpl implements ICommentsService{
     }
     
     @Override
-    public void deleteComment(Comments comment) {
-       
+    public void deleteComment(int id) {
+       commentRepository.deleteComment(id);
     }
     
 }

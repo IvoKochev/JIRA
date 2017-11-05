@@ -15,7 +15,11 @@ public interface IProjectService {
 
 	void save(Project project, HttpServletRequest request);
 
-	int shareProject(HttpServletRequest request);
+	int shareProject(HttpServletRequest request)throws ResourceNotFoundException;
 
 	int sendMail(HttpServletRequest request);
+
+	void deleteProject(int id);
+
+	void delete(int id);
 }

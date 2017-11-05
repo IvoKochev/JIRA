@@ -15,7 +15,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	User findByEmail(String email);
 
 	User findByid(int user_id);
+
 	@Modifying
-	@Query(value="UPDATE users u SET u.rating=:rating,votecounter=:votes WHERE u.id=:id",nativeQuery = true)
+	@Query(value = "UPDATE users u SET u.rating=:rating,votecounter=:votes WHERE u.id=:id", nativeQuery = true)
 	void updateUserRating(@Param("id") Integer id, @Param("rating") double rating, @Param("votes") Integer votes);
 }

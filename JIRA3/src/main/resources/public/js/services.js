@@ -11,7 +11,7 @@ angular.module('adminProjectServices', [])
     };
   }).factory('ProjectService', ['$http', function($http) {
     var _posts = function posts(param) {
-    
+
       return $http.get('/common/projectView/' + param);
     };
     var description = '';
@@ -57,6 +57,29 @@ angular.module('adminProjectServices', [])
     var _posts = function posts(param) {
 
       return $http.get('/common/issueView/' + param);
+    };
+    var description = '';
+    var title = '';
+    return {
+      title: function() {
+        return title;
+      },
+      setTitle: function(newTitle) {
+        title = newTitle;
+      },
+      description: function() {
+        return description;
+      },
+      setDescription: function(newDescription) {
+        description = newDescription;
+      },
+      posts: _posts
+    };
+  }]).factory('AttachmentService', ['$http', function($http) {
+    var _posts = function posts(param) {
+
+      return $http.get('/getAttachment/' + param,{responseType: 'arraybuffer'});
+      //  $http.get('/api/reports/pdf', {responseType: 'arraybuffer'})
     };
     var description = '';
     var title = '';

@@ -1,6 +1,7 @@
 package com.jira.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -12,11 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "sprints")
@@ -29,13 +31,17 @@ public class Sprint implements Serializable {
 
 	private int id;
 	private String name;
-	private Integer owner_id;
+	private int owner_id;
 	private String sprintgoal;
-	private String start_date;
-	private String end_date;
+	private Date start_date;
+	private Date end_date;
 	private Project project;
 	private String imgurl;
 	private Set<Issue> issues;
+	@Transient
+	private String startDate;
+	@Transient
+	private String endDate;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -50,7 +56,7 @@ public class Sprint implements Serializable {
 
 	@Column(name = "name")
 	@NotEmpty(message = "*Please provide a name")
-	@Length(max = 12, message = "*Sprint name must have at max 12 characters")
+	@Length(max = 30, message = "*Sprint name must have at max 30 characters")
 	public String getName() {
 		return name;
 	}
@@ -70,37 +76,34 @@ public class Sprint implements Serializable {
 	}
 
 	@Column(name = "start_date")
-	@NotEmpty(message = "*Please provide a starting date")
-	public String getStart_date() {
+	public Date getStart_date() {
 		return start_date;
 	}
 
-	public void setStart_date(String start_date) {
+	public void setStart_date(Date start_date) {
 		this.start_date = start_date;
 	}
 
 	@Column(name = "end_date")
-	@NotEmpty(message = "*Please provide an ending date")
-	public String getEnd_date() {
+	public Date getEnd_date() {
 		return end_date;
 	}
 
-	public void setEnd_date(String end_date) {
+	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
 	}
 
 	@Column(name = "owner_id")
-	public Integer getOwner_id() {
+	public int getOwner_id() {
 		return owner_id;
 	}
 
-	public void setOwner_id(Integer owner_id) {
+	public void setOwner_id(int owner_id) {
 		this.owner_id = owner_id;
 	}
 
 	@ManyToOne
 	@JoinColumn(name = "projects_id")
-	@JsonIgnore
 	public Project getProject() {
 		return project;
 	}
@@ -125,19 +128,37 @@ public class Sprint implements Serializable {
 		result = prime * result + ((end_date == null) ? 0 : end_date.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((owner_id == null) ? 0 : owner_id.hashCode());
 		result = prime * result + ((sprintgoal == null) ? 0 : sprintgoal.hashCode());
 		result = prime * result + ((start_date == null) ? 0 : start_date.hashCode());
 		return result;
 	}
 
 	@OneToMany(mappedBy = "sprint")
+	@JsonIgnore
 	public Set<Issue> getIssues() {
 		return issues;
 	}
 
 	public void setIssues(Set<Issue> issues) {
 		this.issues = issues;
+	}
+
+	@Transient
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	@Transient
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
 	}
 
 	@Override
@@ -160,11 +181,6 @@ public class Sprint implements Serializable {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
-			return false;
-		if (owner_id == null) {
-			if (other.owner_id != null)
-				return false;
-		} else if (!owner_id.equals(other.owner_id))
 			return false;
 		if (sprintgoal == null) {
 			if (other.sprintgoal != null)

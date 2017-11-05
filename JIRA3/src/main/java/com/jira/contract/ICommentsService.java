@@ -9,6 +9,6 @@ public interface ICommentsService {
     
     Comments findComment(int id);
     
-    void deleteComment(Comments comment);
+    void deleteComment(int id);
     
 }

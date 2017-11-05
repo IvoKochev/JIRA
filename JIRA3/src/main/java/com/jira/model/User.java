@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
@@ -49,7 +50,9 @@ public class User implements Serializable {
 
 	private Set<Role> roles;
 
+//	private Set<Comments> comments = new HashSet<>();
 	private Set<Project> projects = new HashSet<>();
+	private Set<Project> myprojects = new HashSet<>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -143,6 +146,16 @@ public class User implements Serializable {
 		this.rating = rating;
 	}
 
+//	@OneToMany(mappedBy = "owner")
+//	@JsonIgnore
+//	public Set<Comments> getComments() {
+//		return comments;
+//	}
+//
+//	public void setComments(Set<Comments> comments) {
+//		this.comments = comments;
+//	}
+
 	@Column(name = "votecounter")
 	public int getVotecounter() {
 		return votecounter;
@@ -150,6 +163,16 @@ public class User implements Serializable {
 
 	public void setVotecounter(int votecounter) {
 		this.votecounter = votecounter;
+	}
+
+	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+	@JsonIgnore
+	public Set<Project> getMyprojects() {
+		return myprojects;
+	}
+
+	public void setMyprojects(Set<Project> myprojects) {
+		this.myprojects = myprojects;
 	}
 
 }

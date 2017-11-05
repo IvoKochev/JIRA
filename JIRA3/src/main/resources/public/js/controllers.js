@@ -98,7 +98,7 @@ angular.module('jira.controllers', [])
       $scope.project = response.data;
       sprints = $scope.project.sprints;
       $scope.sprints = sprints.slice(($scope.pageS - 1) * pageSizeS, $scope.pageS * pageSizeS);
-      if ($scope.sprints.length * $scope.pageS< sprints.length) {
+      if ($scope.sprints.length * $scope.pageS < sprints.length) {
         $scope.isNextDisabledS = false;
       }
       var usersTemp = $scope.project.users;
@@ -110,7 +110,7 @@ angular.module('jira.controllers', [])
       }
 
     }, function error(data, status, headers, config) {
-      $location.path('/404');
+       $location.path('/error');
     });
     $scope.isVoted = false;
     $scope.myCallback = function(rating, custumVar, project) {
@@ -172,16 +172,23 @@ angular.module('jira.controllers', [])
         $scope.isNextDisabled = false;
       }
     }, function error(data, status, headers, config) {
-      $location.path('/404');
+
     });
   }]).controller('IssueViewCtrl', ['$scope', 'IssueViewService', '$routeParams', '$http', '$location', '$rootScope', function($scope, IssueViewService, $routeParams, $http, $location, $rootScope) {
     IssueViewService.posts($routeParams.id).then(function success(response) {
       $scope.issue = response.data;
-
     }, function error(data, status, headers, config) {
-      $location.path('/404');
+
     });
   }])
-  .controller('ErrorCtrl', function($scope) {
+  .controller('AttachmentCtrl', ['$scope', 'AttachmentService', '$routeParams', '$http', '$location', '$rootScope', 'FileSaver', 'Blob', function($scope, AttachmentService, $routeParams, $http, $location, $rootScope, FileSaver, Blob) {
+    AttachmentService.posts($routeParams.id).then(function success(response) {
+      var filename = (response.headers().filename);
+      var data = new Blob([response.data], {
+        type: 'application/octet-stream'
 
-  });
+      });
+      FileSaver.saveAs(data, filename);
+    });
+  }])
+  .controller('ErrorCtrl', function($scope) {});

@@ -44,7 +44,7 @@ public class LoginController {
 		}
 		user.setImgurl("/images/account.png");
 		userService.saveUser(user);
-		model.addAttribute("successMessage", "User has been registered successfully");
+		model.addAttribute("successMessage", "CurrentUser has been registered successfully");
 		model.addAttribute("user", new User());
 		return "registration";
 	}

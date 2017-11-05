@@ -9,8 +9,8 @@ import com.jira.model.Sprint;
 public interface ISprintService {
 	Sprint findSprintById(int id);
 
-	void removeSprintById(int id) throws ResourceNotFoundException;
+	void deleteSprint(int id);
 
-	int saveSprint(Sprint sprint, HttpServletRequest request) throws SprintException;
+	int saveSprint(Sprint sprint, HttpServletRequest request) throws SprintException, ResourceNotFoundException;
 
 }

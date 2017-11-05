@@ -18,6 +18,8 @@
 	<script src="/js/controllers.js"></script>
 	<script src="/js/app.js"></script>
 	<script src="/bower_components/angular-rateit/dist/ng-rateit.js"></script>
+	<script src="/bower_components/file-saver.js/FileSaver.js"></script>
+	<script src="/bower_components/angular-file-saver/dist/angular-file-saver.js"></script>
 	<style>
 		body {
 			font-family: "Lato", sans-serif;
@@ -120,6 +122,12 @@
 			padding-left: 45px;
 			margin-right: auto;
 			margin-left: auto;
+		}
+
+		.fixed-panel {
+			min-height: 2;
+			max-height: 2;
+			overflow-y: scroll;
 		}
 	</style>
 </head>

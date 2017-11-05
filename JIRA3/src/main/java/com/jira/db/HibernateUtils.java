@@ -24,7 +24,7 @@
 //			configuration.addAnnotatedClass(Issue.class);
 //			configuration.addAnnotatedClass(Project.class);
 //			configuration.addAnnotatedClass(Sprint.class);
-//			configuration.addAnnotatedClass(User.class);
+//			configuration.addAnnotatedClass(CurrentUser.class);
 //			//configuration.addAnnotatedClass(Attachment.class);
 //			StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder();
 //			serviceRegistryBuilder.applySettings(configuration.getProperties());

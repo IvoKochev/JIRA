@@ -7,6 +7,8 @@ import com.jira.contract.IIssueService;
 import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.model.Issue;
 import com.jira.repository.IssueRepository;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 
 @Service
 public class IssueServiceImpl implements IIssueService {
@@ -19,17 +21,17 @@ public class IssueServiceImpl implements IIssueService {
 		if (issue != null) {
 			switch (issue.getType()) {
 			case "Epic":
-				issue.setImg_url("/images/epic.png");
+				issue.setImgUrl("/images/epic.png");
 				break;
 			case "Story":
-				issue.setImg_url("/images/story.png");
+				issue.setImgUrl("/images/story.png");
 				break;
 			case "Task":
-				issue.setImg_url("/images/task.png");
+				issue.setImgUrl("/images/task.png");
 				break;
 
 			default:
-				issue.setImg_url("/images/bug.png");
+				issue.setImgUrl("/images/bug.png");
 				break;
 			}
 			issueRepository.save(issue);
@@ -45,5 +47,21 @@ public class IssueServiceImpl implements IIssueService {
 	public Issue getIssue(int id) {
 		return issueRepository.findById(id);
 	}
+        
+        @Override
+        public boolean isValidEmailAddress(String email) {
+            boolean result = true;
+               try {
+                    InternetAddress emailAddr = new InternetAddress(email);
+                    emailAddr.validate();
+                 } catch (AddressException ex) {
+                    result = false;
+                 }
+                 return result;
+}
 
+    @Override
+    public void deleteIssue(int id) {
+        issueRepository.deleteIssue(id);
+    }
 }
