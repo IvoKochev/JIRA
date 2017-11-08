@@ -43,8 +43,8 @@
     <table class="kffeWc">
       <thead class="iccVIQ">
         <tr>
-          <th width="250" class="geZoUn"><span>Name</span></th>
-          <th width="250" class="geZoUn"><span>Type</span></th>
+          <th width="350" class="geZoUn"><span>Name</span></th>
+          <th width="150" class="geZoUn"><span>Type</span></th>
           <th width="650" class="bKZlcx"><span>Summary</span></th>
           <th width="200" class="dZlBnq"><span>Priority</span></th>
           <th width="250" class="dZlBnq"><span>Status</span></th>
@@ -55,12 +55,12 @@
       </div>
       <tbody>
         <tr class="ewoyXV" ng-repeat="issue in issues | orderBy:'priority'">
-          <td width="250" class="kUfcsh"><span class="gGsHVf"> <a
+          <td width="350" class="kUfcsh"><span class="gGsHVf"> <a
               ng-href="http://localhost:8080/common/home#!/issueView/{{issue.id}}">
               <img ng-src="{{issue.imgUrl}}" width="60" height="60"> {{issue.name}}
             </a>
           </span></td>
-          <td width="650" class="drqBbD"><span class="fuVjLH">{{issue.type}}</span>
+          <td width="150" class="drqBbD"><span class="fuVjLH">{{issue.type}}</span>
           </td>
           <td width="650" class="drqBbD"><span class="fuVjLH">{{issue.summary}}</span>
           </td>

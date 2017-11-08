@@ -26,9 +26,19 @@ angular.module('jiraProject', ['ngRateIt', 'ngFileSaver', 'ngRoute', 'adminProje
       }).when('/issueView/:id', {
         templateUrl: 'issueView.html;',
         controller: 'IssueViewCtrl'
+      }).when('/angularError', {
+        templateUrl: 'angularError.html;',
+        controller: 'ErrorCtrl'
       }).when('/getAttachment/:id', {
         templateUrl: 'issueView.html;',
         controller: 'AttachmentCtrl'
+      })
+      .when('/overview', {
+        templateUrl: 'overview.html;',
+        controller: 'OverViewCtrl'
+      }).when('/angularError', {
+        templateUrl: 'angularError.html;',
+        controller: 'ErrorCtrl'
       });
     // $compileProvider.aHrefSanitizationWhitelist(/^\s*(|blob|):/);
   }]);

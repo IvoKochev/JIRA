@@ -1,14 +1,14 @@
 package com.jira.service;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jira.contract.IIssueService;
-import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.model.Issue;
 import com.jira.repository.IssueRepository;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 
 @Service
 public class IssueServiceImpl implements IIssueService {
@@ -36,11 +36,6 @@ public class IssueServiceImpl implements IIssueService {
 			}
 			issueRepository.save(issue);
 		}
-	}
-
-	@Override
-	public void updateIssue(Issue issue) throws ResourceNotFoundException {
-		// to be done
 	}
 
 	@Override

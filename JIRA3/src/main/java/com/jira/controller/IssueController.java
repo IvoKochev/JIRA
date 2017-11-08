@@ -1,7 +1,5 @@
 package com.jira.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jira.contract.IAttachmentService;
 import com.jira.contract.IIssueService;
 import com.jira.contract.IProjectService;
 import com.jira.contract.ISprintService;
@@ -29,7 +26,6 @@ import com.jira.error.AbstractError;
 import com.jira.exceptions.AccessDeniedException;
 import com.jira.exceptions.ResourceNotFoundException;
 import com.jira.mail.Mail;
-import com.jira.model.Attachment;
 import com.jira.model.Issue;
 import com.jira.model.Project;
 import com.jira.model.Sprint;
@@ -38,7 +34,7 @@ import com.jira.repository.IssueRepository;
 import com.jira.repository.UserRepository;
 
 @Controller
-public class IssueController extends AbstractError{
+public class IssueController extends AbstractError {
 	@Autowired
 	private IProjectService projectService;
 	@Autowired
@@ -51,8 +47,6 @@ public class IssueController extends AbstractError{
 	private UserRepository userRepository;
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private IAttachmentService attachmentService;
 
 	@GetMapping("/common/createIssue")
 	public String issueCreateTemplate(Model model) {
@@ -87,8 +81,9 @@ public class IssueController extends AbstractError{
 
 	@RequestMapping(value = "/common/issueView/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public Issue getIssue(@PathVariable(value = "id") int id) {
+	public Issue getIssue(@PathVariable(value = "id") int id, HttpServletRequest request) {
 		Issue issue = issueRepository.findById(id);
+		issue.setUserId((int) request.getSession().getAttribute("user_id"));
 		return issue;
 	}
 
@@ -187,11 +182,11 @@ public class IssueController extends AbstractError{
 	}
 
 	@PostMapping("/deleteIssue")
-	public String deleteIssue(HttpServletRequest request) throws AccessDeniedException{
+	public String deleteIssue(HttpServletRequest request) throws AccessDeniedException {
 		int userId = (int) request.getSession().getAttribute("user_id");
 		int issueId = Integer.parseInt(request.getParameter("issueId"));
 		Issue issue = issueService.getIssue(issueId);
-                int projectOwnerId = issue.getSprint().getProject().getOwner().getId();
+		int projectOwnerId = issue.getSprint().getProject().getOwner().getId();
 		if (userId != issue.getReporter().getId() && userId != projectOwnerId) {
 			throw new AccessDeniedException();
 		}

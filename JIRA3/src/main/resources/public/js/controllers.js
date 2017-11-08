@@ -4,7 +4,7 @@ angular.module('jira.controllers', [])
     var pageSize = 15;
     var projects;
     $scope.isPrevDisabled = true;
-    $scope.isNextDisabled = false;
+    $scope.isNextDisabled = true;
 
     $scope.goToPrevPage = function() {
       if ($scope.page === 1) {
@@ -31,13 +31,16 @@ angular.module('jira.controllers', [])
     ProjectList.all(function(data) {
       projects = data;
       $scope.projects = projects.slice(($scope.page - 1) * pageSize, $scope.page * pageSize);
+      if ($scope.projects.length * $scope.page < projects.length) {
+        $scope.isNextDisabled = false;
+      }
     });
   })
   .controller('ProjectViewCtrl', ['$scope', 'ProjectService', '$routeParams', '$http', '$location', '$rootScope', '$filter', function($scope, ProjectService, $routeParams, $http, $location, $rootScope, $filter) {
     $scope.pageS = 1;
     $scope.pageU = 1;
-    var pageSizeS = 21;
-    var pageSizeU = 8;
+    var pageSizeS = 18;
+    var pageSizeU = 6;
     var sprints;
     var users;
     $scope.isPrevDisabledS = true;
@@ -110,7 +113,7 @@ angular.module('jira.controllers', [])
       }
 
     }, function error(data, status, headers, config) {
-       $location.path('/error');
+      $location.path('/angularError');
     });
     $scope.isVoted = false;
     $scope.myCallback = function(rating, custumVar, project) {
@@ -172,7 +175,7 @@ angular.module('jira.controllers', [])
         $scope.isNextDisabled = false;
       }
     }, function error(data, status, headers, config) {
-
+      $location.path('/angularError');
     });
   }]).controller('IssueViewCtrl', ['$scope', 'IssueViewService', '$routeParams', '$http', '$location', '$rootScope', function($scope, IssueViewService, $routeParams, $http, $location, $rootScope) {
     IssueViewService.posts($routeParams.id).then(function success(response) {
@@ -190,5 +193,7 @@ angular.module('jira.controllers', [])
       });
       FileSaver.saveAs(data, filename);
     });
-  }])
+  }]).controller('OverViewCtrl', function($scope, ProjectList) {
+
+  })
   .controller('ErrorCtrl', function($scope) {});

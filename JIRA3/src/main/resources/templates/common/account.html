@@ -63,7 +63,7 @@
                           <a ng-href="#">
                         <img th:src="@{${user.imgurl}}" width="50" height="50">
                     </a>
-                          <input type="file" name="file" accept="image/*"/>
+                          <input type="file" name="file" accept="image/*" />
                         </nav>
                       </dd>
                     </dl>
@@ -74,19 +74,13 @@
                     <dl>
                       <dt>Email</dt>
                       <dd>
-                        <a th:href="@{${user.email}}" th:text="${user.email}"></a>
-                      </dd>
-                    </dl>
-                    <dl>
-                      <dt>Password</dt>
-                      <dd>
-                        <a href="#">Change password</a>
+                        <a th:text="${user.email}"></a>
                       </dd>
                     </dl>
                     <dl>
                       <dt>Role</dt>
                       <dd>
-                        <a ng:href="#" th:text="${user.roles[0].role}"></a>
+                        <a th:text="${user.roles[0].role}"></a>
                       </dd>
                     </dl>
                   </li>
@@ -94,6 +88,21 @@
               </div>
               <input type="password" name="password" placeholder="Password" />
               <input class="btn btn-warning" type="submit" />
+            </form>
+            <dt>Password</dt>
+            <form autocomplete="off" action="/changePassword" method="post" class="form-horizontal" role="form">
+              <div class="panel">
+                <div class="dropdown">
+                  <button class="btn btn-success dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Change password
+                          <span class="caret"></span></button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                    <input type="password" name="oldPassword" placeholder="Old password" />
+                    <input type="password" name="password" placeholder="New password" />
+                    <input type="password" name="confirmpassword" placeholder="Confirm password" />
+                    <button type="submit" class="btn btn-danger">Submit</button>
+                  </ul>
+                </div>
+              </div>
             </form>
           </div>
         </div>

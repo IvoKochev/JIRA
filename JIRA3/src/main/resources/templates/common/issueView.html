@@ -145,28 +145,28 @@
     <table class="kffeWc">
       <thead class="iccVIQ">
         <tr>
-          <th width="100" class="geZoUn"><span>Name</span></th>
-          <th width="100" class="geZoUn"><span>Type</span></th>
-          <th width="200" class="bKZlcx"><span>Summary</span></th>
-          <th width="100" class="dZlBnq"><span>Description</span></th>
-          <th width="200" class="dZlBnq"><span>Priotiry</span></th>
-          <th width="200" class="dZlBnq"><span>Status</span></th>
-          <th width="100" class="dZlBnq"><span>Reporter</span></th>
-          <th width="100" class="dZlBnq"><span>Asignee</span></th>
-          <th width="100" class="dZlBnq"><span>Sprint</span></th>
+          <th width="150" class="geZoUn"><span>Name</span></th>
+          <th width="75" class="geZoUn"><span>Type</span></th>
+          <th width="400" class="bKZlcx"><span>Summary</span></th>
+          <th width="100" class="dZlBnq"><span><div title="{{issue.description}}">Description</div></span></th>
+          <th width="100" class="dZlBnq"><span>Priotiry</span></th>
+          <th width="120" class="dZlBnq"><span>Status</span></th>
+          <th width="150" class="dZlBnq"><span>Reporter</span></th>
+          <th width="150" class="dZlBnq"><span>Asignee</span></th>
+          <th width="150" class="dZlBnq"><span>Sprint</span></th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td width="100" class="kUfcsh"><span> {{issue.name}}</span></td>
-          <td width="100" class="kUfcsh"><span> {{issue.type}}</span></td>
-          <td width="200" class="drqBbD"><span>{{issue.summary}}</span></td>
-          <td width="100" class="kqXqNO"><span> {{issue.description}}</span> </td>
-          <td width="250" class="kqXqNO"><span>{{issue.priority}}</span></td>
-          <td width="250" class="kqXqNO"><span>{{issue.status}}</span></td>
-          <td width="100" class="kqXqNO"><span> {{issue.reporter.name}}</span> </td>
-          <td width="100" class="kqXqNO"><span> {{issue.asignee.name}}</span> </td>
-          <td width="100" class="kqXqNO"><span> {{issue.sprint.name}}</span> </td>
+          <td width="150" class="kUfcsh"><span> {{issue.name}}</span></td>
+          <td width="75" class="kUfcsh"><span> {{issue.type}}</span></td>
+          <td width="400" class="drqBbD"><span>{{issue.summary}}</span></td>
+          <td width="100" class="kqXqNO"><span> <div title="{{issue.description}}">Show</div></span> </td>
+          <td width="100" class="kqXqNO"><span>{{issue.priority}}</span></td>
+          <td width="120" class="kqXqNO"><span>{{issue.status}}</span></td>
+          <td width="150" class="kqXqNO"><span> {{issue.reporter.name}}</span> </td>
+          <td width="150" class="kqXqNO"><span> {{issue.asignee.name}}</span> </td>
+          <td width="150" class="kqXqNO"><span> {{issue.sprint.name}}</span> </td>
         </tr>
       </tbody>
     </table>
@@ -201,7 +201,7 @@
                       <input type="hidden" value="{{comment.id}}" name="commentId" />
                       <div class="form-group">
                         <div class="col-sm-9">
-                          <div ng-if="comment.owner.id == issue.reporter.id">
+                          <div ng:if="comment.owner.id == issue.userId">
                             <button type="submit" class="btn btn-danger">Delete</button>
                           </div>
                         </div>

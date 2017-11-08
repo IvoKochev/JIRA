@@ -20,6 +20,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "projects")
@@ -59,6 +60,7 @@ public class Project {
 
 	@Column(name = "name")
 	@NotEmpty(message = "*Please provide your project name")
+        @Length(max = 20)
 	public String getName() {
 		return name;
 	}
@@ -69,6 +71,7 @@ public class Project {
 
 	@Column(name = "projectkey")
 	@NotEmpty(message = "*Please provide your project key")
+        @Length(max = 20)
 	public String getProjectkey() {
 		return projectkey;
 	}
@@ -97,6 +100,8 @@ public class Project {
 	}
 
 	@Column(name = "url")
+        @NotEmpty(message = "*Please, provide url")
+        @Length(max = 50)
 	public String getUrl() {
 		return url;
 	}

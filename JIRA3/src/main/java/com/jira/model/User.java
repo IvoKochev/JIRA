@@ -50,7 +50,6 @@ public class User implements Serializable {
 
 	private Set<Role> roles;
 
-//	private Set<Comments> comments = new HashSet<>();
 	private Set<Project> projects = new HashSet<>();
 	private Set<Project> myprojects = new HashSet<>();
 
@@ -79,6 +78,7 @@ public class User implements Serializable {
 
 	@Column(name = "name")
 	@NotEmpty(message = "*Please provide your name")
+        @Length(max = 30)
 	public String getName() {
 		return name;
 	}

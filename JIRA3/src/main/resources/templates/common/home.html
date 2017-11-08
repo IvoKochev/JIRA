@@ -142,7 +142,7 @@
 					<div th:if="${isAdmin}">
 						<a ng-href="http://localhost:8080/common/home#!/createProject"><img ng-src="/images/createProject.ico" width="50" height="50"> Project </a>
 					</div>
-					<a ng-href="#"><img ng-src="/images/info.png" width="50" height="50"> Info</a>
+					<a ng-href="http://localhost:8080/common/home#!/overview"><img ng-src="/images/info.png" width="50" height="50"> Overview</a>
 					<form th:action="@{/logout}" method="get">
 						<button id="logof" class="btn btn-md btn-danger btn-block" name="registration" type="Submit">Logout</button>
 					</form>
@@ -165,7 +165,7 @@
 						</script>
 						<script type="text/ng-template" id="issueView.html">
 						</script>
-						<script type="text/ng-template" id="404.html">
+						<script type="text/ng-template" id="angularError.html">
 						</script>
 					</div>
 				</div>

@@ -15,14 +15,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jira.contract.UserService;
+import com.jira.error.AbstractError;
+import com.jira.exceptions.AccessDeniedException;
 import com.jira.file.FileWriter;
 import com.jira.model.RatingUser;
 import com.jira.model.User;
 
 @Controller
-public class AccountController {
+public class AccountController extends AbstractError {
 
 	@Autowired
 	private UserService userService;
@@ -40,17 +44,40 @@ public class AccountController {
 	}
 
 	@PostMapping(value = "/avatar")
-	public String setAvatar(HttpServletRequest request) throws IOException, ServletException {
+	public String setAvatar(HttpServletRequest request) throws IOException, ServletException, AccessDeniedException {
 		Part filePart = request.getPart("file");
 		String password = request.getParameter("password");
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
-		if (this.bCryptPasswordEncoder.matches(password, user.getPassword())) {
-			new FileWriter().avatarWrite(filePart, "avatar.png", user.getId());
-			user.setImgurl("/images/" + user.getId() + "/" + "avatar.png");
-			user.setPassword(password);
-			this.userService.saveUser(user);
+		if (!this.bCryptPasswordEncoder.matches(password, user.getPassword())) {
+			throw new AccessDeniedException();
 		}
+		new FileWriter().avatarWrite(filePart, "avatar.png", user.getId());
+		user.setImgurl("/images/" + user.getId() + "/" + "avatar.png");
+		user.setPassword(password);
+		this.userService.saveUser(user);
+		return "redirect:/common/home";
+	}
+
+	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+	public String changePassword(Model model, HttpServletRequest request) throws AccessDeniedException {
+		String oldPassword = request.getParameter("oldPassword");
+		String newPassword = request.getParameter("password");
+		String confirmPassword = request.getParameter("confirmpassword");
+		if (oldPassword == null || newPassword == null || confirmPassword == null
+				|| !newPassword.equals(confirmPassword)) {
+
+			throw new AccessDeniedException();
+		}
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+		if (!this.bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
+			throw new AccessDeniedException();
+		}
+
+		user.setPassword(newPassword);
+		this.userService.saveUser(user);
+
 		return "redirect:/common/home";
 	}
 

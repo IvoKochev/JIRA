@@ -14,6 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.validator.constraints.Length;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -38,6 +41,8 @@ public class Issue implements Serializable {
 	private String imgUrl;
 	private Set<Attachment> attachments = new HashSet<>();
 	private Set<Comments> comments = new HashSet<>();
+	@Transient
+	private int userId;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -61,6 +66,7 @@ public class Issue implements Serializable {
 
 	@Column(name = "summary")
 	@NotEmpty(message = "*Please, provide summary")
+	@Length(max = 40)
 	public String getSummary() {
 		return summary;
 	}
@@ -105,16 +111,9 @@ public class Issue implements Serializable {
 		this.comments = comments;
 	}
 
-	// @OneToMany(mappedBy = "issue")
-	// public Set<Comments> getComments() {
-	// return comments;
-	// }
-	//
-	// public void setComments(Set<Comments> comments) {
-	// this.comments = comments;
-	// }
 	@Column(name = "name")
 	@NotEmpty
+	@Length(max = 20)
 	public String getName() {
 		return name;
 	}
@@ -169,6 +168,15 @@ public class Issue implements Serializable {
 
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
+	}
+
+	@Transient
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	// @Override
@@ -234,4 +242,5 @@ public class Issue implements Serializable {
 	// return false;
 	// return true;
 	// }
+
 }

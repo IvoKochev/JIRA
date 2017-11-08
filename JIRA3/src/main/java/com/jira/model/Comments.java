@@ -14,11 +14,9 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-
-
 @Entity
 @Table(name = "comments")
-public class Comments implements Serializable{
+public class Comments implements Serializable {
 	/**
 	 * 
 	 */
@@ -26,49 +24,50 @@ public class Comments implements Serializable{
 	private Integer id;
 	private String text;
 	private Issue issue;
-        private User owner;
-	
+	private User owner;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
-        
-        @ManyToOne
+
+	@ManyToOne
 	@JoinColumn(name = "user_id")
-        public User getOwner() {
-            return owner;
-        }
+	public User getOwner() {
+		return owner;
+	}
 
-        public void setOwner(User owner) {
-            this.owner = owner;
-        }
-        
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
 
-	
 	@Column(name = "text")
 	@NotEmpty(message = "*Please, provide text")
 	public String getText() {
 		return text;
 	}
+
 	public void setText(String text) {
 		this.text = text;
 	}
-	
+
 	@ManyToOne
 	@JoinColumn(name = "issues_id")
-        @JsonIgnore
+	@JsonIgnore
 	public Issue getIssue() {
 		return issue;
 	}
+
 	public void setIssue(Issue issue) {
 		this.issue = issue;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -78,7 +77,7 @@ public class Comments implements Serializable{
 		result = prime * result + ((text == null) ? 0 : text.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -106,9 +105,5 @@ public class Comments implements Serializable{
 
 		return true;
 	}
-	
-	
-	
-	
 
 }

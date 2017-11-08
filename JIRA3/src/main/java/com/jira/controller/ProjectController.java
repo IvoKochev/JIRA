@@ -75,7 +75,7 @@ public class ProjectController extends AbstractError {
 
 	@GetMapping("/common/projectView/{id}")
 	@ResponseBody
-	public Project getProjectById(@PathVariable(name = "id") int id) throws ResourceNotFoundException {
+	public Project getProjectById(@PathVariable(name = "id") int id) {
 		return this.projectService.getProjectById(id);
 	}
 
@@ -143,6 +143,15 @@ public class ProjectController extends AbstractError {
 		userService.removeUsersIssues(userId, projectId);
 		userHasProjectRepository.removeUserFromProject(userId, projectId);
 		return "redirect:/common/home#!/projectView/" + projectId;
+	}
+	@GetMapping("/common/overview")
+	public String overview() throws ResourceNotFoundException {
+		return "/common/overview";
+	}
+
+	@GetMapping("/common/angularError")
+	public String error() throws ResourceNotFoundException {
+		return "/common/angularError";
 	}
 
 	@Override
